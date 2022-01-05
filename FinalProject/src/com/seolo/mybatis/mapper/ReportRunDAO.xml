@@ -7,19 +7,19 @@
 
 	<update id="approval">   
         UPDATE REPORT_CHECK
-		SET STATUS_NO = 1
+		SET STATUS_NO = 1, CONFIRMDATE = SYSDATE, AD_ID = #{ad_id}
 		WHERE RPCHECK_NO=#{rpcheck_no}
 	</update>
 		
 	<update id="reject">
 		UPDATE REPORT_CHECK
-		SET STATUS_NO = 2
+		SET STATUS_NO = 2, CONFIRMDATE = SYSDATE, AD_ID = #{ad_id}
 		WHERE RPCHECK_NO=#{rpcheck_no}
 	</update>	
 	
 	<update id="fake">
 		UPDATE REPORT_CHECK
-		SET STATUS_NO = 3
+		SET STATUS_NO = 3, CONFIRMDATE = SYSDATE, AD_ID = #{ad_id}
 		WHERE RPCHECK_NO=#{rpcheck_no}
 	</update>	
 	
