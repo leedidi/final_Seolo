@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.seolo.admin.INoticeDAO;
 import com.seolo.admin.NoticeDTO;
+import com.seolo.dto.AdminDTO;
 import com.seolo.dto.ReportRunDTO;
 import com.seolo.idao.IAccountListDAO;
 import com.seolo.idao.IReportRunDAO;
@@ -59,8 +60,13 @@ public class ReportController
 	// 신고 처리 방법 3가지
 	// 신고 처리 - 신고 승인
 	@RequestMapping(value = "/reportapproval.action", method = RequestMethod.GET)
-	public String reportApproval(ReportRunDTO rr)
+	public String reportApproval(ReportRunDTO rr, HttpSession session)
 	{
+		// 관리자 아이디 세션에서 받아와서 추가
+		AdminDTO admin = (AdminDTO)session.getAttribute("adminLogin");
+		String ad_id = admin.getAd_Id();
+		rr.setAd_id(ad_id);
+		
 		IReportRunDAO dao = sqlSession.getMapper(IReportRunDAO.class);
 		
 		dao.approval(rr);
@@ -70,8 +76,13 @@ public class ReportController
 	
 	// 신고 처리 - 신고 반려
 	@RequestMapping(value = "/reportreject.action", method = RequestMethod.GET)
-	public String reportReject(ReportRunDTO rr)
+	public String reportReject(ReportRunDTO rr, HttpSession session)
 	{
+		// 관리자 아이디 세션에서 받아와서 추가
+		AdminDTO admin = (AdminDTO)session.getAttribute("adminLogin");
+		String ad_id = admin.getAd_Id();
+		rr.setAd_id(ad_id);
+		
 		IReportRunDAO dao = sqlSession.getMapper(IReportRunDAO.class);
 			
 		dao.reject(rr);
@@ -81,8 +92,13 @@ public class ReportController
 	
 	// 신고 처리 - 허위 신고
 	@RequestMapping(value = "/reportrefake.action", method = RequestMethod.GET)
-	public String reportFake(ReportRunDTO rr)
+	public String reportFake(ReportRunDTO rr, HttpSession session)
 	{
+		// 관리자 아이디 세션에서 받아와서 추가
+		AdminDTO admin = (AdminDTO)session.getAttribute("adminLogin");
+		String ad_id = admin.getAd_Id();
+		rr.setAd_id(ad_id);
+		
 		IReportRunDAO dao = sqlSession.getMapper(IReportRunDAO.class);
 
 		dao.fake(rr);
