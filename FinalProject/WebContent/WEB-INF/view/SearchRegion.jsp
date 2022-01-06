@@ -31,6 +31,221 @@ integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amn
 		$("#guNo").val("region.action?guNo="+guNo+"&dongNo=").prop("selected", true);
 		$("#dongNo").val("region.action?guNo="+guNo+"&dongNo="+dongNo).prop("selected", true);
 		
+		
+		// 최초 페이지 접속시 필터 전체선택
+		if ($("#checkAll").is(":checked"))
+		{
+			$("#wolse").prop("checked", true);
+			$("#jeonse").prop("checked", true);
+			$("#maemae").prop("checked", true);
+			$("#security").prop("checked", true);
+			$("#transport").prop("checked", true);
+			$("#honjap").prop("checked", true);
+			$("#convenience").prop("checked", true);
+			$("#pet").prop("checked", true);
+		}
+		
+		// 전체선택 체크박스 체크시 / 해제시
+		$("#checkAll").click(function()
+		{
+			if ($("#checkAll").is(":checked"))
+			{
+				$("#wolse").prop("checked", true);
+				$("#jeonse").prop("checked", true);
+				$("#maemae").prop("checked", true);
+				$("#security").prop("checked", true);
+				$("#transport").prop("checked", true);
+				$("#honjap").prop("checked", true);
+				$("#convenience").prop("checked", true);
+				$("#pet").prop("checked", true);
+			}
+			else
+			{
+				$("#wolse").prop("checked", false);
+				$("#jeonse").prop("checked", false);
+				$("#maemae").prop("checked", false);
+				$("#security").prop("checked", false);
+				$("#transport").prop("checked", false);
+				$("#honjap").prop("checked", false);
+				$("#convenience").prop("checked", false);
+				$("#pet").prop("checked", false);
+			}
+		});
+		
+		// 각 항목별 체크박스 체크시 / 해제시
+		$("#wolse").click(function()
+		{
+			if (!$("#wolse").is(":checked"))
+			{
+				$("#checkAll").prop("checked", false);
+			}
+			
+			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
+					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
+					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
+			{
+				$("#checkAll").prop("checked", true);
+			}
+		});
+		
+		$("#jeonse").click(function()
+		{
+			if (!$("#jeonse").is(":checked"))
+			{
+				$("#checkAll").prop("checked", false);
+			}
+			
+			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
+					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
+					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
+			{
+				$("#checkAll").prop("checked", true);
+			}
+		});
+		
+		$("#maemae").click(function()
+		{
+			if (!$("#maemae").is(":checked"))
+			{
+				$("#checkAll").prop("checked", false);
+			}
+			
+			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
+					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
+					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
+			{
+				$("#checkAll").prop("checked", true);
+			}
+		});
+		
+		$("#security").click(function()
+		{
+			if (!$("#security").is(":checked"))
+			{
+				$("#checkAll").prop("checked", false);
+			}
+			
+			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
+					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
+					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
+			{
+				$("#checkAll").prop("checked", true);
+			}
+		});
+		
+		$("#transport").click(function()
+		{
+			if (!$("#transport").is(":checked"))
+			{
+				$("#checkAll").prop("checked", false);
+			}
+			
+			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
+					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
+					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
+			{
+				$("#checkAll").prop("checked", true);
+			}
+		});
+		
+		$("#honjap").click(function()
+		{
+			if (!$("#honjap").is(":checked"))
+			{
+				$("#checkAll").prop("checked", false);
+			}
+			
+			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
+					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
+					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
+			{
+				$("#checkAll").prop("checked", true);
+			}
+		});
+		
+		$("#convenience").click(function()
+		{
+			if (!$("#convenience").is(":checked"))
+			{
+				$("#checkAll").prop("checked", false);
+			}
+			
+			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
+					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
+					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
+			{
+				$("#checkAll").prop("checked", true);
+			}
+		});
+		
+		$("#pet").click(function()
+		{
+			if (!$("#pet").is(":checked"))
+			{
+				$("#checkAll").prop("checked", false);
+			}
+			
+			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
+					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
+					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
+			{
+				$("#checkAll").prop("checked", true);
+			}
+		});
+		
+		
+		// 필터 버튼
+		$("#filterBtn").click(function()
+		{
+			// 월세
+			if ($("#wolse").is(":checked"))
+				$(".colWolse").attr("style", "display:'';");	// 체크되어 있으면 나타내기
+			else
+				$(".colWolse").attr("style", "display:none;");	// 아니라면 숨기기
+				
+			// 전세
+			if ($("#jeonse").is(":checked"))
+				$(".colJeonse").attr("style", "display:'';");
+			else
+				$(".colJeonse").attr("style", "display:none;");
+			
+			// 매매
+			if ($("#maemae").is(":checked"))
+				$(".colMaemae").attr("style", "display:'';");
+			else
+				$(".colMaemae").attr("style", "display:none;");
+			
+			// 치안
+			if ($("#security").is(":checked"))
+				$(".colSecurity").attr("style", "display:'';");
+			else
+				$(".colSecurity").attr("style", "display:none;");
+			
+			// 대중교통
+			if ($("#transport").is(":checked"))
+				$(".colTransport").attr("style", "display:'';");
+			else
+				$(".colTransport").attr("style", "display:none;");
+			
+			// 교통혼잡도
+			if ($("#honjap").is(":checked"))
+				$(".colHonjap").attr("style", "display:'';");
+			else
+				$(".colHonjap").attr("style", "display:none;");
+			
+			// 생활편의시설
+			if ($("#convenience").is(":checked"))
+				$(".colConvenience").attr("style", "display:'';");
+			else
+				$(".colConvenience").attr("style", "display:none;");
+			
+			// 애완동물
+			if ($("#pet").is(":checked"))
+				$(".colPet").attr("style", "display:'';");
+			else
+				$(".colPet").attr("style", "display:none;");
+		});
+		
 	});
 	
 </script>
@@ -104,37 +319,38 @@ integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amn
 	</div>
 	
 	<hr>
+	<!-- 필터 체크박스 -->
 	<div class="custom-control custom-checkbox text-center">
 		<label class="checkAll">
-			<input type="checkbox" id="checkAll" name="checkAll"> 전체선택
+			<input type="checkbox" id="checkAll" name="checkAll" checked="checked"> 전체선택
 		</label>
-		<label class="btn1">
-			<input type="checkbox"> 주거비(월세)
+		<label class="wolse">
+			<input type="checkbox" id="wolse" name="wolse"> 주거비(월세)
 		</label>
-		<label class="btn2">
-			<input type="checkbox"> 주거비(전세)
+		<label class="jeonse">
+			<input type="checkbox" id="jeonse" name="jeonse"> 주거비(전세)
 		</label>
-		<label class="btn3">
-			<input type="checkbox"> 주거비(매매)
+		<label class="maemae">
+			<input type="checkbox" id="maemae" name="maemae"> 주거비(매매)
 		</label>
-		<label class="btn4">
-			<input type="checkbox"> 치안
+		<label class="security">
+			<input type="checkbox" id="security" name="security"> 치안
 		</label>
-		<label class="btn5">
-			<input type="checkbox"> 대중교통
+		<label class="transport">
+			<input type="checkbox" id="transport" name="transport"> 대중교통
 		</label>
-		<label class="btn6">
-			<input type="checkbox"> 교통혼잡도
+		<label class="honjap">
+			<input type="checkbox" id="honjap" name="honjap"> 교통혼잡도
 		</label>
-		<label class="btn7">
-			<input type="checkbox"> 생활편의시설
+		<label class="convenience">
+			<input type="checkbox" id="convenience" name="convenience"> 생활편의시설
 		</label>
-		<label class="btn8">
-			<input type="checkbox"> 반려동물
+		<label class="pet">
+			<input type="checkbox" id="pet" name="pet"> 반려동물
 		</label>
 		
 		<div style="text-align: right; padding-right: 350pt;">
-			<button type="button" class="btn btn-primary">필터 적용</button>
+			<button type="button" class="btn btn-primary" id="filterBtn">필터 적용</button>
 		</div>
 	</div>
 	<hr />
@@ -150,56 +366,56 @@ integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amn
         			 <option>동 내림차순</option>
     			</select>
               </th>
-              <th>
+              <th class="colWolse">
               	<select class="custom-select d-block w-100" id="selectWolse">
          			<option value="">월세</option>
         			 <option>월세 오름차순</option>
         			 <option>월세 내림차순</option>
     			</select>
               </th>
-              <th>
+              <th class="colJeonse">
               	<select class="custom-select d-block w-100" id="selectJeonse">
          			<option value="">전세</option>
         			 <option>전세 오름차순</option>
         			 <option>전세 내림차순</option>
     			</select>
               </th>
-              <th>
+              <th class="colMaemae">
               	<select class="custom-select d-block w-100" id="selectMaemae">
          			<option value="">매매</option>
         			 <option>매매 오름차순</option>
         			 <option>매매 내림차순</option>
     			</select>
               </th>
-              <th>
+              <th class="colSecurity">
               	<select class="custom-select d-block w-100" id="selectSecurity">
          			<option value="">치안</option>
         			 <option>점수 오름차순</option>
         			 <option>점수 내림차순</option>
     			</select>
               </th>
-              <th>
+              <th class="colTransport">
               	<select class="custom-select d-block w-100" id="selectTranspt">
          			<option value="">대중교통</option>
         			 <option>점수 오름차순</option>
         			 <option>점수 내림차순</option>
     			</select>
               </th>
-              <th>
+              <th class="colHonjap">
               	<select class="custom-select d-block w-100" id="selectHonjob">
          			<option value="">교통혼잡도</option>
         			 <option>점수 오름차순</option>
         			 <option>점수 내림차순</option>
     			</select>
               </th>
-              <th>
+              <th class="colConvenience">
               	<select class="custom-select d-block w-100" id="selectConv">
          			<option value="">생활편의시설</option>
         			 <option>점수 오름차순</option>
         			 <option>점수 내림차순</option>
     			</select>
               </th>
-              <th>
+              <th class="colPet">
               	<select class="custom-select d-block w-100" id="selectPet">
          			<option value="">반려동물</option>
         			 <option>점수 오름차순</option>
@@ -219,36 +435,36 @@ integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amn
 	          		<tr onclick="location.href='readlocal.action?dongNo=${local.dongNo}'">
 		              <td>${local.dongName }</td>
 		              <c:choose>
-						<c:when test="${local.mWolse eq -1 || local.deposit eq -1}"><td> - 만원</td></c:when>
-						<c:otherwise><td>${local.deposit }/${local.mWolse } 만원</td></c:otherwise>
+						<c:when test="${local.mWolse eq -1 || local.deposit eq -1}"><td class="colWolse"> - 만원</td></c:when>
+						<c:otherwise><td class="colWolse">${local.deposit }/${local.mWolse } 만원</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
-						<c:when test="${local.mJeonse eq -1 }"><td> - 만원</td></c:when>
-						<c:otherwise><td>${local.mJeonse } 만원</td></c:otherwise>
+						<c:when test="${local.mJeonse eq -1 }"><td class="colJeonse"> - 만원</td></c:when>
+						<c:otherwise><td class="colJeonse">${local.mJeonse } 만원</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
-						<c:when test="${local.mMaemae eq -1 }"><td> - 만원</td></c:when>
-						<c:otherwise><td>${local.mMaemae } 만원</td></c:otherwise>
+						<c:when test="${local.mMaemae eq -1 }"><td class="colMaemae"> - 만원</td></c:when>
+						<c:otherwise><td class="colMaemae">${local.mMaemae } 만원</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
-						<c:when test="${local.security_score eq -1 }"><td> - </td></c:when>
-						<c:otherwise><td>${local.security_score }</td></c:otherwise>
+						<c:when test="${local.security_score eq -1 }"><td class="colSecurity"> - </td></c:when>
+						<c:otherwise><td class="colSecurity">${local.security_score }</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
-						<c:when test="${local.transport_score eq -1 }"><td> - </td></c:when>
-						<c:otherwise><td>${local.transport_score }</td></c:otherwise>
+						<c:when test="${local.transport_score eq -1 }"><td class="colTransport"> - </td></c:when>
+						<c:otherwise><td class="colTransport">${local.transport_score }</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
-						<c:when test="${local.honjap_score eq -1 }"><td> - </td></c:when>
-						<c:otherwise><td>${local.honjap_score }</td></c:otherwise>
+						<c:when test="${local.honjap_score eq -1 }"><td class="colHonjap"> - </td></c:when>
+						<c:otherwise><td class="colHonjap">${local.honjap_score }</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
-						<c:when test="${local.convenience_score eq -1 }"><td> - </td></c:when>
-						<c:otherwise><td>${local.convenience_score }</td></c:otherwise>
+						<c:when test="${local.convenience_score eq -1 }"><td class="colConvenience"> - </td></c:when>
+						<c:otherwise><td class="colConvenience">${local.convenience_score }</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
-						<c:when test="${local.pet_score eq -1 }"><td> - </td></c:when>
-						<c:otherwise><td>${local.pet_score }</td></c:otherwise>
+						<c:when test="${local.pet_score eq -1 }"><td class="colPet"> - </td></c:when>
+						<c:otherwise><td class="colPet">${local.pet_score }</td></c:otherwise>
 					  </c:choose>
 		            </tr>
 	          	</c:forEach>
@@ -263,36 +479,36 @@ integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amn
 	          		<tr onclick="location.href='readcheck.action?checkNo=${check.checkNo}'">
 		              <td>${check.dongName }</td>
 		              <c:choose>
-						<c:when test="${check.mWolse eq '-1' || check.deposit eq '-1'}"><td> - 만원</td></c:when>
-						<c:otherwise><td>${check.deposit }/${check.mWolse } 만원</td></c:otherwise>
+						<c:when test="${check.mWolse eq '-1' || check.deposit eq '-1'}"><td class="colWolse"> - 만원</td></c:when>
+						<c:otherwise><td class="colWolse">${check.deposit }/${check.mWolse } 만원</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
-						<c:when test="${check.mJeonse eq '-1' }"><td> - 만원</td></c:when>
-						<c:otherwise><td>${check.mJeonse } 만원</td></c:otherwise>
+						<c:when test="${check.mJeonse eq '-1' }"><td class="colJeonse"> - 만원</td></c:when>
+						<c:otherwise><td class="colJeonse">${check.mJeonse } 만원</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
-						<c:when test="${check.mMaemae eq '-1' }"><td> - 만원</td></c:when>
-						<c:otherwise><td>${check.mMaemae } 만원</td></c:otherwise>
+						<c:when test="${check.mMaemae eq '-1' }"><td class="colMaemae"> - 만원</td></c:when>
+						<c:otherwise><td class="colMaemae">${check.mMaemae } 만원</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
-						<c:when test="${check.security_score eq '-1' }"><td> - </td></c:when>
-						<c:otherwise><td>${check.security_score }</td></c:otherwise>
+						<c:when test="${check.security_score eq '-1' }"><td class="colSecurity"> - </td></c:when>
+						<c:otherwise><td class="colSecurity">${check.security_score }</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
-						<c:when test="${check.transport_score eq '-1' }"><td> - </td></c:when>
-						<c:otherwise><td>${check.transport_score }</td></c:otherwise>
+						<c:when test="${check.transport_score eq '-1' }"><td class="colTransport"> - </td></c:when>
+						<c:otherwise><td class="colTransport">${check.transport_score }</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
-						<c:when test="${check.honjap_score eq '-1' }"><td> - </td></c:when>
-						<c:otherwise><td>${check.honjap_score }</td></c:otherwise>
+						<c:when test="${check.honjap_score eq '-1' }"><td class="colHonjap"> - </td></c:when>
+						<c:otherwise><td class="colHonjap">${check.honjap_score }</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
-						<c:when test="${check.convenience eq -1 }"><td> - </td></c:when>
-						<c:otherwise><td>${check.convenience }</td></c:otherwise>
+						<c:when test="${check.convenience eq -1 }"><td class="colConvenience"> - </td></c:when>
+						<c:otherwise><td class="colConvenience">${check.convenience }</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
-						<c:when test="${check.pet_score eq '-1' }"><td> - </td></c:when>
-						<c:otherwise><td>${check.pet_score }</td></c:otherwise>
+						<c:when test="${check.pet_score eq '-1' }"><td class="colPet"> - </td></c:when>
+						<c:otherwise><td class="colPet">${check.pet_score }</td></c:otherwise>
 					  </c:choose>
 		            </tr>
 	          	</c:forEach>
