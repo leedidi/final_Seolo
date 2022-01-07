@@ -1,4 +1,4 @@
-package com.seolo.check;
+package com.seolo.dto;
 
 public class GuDTO
 {

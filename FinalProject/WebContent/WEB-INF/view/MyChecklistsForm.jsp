@@ -30,7 +30,6 @@ String cp = request.getContextPath();
 			$("#listFilter").submit();
 		});
 
-		
 		//○ 스티커 전체선택 버튼 클릭
 		$("#allSticker").click(function()
 		{
@@ -45,6 +44,46 @@ String cp = request.getContextPath();
 				$("input[name=sticker]").prop("checked", false);
 		});
 
+		//○ '구 이름' 이 선택되면 '동 이름'을 불러오는 ajax 처리
+		$("#guSelect").on('change', function()
+		{
+			// data 구성
+			var params = "guNo=" + $("#guSelect").val();
+			var fromArri = $("#dongSelect");
+
+			// !! 여기까진 되는데 dongnameajax 로 넘어가지 않음 ㅠㅠ
+
+			// jQuery 의 ajax() 함수 사용(호출)
+			$.ajax(
+			{
+				type: "POST",
+				url: "dongnameajax.action",
+				data: params,
+				dataType: "json",
+				success: function(data)
+				{
+					alert("Ajax success");
+
+					$(fromArri).children().remove(); // selectBox 내의 데이터 삭제
+					$(fromArri).append("<option value='1' selected class='text-center'>-- 전체 보기 --</option>");
+
+					for(var i = 0; i < data.length; i++)
+					{
+						var dongName = data[i].dongName;
+						$(fromArri).append("<option value='" + i + "'>" + dongName + "</option>");
+					}
+
+				},
+				beforeSend: true,
+				error: function(e)
+				{
+					alert(e.responseText);
+				}
+			});
+		});
+
+		//○ 스티커 컨트롤 관련
+		/*
 		$("input[name=sticker]").click(function()
 		{
 			var total = $("input[name=sticker]").length;
@@ -55,6 +94,8 @@ String cp = request.getContextPath();
 			else
 				$("#allSticker").prop("checked", true);
 		});
+		*/
+		
 	});
 
 	/*
@@ -121,7 +162,7 @@ String cp = request.getContextPath();
 					<div class="form-row">
 						<div class="form-group col-md-3">
 							<label for="inputState">분류</label>
-							<select id="typeSelect" class="form-control" name="typeSelect">
+							<select id="typeSelect" class="form-control" name="type">
 								<option value="%" selected class="text-center">-- 전체 보기 --</option>
 								<option value="나의 체크리스트">나의 체크리스트</option>
 								<option value="북마크 체크리스트">북마크 체크리스트</option>
@@ -130,7 +171,7 @@ String cp = request.getContextPath();
 						</div>
 						<div class="form-group col-md-3">
 							<label for="inputState">지역 구</label>
-							<select id="guSelect" class="form-control" name="guSelect" onchange="categoryChange(this)">
+							<select id="guSelect" class="form-control" name="guNo" onchange="categoryChange()">
 								<option value="0" selected class="text-center">-- 전체 보기 --</option>
 								<c:forEach var="gu" items="${guList }">
 									<option value="${gu.guNo }">${gu.guName }</option>
@@ -139,7 +180,7 @@ String cp = request.getContextPath();
 						</div>
 						<div class="form-group col-md-3">
 							<label for="inputState">지역 동</label>
-							<select id="dongSelect" class="form-control" name="dongSelect">
+							<select id="dongSelect" class="form-control" name="dongNo">
 								<option value="0" selected class="text-center">-- 전체 보기 --</option>
 								<c:forEach var="dong" items="${dongList }">
 									<option value="${dong.dongNo }">${dong.dongName }</option>

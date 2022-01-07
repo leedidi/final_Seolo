@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
+String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -79,51 +79,53 @@
 						<%-- 데이터가 존재할 때 --%>
 						<c:otherwise>
 							<c:forEach var="view" items="${viewList }">
-								<tr>
-									<td>${view.type }</td>
-									<td>${view.guName }&nbsp;${view.dongName }</td>
-									<td>${view.title }</td>
-									<c:if test="${wolse }">
-										<td>
-											<c:if test="${view.deposit != -1}">
-												<fmt:formatNumber value="${view.deposit }" pattern="#,###" />만원
-											</c:if>
-										</td>
-										<td>
-											<c:if test="${view.wolse != -1}">
-												<fmt:formatNumber value="${view.wolse }" pattern="#,###" />만원
-											</c:if>
-										</td>
-									</c:if>
-									<c:if test="${jeonse }">
-										<td>
-											<c:if test="${view.jeonse != -1}">
-												<fmt:formatNumber value="${view.jeonse }" pattern="#,###" />만원
-											</c:if>
-										</td>
-									</c:if>
-									<c:if test="${maemae }">
-										<td>
-											<c:if test="${view.maemae != -1}">
-												<fmt:formatNumber value="${view.maemae }" pattern="#,###" />만원
-											</c:if>
-										</td>
-									</c:if>
-									<c:if test="${security }">
-										<td>${view.security != -1? view.security : '' }</td>
-									</c:if>
-									<c:if test="${transportation }">
-										<td>${view.transport != -1? view.transport : '' }</td>
-									</c:if>
-									<c:if test="${honjap }">
-										<td>${view.honjap != -1? view.honjap : '' }</td>
-									</c:if>
-									<c:if test="${conv }">
-										<td>${view.convenience != -1? view.convenience += '/6' : '' }</td>
-									</c:if>
-									<c:if test="${pet }">
-										<td>${view.pet != -1? view.pet : '' }</td>
-									</c:if>
+								<%-- tr 구성을 위한 분기: type 속성에 따라 다른 링크 --%>
+								<c:choose>
+									<c:when test="${view.type == '북마크 지역정보' }">
+										<tr onclick="location.href='readlocal.action?dongNo=${view.listNo}'">
+									</c:when>
+									<c:otherwise>
+										<tr onclick="location.href='readcheck.action?checkNo=${view.listNo}'">
+									</c:otherwise>
+								</c:choose>
+								
+								<%-- td 구성 시작 --%>
+								<td>${view.type }</td>
+								<td>${view.guName }&nbsp;${view.dongName }</td>
+								<td>${view.title }</td>
+								<c:if test="${wolse }">	<%-- wolse 가 선택됐다면... --%>
+									<td><c:if test="${view.deposit != -1}">
+											<fmt:formatNumber value="${view.deposit }" pattern="#,###" />만원
+											</c:if></td>
+									<td><c:if test="${view.wolse != -1}">
+											<fmt:formatNumber value="${view.wolse }" pattern="#,###" />만원
+											</c:if></td>
+								</c:if>
+								<c:if test="${jeonse }">
+									<td><c:if test="${view.jeonse != -1}">
+											<fmt:formatNumber value="${view.jeonse }" pattern="#,###" />만원
+											</c:if></td>
+								</c:if>
+								<c:if test="${maemae }">
+									<td><c:if test="${view.maemae != -1}">
+											<fmt:formatNumber value="${view.maemae }" pattern="#,###" />만원
+											</c:if></td>
+								</c:if>
+								<c:if test="${security }">
+									<td>${view.security != -1? view.security : '' }</td>
+								</c:if>
+								<c:if test="${transportation }">
+									<td>${view.transport != -1? view.transport : '' }</td>
+								</c:if>
+								<c:if test="${honjap }">
+									<td>${view.honjap != -1? view.honjap : '' }</td>
+								</c:if>
+								<c:if test="${conv }">
+									<td>${view.convenience != -1? view.convenience += '/6' : '' }</td>
+								</c:if>
+								<c:if test="${pet }">
+									<td>${view.pet != -1? view.pet : '' }</td>
+								</c:if>
 								</tr>
 								<tr>
 									<td colspan="12"><c:choose>

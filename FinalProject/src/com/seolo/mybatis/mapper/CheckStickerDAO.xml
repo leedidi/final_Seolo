@@ -6,7 +6,7 @@
 <mapper namespace="com.seolo.idao.ICheckStickerDAO">
 
 	<!-- 해당 계정이 가진 스티커 목록 가져오기 -->
-	<select id="stickerList" resultType="com.seolo.check.StickerDTO">   
+	<select id="stickerList" resultType="com.seolo.dto.StickerDTO">   
 		SELECT S.CSTICKER_NO AS stickerNo, S.CONTENT AS content
 		 FROM  ( SELECT CSTICKER_NO
 		         FROM VIEW_ALLSTICKER 
@@ -36,7 +36,7 @@
 	</select>
 	
 	<!-- 해당 체크리스트에 붙은 스티커 목록 가져오기 -->
-	<select id="thisCheck" resultType="com.seolo.check.StickerDTO">
+	<select id="thisCheck" resultType="com.seolo.dto.StickerDTO">
 		SELECT M.MC_TAG_NO AS stickerNo, S.CONTENT AS content
 		FROM MYCHECKTAG M, STICKER S 
 		WHERE M.CSTICKER_NO(+) = S.CSTICKER_NO 

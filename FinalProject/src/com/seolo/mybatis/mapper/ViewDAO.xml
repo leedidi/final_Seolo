@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seolo.idao.IViewDAO">
+	
+	<select id="guList" resultType="com.seolo.dto.GuDTO">
+		SELECT GU_NO, GUNAME
+		FROM GU
+	</select>
+	
+	<select id="dongList" resultType="com.seolo.dto.DongDTO">
+		SELECT DONG_NO, DONGNAME, GU_NO
+		FROM DONG
+	</select>
+	
+	<select id="dongListGuNo" resultType="com.seolo.dto.DongDTO">
+		SELECT DONG_NO, DONGNAME, GU_NO
+		FROM DONG
+		WHERE GU_NO = #{guNo}
+	</select>
+	
+	<select id="stickerList" resultType="com.seolo.dto.StickerDTO">
+		SELECT S.CSTICKER_NO AS STICKERNO, S.CONTENT AS CONTENT
+		FROM
+		(
+		    SELECT CSTICKER_NO
+		    FROM VIEW_ALLSTICKER
+		    WHERE AC_NO = #{acNo}
+		    GROUP BY CSTICKER_NO
+		) T
+		LEFT JOIN STICKER S                                    
+		ON T.CSTICKER_NO = S.CSTICKER_NO                      
+	</select>
+
+	<select id="listAllCheck" resultType="com.seolo.dto.ViewDTO">
+		SELECT AC_NO, TYPE, MARKNO, LISTNO, GUNAME, DONGNAME, TITLE
+		     , DEPOSIT, WOLSE, JEONSE, MAEMAE, SEC, TP, HJ, CONVENIENCE_TOT, PET
+		FROM VIEW_LIST                                                          
+		WHERE AC_NO = #{acNo}
+		  AND TYPE LIKE #{type}
+		  AND GU_NO = #{guNo}
+		  AND DONG_NO = #{dongNo}
+		  AND CSTICKER_NO = #{stickerNo}
+	</select>
+
+	<select id="listGuCheck" resultType="com.seolo.dto.ViewDTO">
+		SELECT AC_NO, TYPE, MARKNO, LISTNO, GUNAME, DONGNAME, TITLE
+		     , DEPOSIT, WOLSE, JEONSE, MAEMAE, SEC, TP, HJ, CONVENIENCE_TOT, PET
+		FROM VIEW_LIST                                                          
+		WHERE AC_NO = #{acNo}
+		  AND TYPE LIKE #{type}
+		  AND GU_NO = #{guNo}
+		  AND CSTICKER_NO = #{stickerNo}
+	</select>
+
+	<select id="listNoneCheck" resultType="com.seolo.dto.ViewDTO">
+		SELECT AC_NO, TYPE, MARKNO, LISTNO, GUNAME, DONGNAME, TITLE
+		     , DEPOSIT, WOLSE, JEONSE, MAEMAE, SEC, TP, HJ, CONVENIENCE_TOT, PET
+		FROM VIEW_LIST                                                          
+		WHERE AC_NO = #{acNo}
+		  AND TYPE LIKE #{type}
+		  AND CSTICKER_NO = #{stickerNo}
+	</select>
+
+	<select id="mycheckStickerList" resultType="com.seolo.dto.StickerDTO">
+		SELECT CSTICKER_NO, CONTENT
+		FROM VIEW_MYCHECKSTICKER
+		WHERE MARKNO = #{no}
+	</select>
+
+	<select id="checkBookmarkStickerList" resultType="com.seolo.dto.StickerDTO">
+		SELECT CSTICKER_NO, CONTENT
+		FROM VIEW_CHECKSTICKER
+		WHERE MARKNO = #{no}
+	</select>
+
+	<select id="localBookmarkStickerList" resultType="com.seolo.dto.StickerDTO">
+		SELECT CSTICKER_NO, CONTENT
+		FROM VIEW_LOCALSTICKER
+		WHERE MARKNO = #{no}
+	</select>
+	
+</mapper>
