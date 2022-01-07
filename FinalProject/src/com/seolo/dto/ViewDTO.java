@@ -1,4 +1,4 @@
-package com.seolo.check;
+package com.seolo.dto;
 
 import java.util.ArrayList;
 
