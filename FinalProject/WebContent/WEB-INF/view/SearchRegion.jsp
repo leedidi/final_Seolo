@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -73,124 +74,22 @@ integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amn
 		});
 		
 		// 각 항목별 체크박스 체크시 / 해제시
-		$("#wolse").click(function()
+		$(".filter").each(function()
 		{
-			if (!$("#wolse").is(":checked"))
+			$(this).click(function()
 			{
-				$("#checkAll").prop("checked", false);
-			}
-			
-			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
-					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
-					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
-			{
-				$("#checkAll").prop("checked", true);
-			}
-		});
-		
-		$("#jeonse").click(function()
-		{
-			if (!$("#jeonse").is(":checked"))
-			{
-				$("#checkAll").prop("checked", false);
-			}
-			
-			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
-					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
-					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
-			{
-				$("#checkAll").prop("checked", true);
-			}
-		});
-		
-		$("#maemae").click(function()
-		{
-			if (!$("#maemae").is(":checked"))
-			{
-				$("#checkAll").prop("checked", false);
-			}
-			
-			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
-					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
-					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
-			{
-				$("#checkAll").prop("checked", true);
-			}
-		});
-		
-		$("#security").click(function()
-		{
-			if (!$("#security").is(":checked"))
-			{
-				$("#checkAll").prop("checked", false);
-			}
-			
-			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
-					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
-					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
-			{
-				$("#checkAll").prop("checked", true);
-			}
-		});
-		
-		$("#transport").click(function()
-		{
-			if (!$("#transport").is(":checked"))
-			{
-				$("#checkAll").prop("checked", false);
-			}
-			
-			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
-					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
-					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
-			{
-				$("#checkAll").prop("checked", true);
-			}
-		});
-		
-		$("#honjap").click(function()
-		{
-			if (!$("#honjap").is(":checked"))
-			{
-				$("#checkAll").prop("checked", false);
-			}
-			
-			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
-					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
-					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
-			{
-				$("#checkAll").prop("checked", true);
-			}
-		});
-		
-		$("#convenience").click(function()
-		{
-			if (!$("#convenience").is(":checked"))
-			{
-				$("#checkAll").prop("checked", false);
-			}
-			
-			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
-					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
-					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
-			{
-				$("#checkAll").prop("checked", true);
-			}
-		});
-		
-		$("#pet").click(function()
-		{
-			if (!$("#pet").is(":checked"))
-			{
-				$("#checkAll").prop("checked", false);
-			}
-			
-			if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
-					&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
-					&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
-			{
-				$("#checkAll").prop("checked", true);
-			}
+				if ( !$(this).is(":checked") )
+				{
+					$("#checkAll").prop("checked", false);
+				}
+				
+				if ($("#wolse").is(":checked") && $("#jeonse").is(":checked") && $("#maemae").is(":checked")
+						&& $("#security").is(":checked") && $("#transport").is(":checked") && $("#honjap").is(":checked")
+						&& $("#convenience").is(":checked") && $("#pet").is(":checked"))
+				{
+					$("#checkAll").prop("checked", true);
+				}
+			});
 		});
 		
 		
@@ -247,6 +146,174 @@ integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amn
 		});
 		
 	});
+	
+	
+	// 테이블 정렬 (오름차순 / 내림차순)
+	/* sortingNumber() : 숫자인 실수만으로 되어있을 때, 적용될 함수 */ 
+	function sortingNumber( a , b ){  
+
+	        if ( typeof a == "number" && typeof b == "number" ) return a - b; 
+
+	        // 천단위 쉼표와 공백문자만 삭제하기.  
+	        var a = ( a + "" ).replace( /[,\s\xA0]+/g , "" ); 
+	        var b = ( b + "" ).replace( /[,\s\xA0]+/g , "" ); 
+
+	        var numA = parseFloat( a ) + ""; 
+	        var numB = parseFloat( b ) + ""; 
+
+	        if ( numA == "NaN" || numB == "NaN" || a != numA || b != numB ) return false; 
+
+	        return parseFloat( a ) - parseFloat( b ); 
+	} 
+
+	/* changeForSorting() : 문자열 바꾸기. */ 
+	function changeForSorting( first , second ){  
+
+	        // 문자열의 복사본 만들기. 
+	        var a = first.toString().replace( /[\s\xA0]+/g , " " ); 
+	        var b = second.toString().replace( /[\s\xA0]+/g , " " ); 
+
+	        var change = { first : a, second : b }; 
+
+	        if ( a.search( /\d/ ) < 0 || b.search( /\d/ ) < 0 || a.length == 0 || b.length == 0 ) return change; 
+
+	        var regExp = /(\d),(\d)/g; // 천단위 쉼표를 찾기 위한 정규식. 
+
+	        a = a.replace( regExp , "$1" + "$2" ); 
+	        b = b.replace( regExp , "$1" + "$2" ); 
+
+	        var unit = 0; 
+	        var aNb = a + " " + b; 
+	        var numbers = aNb.match( /\d+/g ); // 문자열에 들어있는 숫자 찾기 
+
+	        for ( var x = 0; x < numbers.length; x++ ){ 
+
+	                var length = numbers[ x ].length; 
+	                if ( unit < length ) unit = length; 
+	        } 
+
+	        var addZero = function( string ){ // 숫자들의 단위 맞추기 
+
+	                var match = string.match( /^0+/ ); 
+
+	                if ( string.length == unit ) return ( match == null ) ? string : match + string; 
+
+	                var zero = "0"; 
+
+	                for ( var x = string.length; x < unit; x++ ) string = zero + string; 
+
+	                return ( match == null ) ? string : match + string; 
+	        }; 
+
+	        change.first = a.replace( /\d+/g, addZero ); 
+	        change.second = b.replace( /\d+/g, addZero ); 
+
+	        return change; 
+	} 
+
+	/* byLocale() */ 
+	function byLocale(){ 
+
+	        var compare = function( a , b ){ 
+
+	                var sorting = sortingNumber( a , b ); 
+
+	                if ( typeof sorting == "number" ) return sorting; 
+
+	                var change = changeForSorting( a , b ); 
+
+	                var a = change.first; 
+	                var b = change.second; 
+
+	                return a.localeCompare( b ); 
+	        }; 
+
+	        var ascendingOrder = function( a , b ){  return compare( a , b );  }; 
+	        var descendingOrder = function( a , b ){  return compare( b , a );  }; 
+
+	        return { ascending : ascendingOrder, descending : descendingOrder }; 
+	} 
+
+	/* replacement() */ 
+	function replacement( parent ){  
+	        var tagName = parent.tagName.toLowerCase(); 
+	        if ( tagName == "table" ) parent = parent.tBodies[ 0 ]; 
+	        tagName = parent.tagName.toLowerCase(); 
+	        if ( tagName == "tbody" ) var children = parent.rows; 
+	        else var children = parent.getElementsByTagName( "li" ); 
+
+	        var replace = { 
+	                order : byLocale(), 
+	                index : false, 
+	                array : function(){ 
+	                        var array = [ ]; 
+	                        for ( var x = 0; x < children.length; x++ ) array[ x ] = children[ x ]; 
+	                        return array; 
+	                }(), 
+	                checkIndex : function( index ){ 
+	                        if ( index ) this.index = parseInt( index, 10 ); 
+	                        var tagName = parent.tagName.toLowerCase(); 
+	                        if ( tagName == "tbody" && ! index ) this.index = 0; 
+	                }, 
+	                getText : function( child ){ 
+	                        if ( this.index ) child = child.cells[ this.index ]; 
+	                        return getTextByClone( child ); 
+	                }, 
+	                setChildren : function(){ 
+	                        var array = this.array; 
+	                        while ( parent.hasChildNodes() ) parent.removeChild( parent.firstChild ); 
+	                        for ( var x = 0; x < array.length; x++ ) parent.appendChild( array[ x ] ); 
+	                }, 
+	                ascending : function( index ){ // 오름차순 
+	                        this.checkIndex( index ); 
+	                        var _self = this; 
+	                        var order = this.order; 
+	                        var ascending = function( a, b ){ 
+	                                var a = _self.getText( a ); 
+	                                var b = _self.getText( b ); 
+	                                return order.ascending( a, b ); 
+	                        }; 
+	                        this.array.sort( ascending ); 
+	                        this.setChildren(); 
+	                }, 
+	                descending : function( index ){ // 내림차순
+	                        this.checkIndex( index ); 
+	                        var _self = this; 
+	                        var order = this.order; 
+	                        var descending = function( a, b ){ 
+	                                var a = _self.getText( a ); 
+	                                var b = _self.getText( b ); 
+	                                return order.descending( a, b ); 
+	                        }; 
+	                        this.array.sort( descending ); 
+	                        this.setChildren(); 
+	                } 
+	        }; 
+	        return replace; 
+	} 
+
+	function getTextByClone( tag ){  
+	        var clone = tag.cloneNode( true ); // 태그의 복사본 만들기. 
+	        var br = clone.getElementsByTagName( "br" ); 
+	        while ( br[0] ){ 
+	                var blank = document.createTextNode( " " ); 
+	                clone.insertBefore( blank , br[0] ); 
+	                clone.removeChild( br[0] ); 
+	        } 
+	        var isBlock = function( tag ){ 
+	                var display = ""; 
+	                if ( window.getComputedStyle ) display = window.getComputedStyle ( tag, "" )[ "display" ]; 
+	                else display = tag.currentStyle[ "display" ]; 
+	                return ( display == "block" ) ? true : false; 
+	        }; 
+	        var children = clone.getElementsByTagName( "*" ); 
+	        for ( var x = 0; x < children.length; x++){ 
+	                var child = children[ x ]; 
+	                if ( ! ("value" in child) && isBlock(child) ) child.innerHTML = child.innerHTML + " "; 
+	        } 
+	        var textContent = ( "textContent" in clone ) ? clone.textContent : clone.innerText; 
+	        return textContent; 
+	}
 	
 </script>
 
@@ -325,28 +392,28 @@ integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amn
 			<input type="checkbox" id="checkAll" name="checkAll" checked="checked"> 전체선택
 		</label>
 		<label class="wolse">
-			<input type="checkbox" id="wolse" name="wolse"> 주거비(월세)
+			<input type="checkbox" id="wolse" name="wolse" class="filter"> 주거비(월세)
 		</label>
 		<label class="jeonse">
-			<input type="checkbox" id="jeonse" name="jeonse"> 주거비(전세)
+			<input type="checkbox" id="jeonse" name="jeonse" class="filter"> 주거비(전세)
 		</label>
 		<label class="maemae">
-			<input type="checkbox" id="maemae" name="maemae"> 주거비(매매)
+			<input type="checkbox" id="maemae" name="maemae" class="filter"> 주거비(매매)
 		</label>
 		<label class="security">
-			<input type="checkbox" id="security" name="security"> 치안
+			<input type="checkbox" id="security" name="security" class="filter"> 치안
 		</label>
 		<label class="transport">
-			<input type="checkbox" id="transport" name="transport"> 대중교통
+			<input type="checkbox" id="transport" name="transport" class="filter"> 대중교통
 		</label>
 		<label class="honjap">
-			<input type="checkbox" id="honjap" name="honjap"> 교통혼잡도
+			<input type="checkbox" id="honjap" name="honjap" class="filter"> 교통혼잡도
 		</label>
 		<label class="convenience">
-			<input type="checkbox" id="convenience" name="convenience"> 생활편의시설
+			<input type="checkbox" id="convenience" name="convenience" class="filter"> 생활편의시설
 		</label>
 		<label class="pet">
-			<input type="checkbox" id="pet" name="pet"> 반려동물
+			<input type="checkbox" id="pet" name="pet" class="filter"> 반려동물
 		</label>
 		
 		<div style="text-align: right; padding-right: 350pt;">
@@ -356,70 +423,70 @@ integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amn
 	<hr />
 
 	<div class="searchTable">
-        <table class="table table-striped table-sm text-center">	<!-- 이 클래스명 변경하면 안 됨! -->
+        <table class="table table-striped table-sm text-center" id="regionTable">	<!-- 이 클래스명 변경하면 안 됨! -->
           <thead>
             <tr>
               <th>
-              	<select class="custom-select d-block w-100" id="selectGu">
+              	<select class="custom-select d-block w-100" id="selectGu" onchange="upDown(this.value, 0);">
          			<option value="">동</option>
-        			 <option>동 오름차순</option>
-        			 <option>동 내림차순</option>
+        			 <option value="asc">동 오름차순</option>
+        			 <option value="desc">동 내림차순</option>
     			</select>
               </th>
               <th class="colWolse">
-              	<select class="custom-select d-block w-100" id="selectWolse">
+              	<select class="custom-select d-block w-100" id="selectWolse" onchange="upDown(this.value, 1);">
          			<option value="">월세</option>
-        			 <option>월세 오름차순</option>
-        			 <option>월세 내림차순</option>
+        			 <option value="asc">월세 오름차순</option>
+        			 <option value="desc">월세 내림차순</option>
     			</select>
               </th>
               <th class="colJeonse">
-              	<select class="custom-select d-block w-100" id="selectJeonse">
+              	<select class="custom-select d-block w-100" id="selectJeonse" onchange="upDown(this.value, 2);">
          			<option value="">전세</option>
-        			 <option>전세 오름차순</option>
-        			 <option>전세 내림차순</option>
+        			 <option value="asc">전세 오름차순</option>
+        			 <option value="desc">전세 내림차순</option>
     			</select>
               </th>
               <th class="colMaemae">
-              	<select class="custom-select d-block w-100" id="selectMaemae">
+              	<select class="custom-select d-block w-100" id="selectMaemae" onchange="upDown(this.value, 3);">
          			<option value="">매매</option>
-        			 <option>매매 오름차순</option>
-        			 <option>매매 내림차순</option>
+        			 <option value="asc">매매 오름차순</option>
+        			 <option value="desc">매매 내림차순</option>
     			</select>
               </th>
               <th class="colSecurity">
-              	<select class="custom-select d-block w-100" id="selectSecurity">
+              	<select class="custom-select d-block w-100" id="selectSecurity" onchange="upDown(this.value, 4);">
          			<option value="">치안</option>
-        			 <option>점수 오름차순</option>
-        			 <option>점수 내림차순</option>
+        			 <option value="asc">점수 오름차순</option>
+        			 <option value="desc">점수 내림차순</option>
     			</select>
               </th>
               <th class="colTransport">
-              	<select class="custom-select d-block w-100" id="selectTranspt">
+              	<select class="custom-select d-block w-100" id="selectTranspt" onchange="upDown(this.value, 5);">
          			<option value="">대중교통</option>
-        			 <option>점수 오름차순</option>
-        			 <option>점수 내림차순</option>
+        			 <option value="asc">점수 오름차순</option>
+        			 <option value="desc">점수 내림차순</option>
     			</select>
               </th>
               <th class="colHonjap">
-              	<select class="custom-select d-block w-100" id="selectHonjob">
+              	<select class="custom-select d-block w-100" id="selectHonjob" onchange="upDown(this.value, 6);">
          			<option value="">교통혼잡도</option>
-        			 <option>점수 오름차순</option>
-        			 <option>점수 내림차순</option>
+        			 <option value="asc">점수 오름차순</option>
+        			 <option value="desc">점수 내림차순</option>
     			</select>
               </th>
               <th class="colConvenience">
-              	<select class="custom-select d-block w-100" id="selectConv">
+              	<select class="custom-select d-block w-100" id="selectConv" onchange="upDown(this.value, 7);">
          			<option value="">생활편의시설</option>
-        			 <option>점수 오름차순</option>
-        			 <option>점수 내림차순</option>
+        			 <option value="asc">점수 오름차순</option>
+        			 <option value="desc">점수 내림차순</option>
     			</select>
               </th>
               <th class="colPet">
-              	<select class="custom-select d-block w-100" id="selectPet">
+              	<select class="custom-select d-block w-100" id="selectPet" onchange="upDown(this.value, 8);">
          			<option value="">반려동물</option>
-        			 <option>점수 오름차순</option>
-        			 <option>점수 내림차순</option>
+        			 <option value="asc">점수 오름차순</option>
+        			 <option value="desc">점수 내림차순</option>
     			</select>
               </th>
             </tr>
@@ -436,15 +503,17 @@ integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amn
 		              <td>${local.dongName }</td>
 		              <c:choose>
 						<c:when test="${local.mWolse eq -1 || local.deposit eq -1}"><td class="colWolse"> - 만원</td></c:when>
-						<c:otherwise><td class="colWolse">${local.deposit }/${local.mWolse } 만원</td></c:otherwise>
+						<c:otherwise><td class="colWolse">
+										<fmt:formatNumber value="${local.deposit }" type="number"/>/
+										<fmt:formatNumber value="${local.mWolse }" type="number"/> 만원</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
 						<c:when test="${local.mJeonse eq -1 }"><td class="colJeonse"> - 만원</td></c:when>
-						<c:otherwise><td class="colJeonse">${local.mJeonse } 만원</td></c:otherwise>
+						<c:otherwise><td class="colJeonse"><fmt:formatNumber value="${local.mJeonse }" type="number"/> 만원</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
 						<c:when test="${local.mMaemae eq -1 }"><td class="colMaemae"> - 만원</td></c:when>
-						<c:otherwise><td class="colMaemae">${local.mMaemae } 만원</td></c:otherwise>
+						<c:otherwise><td class="colMaemae"><fmt:formatNumber value="${local.mMaemae }" type="number"/> 만원</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
 						<c:when test="${local.security_score eq -1 }"><td class="colSecurity"> - </td></c:when>
@@ -480,15 +549,17 @@ integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amn
 		              <td>${check.dongName }</td>
 		              <c:choose>
 						<c:when test="${check.mWolse eq '-1' || check.deposit eq '-1'}"><td class="colWolse"> - 만원</td></c:when>
-						<c:otherwise><td class="colWolse">${check.deposit }/${check.mWolse } 만원</td></c:otherwise>
+						<c:otherwise><td class="colWolse">
+										<fmt:formatNumber value="${check.deposit }" type="number"/>/
+										<fmt:formatNumber value="${check.mWolse }" type="number"/> 만원</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
 						<c:when test="${check.mJeonse eq '-1' }"><td class="colJeonse"> - 만원</td></c:when>
-						<c:otherwise><td class="colJeonse">${check.mJeonse } 만원</td></c:otherwise>
+						<c:otherwise><td class="colJeonse"><fmt:formatNumber value="${check.mJeonse }" type="number"/> 만원</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
 						<c:when test="${check.mMaemae eq '-1' }"><td class="colMaemae"> - 만원</td></c:when>
-						<c:otherwise><td class="colMaemae">${check.mMaemae } 만원</td></c:otherwise>
+						<c:otherwise><td class="colMaemae"><fmt:formatNumber value="${check.mMaemae }" type="number"/> 만원</td></c:otherwise>
 					  </c:choose>
 					  <c:choose>
 						<c:when test="${check.security_score eq '-1' }"><td class="colSecurity"> - </td></c:when>
@@ -526,6 +597,20 @@ integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amn
 		</p>
 	</div>
 </div>
+
+<script type="text/javascript">
+	var myTable = document.getElementById( "regionTable" ); 
+	var replace = replacement( myTable ); 
+	function sortTD( index ){    replace.ascending( index );    } 
+	function reverseTD( index ){    replace.descending( index );    }
+	function upDown(value, index)
+	{
+		if (value=='asc')
+			sortTD(index);
+		else if (value=='desc')
+			reverseTD(index);
+	}
+</script>
 
 </body>
 </html>
