@@ -5,17 +5,17 @@
 <mapper namespace="com.seolo.idao.IViewDAO">
 	
 	<select id="guList" resultType="com.seolo.dto.GuDTO">
-		SELECT GU_NO, GUNAME
+		SELECT GU_NO AS GUNO, GUNAME
 		FROM GU
 	</select>
 	
 	<select id="dongList" resultType="com.seolo.dto.DongDTO">
-		SELECT DONG_NO, DONGNAME, GU_NO
+		SELECT DONG_NO AS DONGNO, DONGNAME 
 		FROM DONG
 	</select>
 	
 	<select id="dongListGuNo" resultType="com.seolo.dto.DongDTO">
-		SELECT DONG_NO, DONGNAME, GU_NO
+		SELECT DONG_NO AS DONGNO, DONGNAME 
 		FROM DONG
 		WHERE GU_NO = #{guNo}
 	</select>
