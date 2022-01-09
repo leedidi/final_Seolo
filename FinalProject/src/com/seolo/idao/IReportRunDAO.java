@@ -16,4 +16,7 @@ public interface IReportRunDAO
 	
 	// 허위신고 처리
 	public int fake(ReportRunDTO dto);
+	
+	// 마이페이지 - 나의 신고리스트 취소
+	public int delete(ReportRunDTO dto);
 }

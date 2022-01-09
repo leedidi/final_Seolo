@@ -27,5 +27,18 @@
       SET PW=#{pw}
       WHERE PE_ID=#{pe_Id}
    </update>
+   
+   <!-- 마이페이지 - 나의 신고리스트(최신순 3개) -->
+   <select id="myinfoList" resultType="com.seolo.dto.ReportviewDTO">
+	<![CDATA[  
+		SELECT RPCHECK_NO, CHECK_NO, TITLE, STATUSNAME, REPORTDATE
+		FROM (
+		SELECT RPCHECK_NO, CHECK_NO, TITLE, STATUSNAME, REPORTDATE, REPORTERNAME
+		FROM VIEW_REPORT
+		ORDER BY RPCHECK_NO DESC
+		)
+		WHERE REPORTERNAME=#{reportername} AND ROWNUM>=1 AND ROWNUM<=3
+	]]>
+	</select>
    	
 </mapper>
