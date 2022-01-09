@@ -31,9 +31,9 @@ public class MyChecklistController
 	{
 		IViewDAO dao = sqlSession.getMapper(IViewDAO.class);
 
-		//○ 세션 확인: 로그인 상태 확인 → 정보가 없을 경우 main 으로
+		//○ 세션 확인: 로그인 상태 확인 → 정보가 없을 경우 loginform 으로
 		if (session.getAttribute("userLogin") == null)
-			return "redirect:main.action";
+			return "redirect:loginform.action";
 
 		//○ 계정 정보 받아오기
 		PersonalDTO user = (PersonalDTO) session.getAttribute("userLogin");
@@ -69,9 +69,9 @@ public class MyChecklistController
 	{
 		IViewDAO dao = sqlSession.getMapper(IViewDAO.class);
 
-		//○ 세션 확인: 로그인 상태 확인 → 정보가 없을 경우 main 으로
+		//○ 세션 확인: 로그인 상태 확인 → 정보가 없을 경우 loginform 으로
 		if (session.getAttribute("userLogin") == null)
-			return "redirect:main.action";
+			return "redirect:loginform.action";
 
 		//○ 계정 정보 받아오기
 		PersonalDTO user = (PersonalDTO) session.getAttribute("userLogin");
@@ -174,7 +174,7 @@ public class MyChecklistController
 			}
 			
 
-			// ○ 결정된 값 보내기
+			//○ 결정된 값 보내기
 			model.addAttribute("wolse", wolse);
 			model.addAttribute("jeonse", jeonse);
 			model.addAttribute("maemae", maemae);
@@ -196,17 +196,40 @@ public class MyChecklistController
 	}
 
 	@RequestMapping(value = "/dongnameajax.action", method = RequestMethod.GET)
-	public String dongNameAjax(Model model, HttpSession session)
+	public String dongNameAjax(Model model, HttpSession session, int guNo)
 	{
-		//IViewDAO dao = sqlSession.getMapper(IViewDAO.class);
+		IViewDAO dao = sqlSession.getMapper(IViewDAO.class);
 
-		// 세션 적용: 로그인 정보가 없을 경우 main 으로
+		//○ 세션 확인: 로그인 상태 확인 → 정보가 없을 경우 loginform 으로
 		if (session.getAttribute("userLogin") == null)
-			return "redirect:main.action";
+			return "redirect:loginform.action";
 
-		// Ajax 처리
+		
+		//○ Ajax 관련 처리
+		// ① DongList 받아오기
+		ArrayList<DongDTO> list = dao.dongListGuNo(guNo);
+		
+		// ② json 형태로 변경하여 넘겨주기
+		//　　→ 예시: [{"dongNo":"1","dongName":"구산동"}, {"dongNo":"2","dongName":"연희동"}]
+		StringBuffer buf = new StringBuffer();
+		
+		buf.append("[");
+		for (int i = 0; i < list.size(); i++)
+		{
+			buf.append("{\"dongNo\":\"" + list.get(i).getDongNo() + "\",");
+			buf.append(" \"dongName\":\"" + list.get(i).getDongName() + "\"},");
+		}
+			
+		buf.deleteCharAt(buf.lastIndexOf(","));	//-- 마지막 콤마(,) 삭제
+		buf.append("]");
 
-		return "WEB-INF/view/ChecklistWrite_first.jsp";
+		String result = buf.toString();
+
+		
+		//○ 결정된 값 보내기
+		model.addAttribute("result", result);
+
+		return "WEB-INF/view/AjaxDongList.jsp";
 	}
 
 }

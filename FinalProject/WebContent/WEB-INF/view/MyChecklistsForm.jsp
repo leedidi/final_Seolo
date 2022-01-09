@@ -30,6 +30,7 @@ String cp = request.getContextPath();
 			$("#listFilter").submit();
 		});
 
+		
 		//○ 스티커 전체선택 버튼 클릭
 		$("#allSticker").click(function()
 		{
@@ -44,6 +45,7 @@ String cp = request.getContextPath();
 				$("input[name=sticker]").prop("checked", false);
 		});
 
+		
 		//○ '구 이름' 이 선택되면 '동 이름'을 불러오는 ajax 처리
 		$("#guSelect").on('change', function()
 		{
@@ -51,30 +53,26 @@ String cp = request.getContextPath();
 			var params = "guNo=" + $("#guSelect").val();
 			var fromArri = $("#dongSelect");
 
-			// !! 여기까진 되는데 dongnameajax 로 넘어가지 않음 ㅠㅠ
-
 			// jQuery 의 ajax() 함수 사용(호출)
 			$.ajax(
 			{
-				type: "POST",
+				type: "GET",
 				url: "dongnameajax.action",
 				data: params,
 				dataType: "json",
 				success: function(data)
 				{
-					alert("Ajax success");
-
 					$(fromArri).children().remove(); // selectBox 내의 데이터 삭제
-					$(fromArri).append("<option value='1' selected class='text-center'>-- 전체 보기 --</option>");
+					$(fromArri).append("<option value='0' selected class='text-center'>-- 전체 보기 --</option>");
 
 					for(var i = 0; i < data.length; i++)
 					{
+						var dongNo = data[i].dongNo;
 						var dongName = data[i].dongName;
-						$(fromArri).append("<option value='" + i + "'>" + dongName + "</option>");
+						$(fromArri).append("<option value='" + dongNo + "'>" + dongName + "</option>");
 					}
 
 				},
-				beforeSend: true,
 				error: function(e)
 				{
 					alert(e.responseText);
@@ -95,40 +93,9 @@ String cp = request.getContextPath();
 				$("#allSticker").prop("checked", true);
 		});
 		*/
-		
+
 	});
 
-	/*
-	 function categoryChange(e)
-	 {
-	 //alert("categoryChange");
-	 //alert(e.value);
-	
-	
-	 var target = document.getElementById("dongSelect");
-	
-	 var good_a = [ "지수", "제니", "로제", "리사" ];
-	 var good_b = [ "빅토리아", "엠버", "루나", "크리스탈" ];
-	 var good_c = [ "LE", "하니", "정화", "혜린", "솔지" ];
-
-	 if(e.value == "1")
-	 var d = good_a;
-	 else if(e.value == "2")
-	 var d = good_b;
-	 else if(e.value == "3")
-	 var d = good_c;
-
-	 target.options.length = 0;
-
-	 for(x in d)
-	 {
-	 var opt = document.createElement("option");
-	 opt.value = d[x];
-	 opt.innerHTML = d[x];
-	 target.appendChild(opt);
-	 }
-	 }
-	 */
 </script>
 
 
@@ -171,7 +138,7 @@ String cp = request.getContextPath();
 						</div>
 						<div class="form-group col-md-3">
 							<label for="inputState">지역 구</label>
-							<select id="guSelect" class="form-control" name="guNo" onchange="categoryChange()">
+							<select id="guSelect" class="form-control" name="guNo">
 								<option value="0" selected class="text-center">-- 전체 보기 --</option>
 								<c:forEach var="gu" items="${guList }">
 									<option value="${gu.guNo }">${gu.guName }</option>
@@ -182,9 +149,6 @@ String cp = request.getContextPath();
 							<label for="inputState">지역 동</label>
 							<select id="dongSelect" class="form-control" name="dongNo">
 								<option value="0" selected class="text-center">-- 전체 보기 --</option>
-								<c:forEach var="dong" items="${dongList }">
-									<option value="${dong.dongNo }">${dong.dongName }</option>
-								</c:forEach>
 							</select>
 						</div>
 					</div>
@@ -258,11 +222,10 @@ String cp = request.getContextPath();
 					<!-- 스티커가 존재할 때 -->
 					<c:if test="${stickerList.size() != 0 }">
 						<div class="btn-group-toggle" data-toggle="buttons">
-							<!-- 모두 선택 버튼-->
-							<!--
+							<%--
 							<label class="btn btn-outline-primary" id="allStickerLabel"> <input type="checkbox" id="allSticker"> 모두 선택
 							</label>
-							-->
+							--%>
 							<c:forEach var="sticker" items="${stickerList }">
 								<label class="btn btn-outline-primary"> <input type="checkbox" value="${sticker.stickerNo }" name="sticker"> ${sticker.content }
 								</label>
