@@ -11,6 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.seolo.admin.INoticeDAO;
+import com.seolo.admin.NoticeDTO;
+import com.seolo.dto.AdminDTO;
+import com.seolo.dto.ReportRunDTO;
+import com.seolo.dto.ReportviewDTO;
+import com.seolo.idao.IMainDAO;
+import com.seolo.idao.IReportRunDAO;
+import com.seolo.idao.IReportviewDAO;
 import com.seolo.idao.IUpdateDAO;
 import com.seolo.personal.PersonalDTO;
 
@@ -20,6 +28,11 @@ public class PersonalUpdateController
 	@Autowired
 	private SqlSession sqlSession;	// mybatis 객체 의존성(자동) 주입
 	
+
+	// 마이페이지 내 정보 전체 조회
+	
+	// ★ 다영 수정
+	// + 나의 신고리스트(최근 3개) 조회 가능하게 추가
 	@RequestMapping(value = "/myinfo.action", method = RequestMethod.GET)
 	public String myInfoForm(Model model, HttpSession session)
 	{
@@ -36,10 +49,16 @@ public class PersonalUpdateController
 			
 			PersonalDTO user = dao.searchId(pe_Id);
 			model.addAttribute("user", user);
+			
+			// 나의 신고리스트 부분 추가
+			String reportername = userLogin.getPe_Id();
+			model.addAttribute("myinfoList", dao.myinfoList(reportername));
+			
 		}
 		
 		return "WEB-INF/view/MyInfo.jsp";
 	}
+	
 	
 	// ★ 소연 수정
 	@RequestMapping(value = "/infoupdateconfirmform.action", method = RequestMethod.GET)
@@ -183,5 +202,52 @@ public class PersonalUpdateController
       return "WEB-INF/view/PwdChangeFn.jsp";
    }
 	
+   // ★ 다영 수정
+   // 마이페이지 - <나의 신고리스트> 추가
+   
+   // 마이페이지 - 나의 신고리스트(전체) 조회로 이동 및 전체 조회
+   // 나의 신고리스트 상세 페이지로 바로가기
+   @RequestMapping(value = "/myInfoReportList.action", method = RequestMethod.GET)
+	public String myInfoReportAllList(Model model, HttpSession session)
+	{
+	   // 값 못 받아옴^ㅠ^ 일단 주석처리... -> 받아오기 성공! (신고번호 11-15, 신고자 chunsik)
+		IReportviewDAO dao = sqlSession.getMapper(IReportviewDAO.class);
+	   
+		if (session.getAttribute("userLogin")==null)
+		{
+			return "redirect:main.action";
+		}
+		else
+		{
+			PersonalDTO userLogin = (PersonalDTO)session.getAttribute("userLogin");
+			String reportername = userLogin.getPe_Id();
+			//rv.setReportername(reportername); -> 없어도 되는 부분임.
+			
+			model.addAttribute("myinfoAllList", dao.myinfoAllList(reportername));
+		}
+		
+		return "WEB-INF/view/MyInfoReportList.jsp";
+	}
+   
+   // 마이페이지 - 나의 신고리스트(전체)에서 신고 취소
+	@RequestMapping(value = "/myInfoReportDelete.action", method = RequestMethod.GET)
+	public String myInfoReportDelete(ReportRunDTO dto)
+	{
+		IReportRunDAO dao = sqlSession.getMapper(IReportRunDAO.class);
+		
+		dao.delete(dto);
+		
+		return "redirect:myInfoReportList.action";
+	}
 	
+	// 마이페이지 - 나의 신고리스트(메인-최근 3개)에서 신고 취소
+	@RequestMapping(value = "/myInfoReportMDelete.action", method = RequestMethod.GET)
+	public String myInfoReportMDelete(ReportRunDTO dto)
+	{
+		IReportRunDAO dao = sqlSession.getMapper(IReportRunDAO.class);
+		
+		dao.delete(dto);
+		
+		return "redirect:myinfo.action";
+	}
 }

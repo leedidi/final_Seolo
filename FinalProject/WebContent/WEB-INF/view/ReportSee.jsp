@@ -100,7 +100,7 @@ String cp = request.getContextPath();
             </tr><tr>
                <th width="150px;">신고자</th>
                <td>${view.reportername }</td>
-               <th width="150px;">원글 작성자</th>
+               <th width="150px;">신고 대상자</th>
                <td>${view.writername }</td>
             </tr>
             <tr>

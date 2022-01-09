@@ -4,7 +4,8 @@ import java.sql.Date;
 
 public class ReportviewDTO
 {
-	/* RNUM 		행 번호 
+	/* 
+	   RNUM 		행 번호 
 	   TITLE 		제목(신고 유형)
 	   STATUSNAME 	상태(신고 상태 - 승인/반려/허위신고/미해결)
 	   REPORTDATE	신고 날짜
@@ -15,8 +16,8 @@ public class ReportviewDTO
 	   RPCHECK_NO	신고 고유번호
 	   CHECK_NO		신고당한 체크리스트 고유번호
 	   WHY			상세사유 
-	   
 	 */
+	
 	String rnum, title, statusname, reporterno, reportername, writerno, writername, rpcheck_no, why, check_no;
 	Date reportdate;
 	

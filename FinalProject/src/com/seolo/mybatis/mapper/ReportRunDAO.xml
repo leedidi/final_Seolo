@@ -23,4 +23,10 @@
 		WHERE RPCHECK_NO=#{rpcheck_no}
 	</update>	
 	
+	<delete id="delete">
+		DELETE
+		FROM REPORT_CHECK
+		WHERE RPCHECK_NO=#{rpcheck_no}
+	</delete>
+	
 </mapper>

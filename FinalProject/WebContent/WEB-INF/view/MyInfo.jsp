@@ -43,6 +43,27 @@ crossorigin="anonymous">
 				$(location).attr("href", "withdrawalconfirm.action");
 			});
 			
+			// 나의 신고리스트로 이동 버튼 추가
+			$("#myInfoReportBtn").click(function()
+			{
+				$(location).attr("href", "myInfoReportList.action");
+			});
+	
+			//myInfoReportList.action
+		});
+		
+		$(function()
+		{
+			// 취소 버튼 클릭
+			$(".btn-secondary").click(
+			function()
+			{
+				if (confirm("해당 신고를 정말 취소하시겠습니까?"))
+				{
+					$(location).attr("href", "myInfoReportMDelete.action?rpcheck_no=" + $(this).val());
+				}
+			});
+
 		});
 	
 </script>
@@ -159,12 +180,87 @@ crossorigin="anonymous">
           <div class="btn_wrap">
 			<button type="button" class="btn btn-primary" id="updateBtn" style="font-size: 13px;">수정하기</button>&nbsp;&nbsp;&nbsp;
 			<button type="button" class="btn btn-primary" id="pwdUpdateBtn" style="font-size: 13px;">비밀번호 변경</button>&nbsp;&nbsp;&nbsp;
-			<button type="button" class="btn btn-secondary" id="withdrawalBtn" style="font-size: 13px;">탈퇴하기</button>
+			<button type="button" class="btn btn-danger" id="withdrawalBtn" style="font-size: 13px;">탈퇴하기</button>
+			<!-- ＠ 자바스크립트에서 secondary 버튼 사용해야해서...! 이부분만 danger로 수정할게요! -->
           </div>
-          <br>
+           
+          <!-- 나의 신고리스트 추가 -->
+          <!-- 최근 3개 신고만 보이도록 함 -->
+          
+          <div class="report_form">
+           <hr style="margin: 30px 0;"><br>
+           <!-- <h2 class="sub_tit_txt">나의 신고리스트</h2> -->
+           <h4>나의 신고리스트<button type="button" class="btn btn-light" id="myInfoReportBtn" style="float: right;">바로가기▶</button></h4>
+           <br>
+          <div class="table-responsive">
+      	 <table class="table table-hover">
+         	<thead>
+            <tr class="table-primary">
+               <th>신고 번호</th>
+               <th>대상 게시물</th>
+               <th style="text-align: center;" width="20%;">신고사유</th>
+               <th>신고 상태</th>
+               <th>신고일시</th>
+               <th></th>
+            </tr> 
+         </thead>
+        
+         <c:choose>
+         	<%-- 신고 내용이 없을 때 --%>
+         	<c:when test="${empty myinfoList}">
+               <td colspan='6' style="text-align: center;">신고한 내용이 없습니다.</td>
+         	</c:when>
+         	
+         	<%-- 신고 내용이 존재할 때 --%>
+         	<c:otherwise>
+         		<tbody>
+          	<c:forEach var="myinfoList" items="${myinfoList }">
+            <tr>
+               <th scope="row" style="text-align: center">${myinfoList.rpcheck_no }</th>
+               <td style="text-align: center">
+               <button type="button" class="btn btn-light" style="width:38pt; height:23pt; font-size:12px;" onclick="location.href='readcheck.action?checkNo=${myinfoList.check_no}'">
+               이동</button></td>
+               <td style="text-align:center;">${myinfoList.title }</td>
+               
+               <!-- 신고 상태가 미해결일 시에는 붉은 글씨, 해결된 상태일때는 파란 글씨로 보이게 함 -->
+               <c:choose>
+	               <c:when test="${myinfoList.statusname eq '미해결'}">
+	               		<td style="color:red;font-weight: bold;text-align:center;">[${myinfoList.statusname }]</td>
+	               </c:when>
+	               <c:otherwise>
+	               		<td style="color:blue;font-weight: bold;text-align:center;">[${myinfoList.statusname }]</td>
+	               </c:otherwise>
+	               </c:choose>
+               <td>${myinfoList.reportdate }</td>
+               
+               <!-- 취소 버튼은 미해결 일때만 클릭할 수 있게 함 -->
+                <c:choose>
+	               <c:when test="${myinfoList.statusname eq '미해결'}">
+	               		<td><button type="button" class="btn btn-secondary" id="cancleBtn" value="${myinfoList.rpcheck_no }" 
+	               		style="width:38pt; height:23pt; font-size:12px;">취소</button></td>
+	               </c:when>
+	               <c:otherwise>
+	               		<td><button type="button" class="btn btn-secondary" id="cancleBtn" value="${myinfoList.rpcheck_no }" 
+	               		style="width:38pt; height:23pt; font-size:12px;" disabled="disabled">취소</button></td>
+	               </c:otherwise>
+	               </c:choose>
+            </tr>  
+            </c:forEach>
+         </tbody>
+         	</c:otherwise>
+         </c:choose>
+         
+          
+         
+      </table>
+      </div> <!-- report_form E -->
+      <br><br>
+      
+          
         </div> <!-- form_txtInput E -->
       </div><!-- content E-->
     </div> <!-- container E -->
+    
 
 </body>
 </html>
