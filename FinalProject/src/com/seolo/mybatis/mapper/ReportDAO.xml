@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seolo.idao.IReportDAO">
+
+
+	<insert id="add" parameterType="com.seolo.dto.ReportDTO">
+		INSERT INTO REPORT_CHECK(RPCHECK_NO, REPORTDATE, CHECK_NO, AC_NO, WHY_NO, WHY)
+		VALUES(SEQ_REPORT.NEXTVAL,SYSDATE, #{check_No},#{ac_No},#{why_No},#{why})		
+	</insert>
+
+
+</mapper>

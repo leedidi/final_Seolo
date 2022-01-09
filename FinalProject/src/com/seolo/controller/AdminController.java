@@ -53,7 +53,6 @@ public class AdminController
 		// 사작여기서부터
 		String pageNum = request.getParameter("pageNum");
 		
-		System.out.println(pageNum);
 		// 현재 표시되어야 하는 페이지
 		int currentPage = 1;
 		

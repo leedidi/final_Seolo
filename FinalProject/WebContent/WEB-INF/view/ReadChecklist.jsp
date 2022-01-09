@@ -30,6 +30,28 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
 
 <script>
 	
+	$(document).ready(function()
+	{
+		$("#repBtn").click(function()
+		{
+			$("#readCheck").attr("method", "POST");
+			$("#readCheck").attr("action", "reportform.action?checkNo=" + $(this).val() + "&acNo=" + $("#acNo").val());
+			
+		});
+
+		
+
+		$("#bookBtn").click(function()
+		{
+			$("#readCheck").attr("method", "GET");
+			$("#readCheck").attr("action", "main.action");
+			
+		});
+		
+			
+	});
+		
+
 	// 지도 출력
 	window.onload = function()
     {
@@ -93,6 +115,11 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
     	
     	return polyline.getLength();
 	}
+	
+	
+	
+	
+	
 	
 </script>
 
@@ -246,13 +273,20 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
 					
 					<!-- 북마크 추가 -->
 					<c:if test="${user eq 'viewer' }">
-					<button class="btn btn-primary" style="width: 100%;">북마크 추가하기</button>
+					<button class="btn btn-primary" id="bookBtn" style="width: 100%;">북마크 추가하기</button>
+					<br><br>
+					<button class="btn btn-danger" id="repBtn" style="width: 100%;"
+					value="${checklist.checkNo}">신고하기</button>							
 					</c:if>
 					
 					<!-- 북마크 삭제 -->
 					<c:if test="${user eq 'bookmarker' }">
 					<button class="btn btn-secondary" style="width: 100%;">북마크 삭제하기</button>
+					<br><br>
+					<button class="btn btn-danger" id="repBtn" style="width: 100%;"
+					value="${checklist.checkNo}">신고하기</button>							
 					</c:if>
+			
 
 				</div><!-- 본문 우측 영역 끝 -->
 
@@ -538,7 +572,8 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
 				<textarea class="form-control" name="secret_co" id="secret_co" rows="3" readonly="readonly" maxlength="150">${checklist.secret_co }</textarea>
 			</div>
 			</c:if>
-			
+			<input type="hidden" name="checkNo" value="${checklist.checkNo}">
+			<input type="hidden" id="acNo" value="${ulogAcNo}">
 			<hr class="mb-4">
 
 		</form>

@@ -68,7 +68,6 @@ public class ChecklistReadController
 				if (acNo == Integer.parseInt(logAcNo))	// 작성자=로그인한 사람 → ⓐ
 				{
 					model.addAttribute("user", "writer");
-					
 					// 스티커 리스트
 					ArrayList<String> stickerList = dao.listWriterSticker(checkNo);
 					if (stickerList!=null)
@@ -98,12 +97,19 @@ public class ChecklistReadController
 					}
 				}
 				
+				String ulogAcNo = ((PersonalDTO)session.getAttribute("userLogin")).getAc_No();
+				model.addAttribute("ulogAcNo", ulogAcNo);
+				//System.out.println(ulogAcNo);
+				
 			}
 			else	// 비로그인 → ⓓ
 			{
+				String ulogAcNo = "";
+				model.addAttribute("ulogAcNo", ulogAcNo);	
+				//System.out.println(ulogAcNo);
 				model.addAttribute("user", "");
-			}
 			
+			}
 			
 			// 추가항목 확인하기
 			ArrayList<PlusDTO> timeList = dao.listTime(checkNo);
@@ -113,7 +119,6 @@ public class ChecklistReadController
 			if (scoreList != null)
 				model.addAttribute("scoreList", scoreList);
 			
-
 			
 			model.addAttribute("checklist", checklist);
 			model.addAttribute("scores", dao.scoreList());
