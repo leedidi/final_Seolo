@@ -5,8 +5,7 @@
 
 <mapper namespace="com.seolo.admin.INoticeDAO">
 
-	<!-- 게시물 조회 -->
-	<!-- 페이징 기능 구현 시 추후 수정 필요할 수도... -->
+	<!-- 공지사항 게시판 조회 -->
 	<select id="list" resultType="com.seolo.admin.NoticeDTO">  
     <![CDATA[    
   		 SELECT NO_NO, NOS_NAME, TITLE, NODATE
@@ -15,7 +14,7 @@
     		   SELECT ROWNUM RNUM, DATA.*
       		 FROM
      		  (
-      		     SELECT NOTICE_NO "NO_NO", NOTICE_TITLE "TITLE", NOTICESORT_NAME "NOS_NAME", TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') AS NODATE
+      		     SELECT NOTICE_NO "NO_NO", NOTICE_TITLE "TITLE", NOTICESORT_NAME "NOS_NAME", TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') AS NODATE, NOTICESORT_NO AS "NOS_NO"
       	    	 FROM VIEW_NOTICE
        		    ORDER BY NOTICE_NO DESC
      		  ) DATA
@@ -24,29 +23,46 @@
    ]]>
 	</select>
 	
-	
-		
-	<!-- 카테고리 조회 -->
-	<select id="catelist" resultType="com.seolo.admin.NoticeDTO">
-		SELECT NAME
+	<!-- 카테고리 버튼 클릭 시 공지사항 게시판 조회 -->
+ 	<select id="catelist" resultType="com.seolo.admin.NoticeDTO">  
+ 	<![CDATA[    
+  		 SELECT NO_NO, NOS_NAME, TITLE, NODATE
+		 FROM
+		 (
+		     SELECT ROWNUM RNUM, DATA.*
+		     FROM
+		      (
+		        SELECT NOTICE_NO "NO_NO", NOTICE_TITLE "TITLE", NOTICESORT_NAME "NOS_NAME", TO_CHAR(NOTICE_DATE, 'YYYY-MM-DD') AS NODATE, NOTICESORT_NO AS "NOS_NO"
+		        FROM VIEW_NOTICE
+		        WHERE NOTICESORT_NO=#{notice_check}
+		        ORDER BY NOTICE_NO DESC
+		      ) DATA
+		   )
+ 		  WHERE RNUM >=#{start} AND RNUM <= #{end}
+   ]]>
+	</select>
+		 
+	<!-- 카테고리 조회(공지사항, 점검알림) -->
+	<select id="cateNamelist" resultType="com.seolo.admin.NoticeDTO">
+		SELECT NAME, NOS_NO
 		FROM NOTICE_SORT
 	</select>
 	
-	<!-- 게시물 추가 -->
+	<!-- 공지사항 게시물 추가 -->
 	<!-- 세션에서 받아온 관리자 아이디 추가 -->
 	<insert id="add">
 		INSERT INTO NOTICE(NO_NO, AD_ID, NOS_NO, TITLE, CONTENT, NODATE)
 		VALUES(NOTICESEQ.NEXTVAL, #{ad_id}, #{nos_no}, #{title}, #{content}, SYSDATE)
 	</insert>
 	
-	<!-- 게시물 조회 -->
+	<!-- 공지사항 게시물 조회 -->
 	<select id="view" resultType="com.seolo.admin.NoticeDTO">
 		SELECT NO_NO, TITLE, CONTENT, AD_ID, TO_CHAR(NODATE, 'YYYY-MM-DD') AS NODATE
 		FROM NOTICE
 		WHERE NO_NO = #{no_no}
 	</select>
 	
-	<!-- 게시물 수정 -->
+	<!-- 공지사항 게시물 수정 -->
  	<update id="modify">
  		UPDATE NOTICE
 		SET 
@@ -62,15 +78,18 @@
 		WHERE NO_NO=#{no_no}
 	</delete>
 	
-	<!--@@@ 분류 기능 -->
-
-
+	<!-- 분류 기능 -->
 	<!-- 데이터 총 갯수 -->
 	<select id="count" resultType="java.lang.Integer">
 		SELECT COUNT(*) AS COUNT
 		FROM VIEW_NOTICE
 	</select>
 	
-			
+	<!-- 데이터 카테고리별 총 갯수 -->
+	<select id="cateCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM NOTICE
+		WHERE NOS_NO=#{nos_no}
+	</select>
 
 </mapper>

@@ -6,6 +6,7 @@
 package com.seolo.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -20,6 +21,7 @@ import com.seolo.admin.INoticeDAO;
 import com.seolo.admin.NoticeDTO;
 import com.seolo.dto.AdminDTO;
 import com.seolo.dto.FaqRunDTO;
+import com.seolo.dto.FaqviewDTO;
 import com.seolo.dto.ReportRunDTO;
 import com.seolo.idao.IAccountListDAO;
 import com.seolo.idao.IFaqRunDAO;
@@ -36,30 +38,37 @@ public class FaqController
 	@Autowired
 	private SqlSession sqlSession;
 	
-	
 	// 자주 묻는 게시판 처리 게시판 조회
+	// 카테고리 조회 기능 추가
 	@RequestMapping(value = "/faqlist.action", method = RequestMethod.GET)
-	public String reportList(Model model)
+	public String faqList(FaqviewDTO dto, Model model, HttpServletRequest request)
 	{
 		IFaqviewDAO dao = sqlSession.getMapper(IFaqviewDAO.class);
 		
-		model.addAttribute("list", dao.list());
+		// 카테고리 숫자 받아옴
+		String faq_check = request.getParameter("faq_check");
+		
+		// 카테고리 클릭시 카테고리 번호 넘겨주고 카테고리 출력,
+		// 카테고리 미 클릭 시 전체 리스트 출력
+		if(faq_check != null)
+		{
+			dto.setFaq_check(faq_check);
+			model.addAttribute("list", dao.cateList(faq_check));
+			model.addAttribute("cateNameList", dao.cateNameList());
+		}
+		else
+		{
+			model.addAttribute("list", dao.list());
+			model.addAttribute("cateNameList", dao.cateNameList());
+		}
+		
+		// 하나로 통일시켜보려고 했는뎅 그러면.. 맨처음 select문에서 where에서 오류나서.. 안댐
+		//dto.setFaq_check(faq_check);
+		//model.addAttribute("list", dao.list(faq_check));
 		
 		return "WEB-INF/view/FaqListNode.jsp";
 	}
 	
-	// 생성
-	// 1. 입력 버튼을 누르면 작성 폼으로 가는 것
-	/*
-	 // 생성하는 생성폼페이지로 보내기
-	@RequestMapping(value = "/writenotice.action", method = RequestMethod.GET)
-	public String writeNotice(Model model)
-	{
-		INoticeDAO dao = sqlSession.getMapper(INoticeDAO.class);
-		
-		return "WEB-INF/view/WriteNotice.jsp";
-	}
-	 */
 	
 	// 자주 묻는 게시판 생성 페이지로 보내기
 	@RequestMapping(value = "/faqinsertform.action", method = RequestMethod.GET)
@@ -129,6 +138,18 @@ public class FaqController
 		return "redirect:faqlist.action";
 	}
 	
+	/*
+	// 자주 묻는 게시판 처리 게시판 - 카테고리별 조회
+	@RequestMapping(value = "/faqCatelist.action", method = RequestMethod.GET)
+	public String reportCateList(Model model)
+	{
+		IFaqviewDAO dao = sqlSession.getMapper(IFaqviewDAO.class);
+		
+		model.addAttribute("list", dao.list());
+		
+		return "WEB-INF/view/FaqListNode.jsp";
+	}
+	*/
 }
 
 

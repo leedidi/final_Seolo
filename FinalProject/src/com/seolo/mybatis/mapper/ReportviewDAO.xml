@@ -41,4 +41,18 @@
 		ORDER BY RPCHECK_NO DESC
 	</select>
 	
+	<!-- 신고 게시판 - 카테고리별 조회 -->
+	<select id="cateList" resultType="com.seolo.dto.ReportviewDTO">   
+        SELECT RNUM, RPCHECK_NO, TITLE, STATUSNAME, REPORTDATE, REPORTERNAME
+		FROM VIEW_REPORT
+		WHERE STATUSNAME=#{report_check}
+		ORDER BY RPCHECK_NO DESC
+	</select>
+	
+	<!-- 카테고리 조회 -->
+	<select id="cateNameList" resultType="com.seolo.dto.ReportviewDTO">
+		SELECT STATUS_NO, STATUSNAME
+		FROM REPORT_STATUS
+	</select>
+	
 </mapper>

@@ -17,4 +17,17 @@
 		WHERE FAQ_NO = #{faq_no}
 	</select>
 	
+	<select id="cateList" resultType="com.seolo.dto.FaqviewDTO">   
+        SELECT FAQ_NO, FAQSORT_NO, FAQSORT_NAME, FAQ_TITLE, FAQ_CONTENT
+		FROM VIEW_FAQ
+		WHERE FAQSORT_NO= #{faq_check}
+		ORDER BY FAQ_NO
+	</select>
+	
+	<!-- 카테고리 조회 -->
+	<select id="cateNameList" resultType="com.seolo.dto.FaqviewDTO">
+		SELECT QS_NO, NAME
+		FROM FAQ_SORT
+	</select>
+	
 </mapper>
