@@ -5,7 +5,7 @@ public class ViewMakerDTO
 	//○ ViewList를 만들 때 사용하는 함수에서 사용할 매개변수
 	//　 (ViewDAO 의 listAllCheck, listGuCheck, listNoneCheck) 
 	//　 -- 계정번호, 구번호, 동번호, 스티커번호
-	//　　　타입(조회하려는 체크리스트의 타입: 나의 체크리스트, 북마크 체크리스트, 북마크 지역정보)
+	//　 -- 타입: %(전체 보기), 나의 체크리스트, 북마크 체크리스트, 북마크 지역정보
 	private int acNo, guNo, dongNo, stickerNo;
 	private String type;
 	

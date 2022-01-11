@@ -5,8 +5,6 @@
 
 package com.seolo.admin;
 
-import java.util.Date;
-
 //NOTICE(NO_NO, AD_ID, NOS_NO, TITLE, CONTENT, NODATE) + NOS_NAME
 
 // no_no		공지사항 고유번호
@@ -23,11 +21,9 @@ public class NoticeDTO
 {
 	private int no_no, nos_no;
 	private String ad_id, nos_name, title, content;
-	//private Date nodate;
 	private String nodate;
 	private String name;
 	private String notice_check;
-	
 	
 	// getter/setter 구성
 	public int getNo_no()
@@ -78,18 +74,6 @@ public class NoticeDTO
 	{
 		this.content = content;
 	}
-	
-	/*
-	public Date getNodate()
-	{
-		return nodate;
-	}
-	public void setNodate(Date nodate)
-	{
-		this.nodate = nodate;
-	}
-	*/
-	
 	public String getNodate()
 	{
 		return nodate;
@@ -98,7 +82,6 @@ public class NoticeDTO
 	{
 		this.nodate = nodate;
 	}
-
 	public String getName()
 	{
 		return name;
@@ -115,6 +98,5 @@ public class NoticeDTO
 	{
 		this.notice_check = notice_check;
 	}
-	
 	
 }

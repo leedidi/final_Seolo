@@ -64,8 +64,7 @@ public class MyChecklistController
 	}
 
 	@RequestMapping(value = "/mychecklist.action", method = RequestMethod.POST)
-	public String myCheckList(Model model, HttpSession session, String type, int guNo, int dongNo, String[] bigyo,
-			String[] sticker)
+	public String myCheckList(Model model, HttpSession session, ViewMakerDTO viewMaker, String[] bigyo, String[] sticker)
 	{
 		IViewDAO dao = sqlSession.getMapper(IViewDAO.class);
 
@@ -79,12 +78,8 @@ public class MyChecklistController
 
 		
 		//○ 페이지 구현과 관련된 작업 처리
-		// ① 선택된 알아볼 내용 값 받아오기
-		ViewMakerDTO viewMaker = new ViewMakerDTO();
+		// ① 선택된 알아볼 내용 값(viewMaker)에 계정 번호 추가
 		viewMaker.setAcNo(acNo);		//-- 계정 번호
-		viewMaker.setType(type);		//-- 타입: %, 나의 체크리스트, 북마크 체크리스트, 북마크 지역정보
-		viewMaker.setGuNo(guNo);		//-- 구 번호
-		viewMaker.setDongNo(dongNo);	//-- 동 번호
 		
 		// ② String[] bigyo: 선택된 비교 값 받아오기
 		boolean wolse = Arrays.asList(bigyo).contains("wolse");
@@ -105,6 +100,9 @@ public class MyChecklistController
 		try
 		{
 			// 4-1. 뷰 목록에 값 넣기 : 구·동 선택 여부에 따라 분기
+			int guNo = viewMaker.getGuNo();
+			int dongNo = viewMaker.getDongNo();
+			
 			if (guNo != 0 && dongNo != 0) 	// 구·동 둘 다 선택 O
 			{
 				for (int i = 0; i < sticker.length; i++)
