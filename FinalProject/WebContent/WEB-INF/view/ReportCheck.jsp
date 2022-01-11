@@ -42,15 +42,26 @@ String cp = request.getContextPath();
 		</div>
 		<br> <br>
 
-		
-		<!-- 질문 분류 -->
+		<!-- 
+		질문 분류
 		<ul class="nav nav-tabs page-header-tabs" id="categori" role="tablist">
-			<li class="nav-item"><a class="nav-link" href="">승인</a></li>
-			<li class="nav-item"><a class="nav-link " href="">반려</a></li>
-			<li class="nav-item"><a class="nav-link " href="">허위신고</a></li>
-			<li class="nav-item"><a class="nav-link " href="">미해결</a></li>
+			<li class="nav-item"><a class="nav-link" href="reportlist.action?report_check=승인">승인1</a></li>
+			<li class="nav-item"><a class="nav-link" href="reportlist.action?report_check=반려">반려1</a></li>
+			<li class="nav-item"><a class="nav-link" href="reportlist.action?report_check=허위신고">허위신고1</a></li>
+			<li class="nav-item"><a class="nav-link" href="reportlist.action?report_check=미해결">미해결1</a></li>
 		</ul>
-		
+		 -->
+		 
+	   <!-- 신고처리 분류 -->
+	   <ul class="nav nav-tabs page-header-tabs" id="categori" role="tablist">
+	       <c:forEach var="cateNameList" items="${cateNameList }">
+	       <li class="nav-item">
+	         <%-- <a class="nav-link" href="faqlist.action?faq_check=${cateNameList.statusname }">${cateNameList.statusname }</a> --%>
+	         <a class="nav-link" href="reportlist.action?report_check=${cateNameList.statusname }">${cateNameList.statusname }</a>
+	       </li>
+	       </c:forEach> 
+	       <li class="nav-item"><a class="nav-link" href="reportlist.action?report_check=미해결">미해결</a></li>
+	    </ul>
 
 		<div class="table-responsive">
 			<table class="card-text table table-striped">

@@ -27,9 +27,6 @@ integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amn
 </head>
 <body>
 
-<!-- 내비바 -->
-<%-- <div><c:import url="MenuNavbar_admin.jsp"></c:import></div> --%>
-<!-- 내비바 -->
    <div>
    		<c:choose>
 			<c:when test="${!empty adminLogin }">
@@ -47,28 +44,22 @@ integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amn
    <div class="page-header"><h1 class="page-heading">공지사항</h1></div>
    <br><br>
    
-   
    <!-- 공지 분류 -->
    <ul class="nav nav-tabs page-header-tabs" id="categori" role="tablist">
-       <!-- <li class="nav-item">
-         <a class="nav-link " href="">공지 사항</a>
-       </li> -->
-         
-       <c:forEach var="catelist" items="${catelist }">
+       <c:forEach var="cateNamelist" items="${cateNamelist }">
        <li class="nav-item">
-         <a class="nav-link " href="">${catelist.name }</a>
+         <a class="nav-link" href="noticelist.action?notice_check=${cateNamelist.nos_no }">${cateNamelist.name }</a>
        </li>
        </c:forEach> 
     </ul>
     
-   
    <div class="table-responsive">
       <table class="card-text table table-striped">
          <thead>
             <tr>
                <th>순번</th>
                <th>공지 분류</th>
-               <th style="text-align: center;">제목</th>
+               <th style="text-align: center;" width="40%;">제목</th>
                <th>작성자</th>
                <th>&nbsp;&nbsp;작성일시</th>
             </tr>

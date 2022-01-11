@@ -108,18 +108,26 @@
 		</div>
 		<br>
 		<br>
-
-		
-		<!-- 질문 분류 -->
+		<%-- 
+		질문 분류
 		<ul class="nav nav-tabs page-header-tabs" id="categori" role="tablist">
-			<li class="nav-item"><a class="nav-link " href="">회원 관리</a></li>
-			<li class="nav-item"><a class="nav-link " href="">체크리스트</a></li>
-			<li class="nav-item"><a class="nav-link " href="">공동구매</a></li>
-			<li class="nav-item"><a class="nav-link " href="">기타</a></li>
+			<li class="nav-item"><a class="nav-link" href="faqlist.action?faq_check=1">체크리스트1</a></li>
+			<li class="nav-item"><a class="nav-link" href="faqlist.action?faq_check=2">공동구매1</a></li>
+			<li class="nav-item"><a class="nav-link" href="faqlist.action?faq_check=3">회원관리1</a></li>
+			<li class="nav-item"><a class="nav-link" href="faqlist.action?faq_check=4">기타1</a></li>
 		</ul>
+		  --%>
+		  
 		
-
-
+		 <!-- 카테고리 분류 -->
+	   <ul class="nav nav-tabs page-header-tabs" id="categori" role="tablist">
+	       <c:forEach var="cateNameList" items="${cateNameList }">
+	       <li class="nav-item">
+	         <a class="nav-link" href="faqlist.action?faq_check=${cateNameList.qs_no }">${cateNameList.name }</a>
+	       </li>
+	       </c:forEach> 
+	    </ul>
+		
 		<!-- collapse/노드 확장  -->
 		<div class="accordion" id="accordionExample">
 			<div class="card">

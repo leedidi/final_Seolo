@@ -19,6 +19,10 @@ public interface IReportviewDAO
 
 	// 마이페이지 - 나의 신고리스트(전체) 조회
 	public ArrayList<ReportviewDTO> myinfoAllList(String reportername);
-	//public ArrayList<ReportviewDTO> myinfoAllList();
 
+	// 신고 게시판 - 카테고리별 조회
+	public ArrayList<ReportviewDTO> cateList(String report_check);
+	
+	// 신고 게시판 - 카테고리 조회
+	public ArrayList<ReportviewDTO> cateNameList();
 }

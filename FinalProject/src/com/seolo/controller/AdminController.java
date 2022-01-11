@@ -45,51 +45,87 @@ public class AdminController
 	
 	// 공지사항 게시판 조회
 	@RequestMapping(value = "/noticelist.action", method = RequestMethod.GET)
-	public String noticeList(Model model, PageDTO dto, HttpServletRequest request)
+	public String noticeList(Model model, PageDTO dto, NoticeDTO ndto, HttpServletRequest request)
 	{
 		INoticeDAO dao = sqlSession.getMapper(INoticeDAO.class);
 		
+		// 페이징 처리
 		MyUtil my = new MyUtil();
 		// 사작여기서부터
 		String pageNum = request.getParameter("pageNum");
 		
-		// 현재 표시되어야 하는 페이지
+		//System.out.println(pageNum);
+		// 현재 표시되어야 하는 페이지 (* 주석처리함)
+		
 		int currentPage = 1;
 		
 		if(pageNum != null)
 			currentPage = Integer.parseInt(pageNum);
 		
-		// 전체 데이터 갯수 구하기		
-		int dataCount = dao.count();
 		// 전체 페이지를 기준으로 총 페이지 수 계산
 		int numPerPage = 10;	//-- 한 페이지에 표시할 데이터 갯수		
 		
-		int totalPage = my.getPageCount(numPerPage, dataCount);
-		// 데이터베이스에서 가져올 시작과 끝 위치
 		int start = (currentPage-1) * numPerPage + 1;
 		int end = currentPage * numPerPage;		
 
-
 		// 페이징 처리
 		String param = "";
-		
-		
-		String listUrl = "noticelist.action" + param;
-		String pageIndexList = my.pageIndexList(currentPage, totalPage, listUrl);
-		
-		
+
 		dto.setStart(start);
-		dto.setEnd(end);
+		dto.setEnd(end);		
 		
+		// 카테고리 버튼 클릭 시 해당 카테고리에 해당되는 게시물 뜨도록 추가 
+		// 카테고리 번호 가져옴
+		String notice_check = request.getParameter("notice_check");
+		
+		int dataCount, totalPage;
+		String listUrl, pageIndexList;
 		
 		// 실제 리스트 가져오기
-		model.addAttribute("list", dao.list(dto));
-		model.addAttribute("pageIndexList", pageIndexList);
-		model.addAttribute("catelist", dao.catelist());
+		if(notice_check != null)
+		{
+			// 카테고리 클릭시(notice_check 값 존재 시) 카테고리 번호 넘겨주고 카테고리 출력
+			
+			// 카운트를 xml에 메소드 하나 새로 만듬(카테고리별 총 수)
+			// 해당 메소드를 실행
+			// 페이지 인데스 실행!
+			//-> 전체 페이지를 기준으로 총 페이지 수 계산
+			
+			// 전체 데이터 갯수 구하기	
+			dataCount = dao.cateCount(notice_check);
+			// 데이터베이스에서 가져올 시작과 끝 위치
+			totalPage = my.getPageCount(numPerPage, dataCount);
+			
+			// url 추가
+			listUrl = "noticelist.action?notice_check=" + notice_check;
+			pageIndexList = my.pageIndexList(currentPage, totalPage, listUrl);
+			
+			ndto.setNotice_check(notice_check);
+			model.addAttribute("list", dao.catelist(dto, start, end, notice_check));
+			model.addAttribute("pageIndexList", pageIndexList);
+			model.addAttribute("cateNamelist", dao.cateNamelist());
+			
+		}
+		else
+		{	// 카테고리 미 클릭 시(notice_check 값 존재하지 않을 시) 전체 리스트 출력
+			
+			// 전체 데이터 갯수 구하기		
+			dataCount = dao.count();
+			// 데이터베이스에서 가져올 시작과 끝 위치
+			totalPage = my.getPageCount(numPerPage, dataCount);
+			
+			// url 추가
+			listUrl = "noticelist.action" + param;
+			pageIndexList = my.pageIndexList(currentPage, totalPage, listUrl);
+			
+			model.addAttribute("list", dao.list(dto));
+			model.addAttribute("pageIndexList", pageIndexList);
+			model.addAttribute("cateNamelist", dao.cateNamelist());
+		}
 		
 		return "WEB-INF/view/NoticeList.jsp";
 	}
-	
+
 	// 공지사항 게시물 작성 폼으로 이동
 	@RequestMapping(value = "/writenotice.action", method = RequestMethod.GET)
 	public String writeNotice(Model model)
@@ -105,17 +141,7 @@ public class AdminController
 	@RequestMapping(value = "/noticeinsert.action", method = RequestMethod.POST)
 	public String noticeInsert(NoticeDTO n, HttpSession session)
 	{
-		
-		// AC_NO, 관리자 아이디 받아와서 테이블에 insert 해줘야 함!
-		
-	    // 체크 고유번호는 시퀀스를 통해 알아서 입력
-	    // AC_NO를 세션속성으로 받아온다.
-		/*
-	      HttpSession session = request.getSession();
-	      PersonalDTO user = (PersonalDTO)session.getAttribute("userLogin");
-	      int acNo = Integer.parseInt(user.getAc_No());
-		*/
-		
+	
 		// 관리자 아이디 세션에서 받아와서 추가
 		AdminDTO admin = (AdminDTO)session.getAttribute("adminLogin");
 		String ad_id = admin.getAd_Id();

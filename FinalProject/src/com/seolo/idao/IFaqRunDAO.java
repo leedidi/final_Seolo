@@ -13,6 +13,7 @@ public interface IFaqRunDAO
 	
 	// 게시물 삭제
 	public int remove(FaqRunDTO n);
+	
 }
 
 

@@ -9,14 +9,15 @@ import java.util.Date;
 
 //NOTICE(NO_NO, AD_ID, NOS_NO, TITLE, CONTENT, NODATE) + NOS_NAME
 
-// no_no	공지사항 고유번호
-// ad_id	관리자 아이디
-// nos_no	공지사항 분류 고유번호
-// nos_name 공지사항 분류명
-// title	제목
-// content	내용
-// nodate	작성일시	
-// name     공지사항 분류명 - 카테고리 출력용
+// no_no		공지사항 고유번호
+// ad_id		관리자 아이디
+// nos_no		공지사항 분류 고유번호
+// nos_name 	공지사항 분류명
+// title		제목
+// content		내용
+// nodate		작성일시	
+// name     	공지사항 분류명 - 카테고리 출력용
+// notice_check	공지사항 분류명 - 카테고리 선택용
 
 public class NoticeDTO
 {
@@ -25,6 +26,7 @@ public class NoticeDTO
 	//private Date nodate;
 	private String nodate;
 	private String name;
+	private String notice_check;
 	
 	
 	// getter/setter 구성
@@ -104,6 +106,14 @@ public class NoticeDTO
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+	public String getNotice_check()
+	{
+		return notice_check;
+	}
+	public void setNotice_check(String notice_check)
+	{
+		this.notice_check = notice_check;
 	}
 	
 	

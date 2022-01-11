@@ -7,9 +7,12 @@ public class FaqviewDTO
 	    FAQSORT_NAME	자주 묻는 질문 카테고리 이름
 	    FAQ_TITLE		제목
 	    FAQ_CONTENT 	내용
+	    FAQ_CHECK		자주 묻는 질문 선택 카테고리
+	    QS_NO			카테고리 번호
+	    NAME			카테고리 이름
 	*/
 	
-	String faq_no, faqsort_no, faqsort_name, faq_title, faq_content;
+	String faq_no, faqsort_no, faqsort_name, faq_title, faq_content, faq_check, qs_no, name;
 
 	// getter / setter 구성
 	public String getFaq_no()
@@ -61,5 +64,37 @@ public class FaqviewDTO
 	{
 		this.faq_content = faq_content;
 	}
+
+	public String getFaq_check()
+	{
+		return faq_check;
+	}
+
+	public void setFaq_check(String faq_check)
+	{
+		this.faq_check = faq_check;
+	}
+
+	public String getQs_no()
+	{
+		return qs_no;
+	}
+
+	public void setQs_no(String qs_no)
+	{
+		this.qs_no = qs_no;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	
 	
 }

@@ -89,6 +89,7 @@ body {
 					<select class="form-control" name="qs_no" id="qs_no">
 						<option value="-1">========</option>
 						<option value="1">체크리스트</option>
+						<option value="2">공동구매</option>
 						<option value="3">회원 관리</option>
 						<option value="4">기타</option>
 					</select>
