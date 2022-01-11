@@ -5,29 +5,65 @@
 
 <mapper namespace="com.seolo.idao.IFaqviewDAO">
 
-	<select id="list" resultType="com.seolo.dto.FaqviewDTO">   
-        SELECT FAQ_NO, FAQSORT_NO, FAQSORT_NAME, FAQ_TITLE, FAQ_CONTENT
-		FROM VIEW_FAQ
-		ORDER BY FAQ_NO
+	<!-- 자주 묻는 질문 게시판 조회 -->
+	<select id="list" resultType="com.seolo.dto.FaqviewDTO">
+    <![CDATA[    
+		SELECT FAQ_NO, FAQSORT_NO, FAQSORT_NAME, FAQ_TITLE, FAQ_CONTENT
+		FROM
+		(
+		    SELECT ROWNUM RNUM, DATA.*
+		    FROM
+		    (
+		        SELECT *
+		        FROM VIEW_FAQ
+		        ORDER BY FAQ_NO DESC
+		    ) DATA
+		)
+		WHERE RNUM >=#{start} AND RNUM <= #{end}
+   	]]>
+	</select>
+
+	<!-- 자주 묻는 질문 게시판 조회: 카테고리 버튼 클릭 시 -->
+	<select id="cateList" resultType="com.seolo.dto.FaqviewDTO">
+    <![CDATA[    
+		SELECT FAQ_NO, FAQSORT_NO, FAQSORT_NAME, FAQ_TITLE, FAQ_CONTENT
+		FROM
+		(
+		    SELECT ROWNUM RNUM, DATA.*
+		    FROM
+		    (
+		        SELECT *
+		        FROM VIEW_FAQ
+		        WHERE FAQSORT_NO = #{qs_no}
+		        ORDER BY FAQ_NO DESC
+		    ) DATA
+		)
+		WHERE RNUM >=#{start} AND RNUM <= #{end}
+   	]]>
 	</select>
 	
-	<select id="view" resultType="com.seolo.dto.FaqviewDTO">   
-    	SELECT FAQ_NO, FAQSORT_NO, FAQSORT_NAME, FAQ_TITLE, FAQ_CONTENT
+	<select id="view" resultType="com.seolo.dto.FaqviewDTO">
+		SELECT FAQ_NO, FAQSORT_NO, FAQSORT_NAME, FAQ_TITLE, FAQ_CONTENT
 		FROM VIEW_FAQ
 		WHERE FAQ_NO = #{faq_no}
 	</select>
-	
-	<select id="cateList" resultType="com.seolo.dto.FaqviewDTO">   
-        SELECT FAQ_NO, FAQSORT_NO, FAQSORT_NAME, FAQ_TITLE, FAQ_CONTENT
-		FROM VIEW_FAQ
-		WHERE FAQSORT_NO= #{faq_check}
-		ORDER BY FAQ_NO
-	</select>
-	
+
 	<!-- 카테고리 조회 -->
 	<select id="cateNameList" resultType="com.seolo.dto.FaqviewDTO">
 		SELECT QS_NO, NAME
 		FROM FAQ_SORT
 	</select>
-	
+
+	<!-- 데이터 총 갯수 -->
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM VIEW_FAQ
+	</select>
+
+	<!-- 카테고리 선택 시 데이터 총 갯수 -->
+	<select id="cateCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM VIEW_FAQ
+		WHERE FAQ_NO = #{faq_no}
+	</select>
 </mapper>
