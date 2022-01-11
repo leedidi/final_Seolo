@@ -78,7 +78,7 @@ public class FaqController
 			totalPage = my.getPageCount(numPerPage, dataCount);
 
 			//-- url, 페이징 처리
-			listUrl = "noticelist.action";
+			listUrl = "faqlist.action";
 			pageIndexList = my.pageIndexList(currentPage, totalPage, listUrl);
 
 			//-- 게시글 목록
