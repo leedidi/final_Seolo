@@ -28,7 +28,6 @@ String cp = request.getContextPath();
 	<div>
 		<c:import url="MenuNavbar_admin.jsp"></c:import>
 	</div>
-
 	<br>
 	<br>
 	<br>
@@ -42,21 +41,11 @@ String cp = request.getContextPath();
 		</div>
 		<br> <br>
 
-		<!-- 
-		질문 분류
-		<ul class="nav nav-tabs page-header-tabs" id="categori" role="tablist">
-			<li class="nav-item"><a class="nav-link" href="reportlist.action?report_check=승인">승인1</a></li>
-			<li class="nav-item"><a class="nav-link" href="reportlist.action?report_check=반려">반려1</a></li>
-			<li class="nav-item"><a class="nav-link" href="reportlist.action?report_check=허위신고">허위신고1</a></li>
-			<li class="nav-item"><a class="nav-link" href="reportlist.action?report_check=미해결">미해결1</a></li>
-		</ul>
-		 -->
-		 
 	   <!-- 신고처리 분류 -->
 	   <ul class="nav nav-tabs page-header-tabs" id="categori" role="tablist">
+	   	   <li class="nav-item"><a class="nav-link" href="reportlist.action">전체</a></li>
 	       <c:forEach var="cateNameList" items="${cateNameList }">
 	       <li class="nav-item">
-	         <%-- <a class="nav-link" href="faqlist.action?faq_check=${cateNameList.statusname }">${cateNameList.statusname }</a> --%>
 	         <a class="nav-link" href="reportlist.action?report_check=${cateNameList.statusname }">${cateNameList.statusname }</a>
 	       </li>
 	       </c:forEach> 
@@ -81,18 +70,10 @@ String cp = request.getContextPath();
 						<th scope="row">${list.rpcheck_no }</th>
 						<td>[${list.statusname }]</td>
 						<td><a href="reportview.action?rpcheck_no=${list.rpcheck_no}">${list.title }</a></td>
-						<%-- <td><a href="reportview.action">${list.title }</a></td> --%>
 						<td>${list.reportername }</td>
 						<td>${list.reportdate }</td>
 					</tr>
 					</c:forEach>
-					 <!-- <tr>
-						<th scope="row">34</th>
-						<td>미해결</td>
-						<td>음란성 / 선정성</td>
-						<td>batman</td>
-						<td>2021-11-22</td>
-					</tr>  -->
 				</tbody>
 			</table>
 			<br>

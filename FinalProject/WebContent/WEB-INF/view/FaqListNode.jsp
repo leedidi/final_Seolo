@@ -74,6 +74,7 @@
 
 		<!-- 카테고리 분류 -->
 		<ul class="nav nav-tabs page-header-tabs" id="categori" role="tablist">
+			<li class="nav-item"><a class="nav-link" href="faqlist.action">전체</a></li>
 			<c:forEach var="cateNameList" items="${cateNameList }">
 				<li class="nav-item"><a class="nav-link" href="faqlist.action?faq_check=${cateNameList.qs_no }">${cateNameList.name }</a></li>
 			</c:forEach>

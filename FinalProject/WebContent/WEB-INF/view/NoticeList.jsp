@@ -48,6 +48,7 @@
 
 		<!-- 공지 분류 -->
 		<ul class="nav nav-tabs page-header-tabs" id="categori" role="tablist">
+			<li class="nav-item"><a class="nav-link" href="noticelist.action">전체</a></li>
 			<c:forEach var="cateNamelist" items="${cateNamelist }">
 				<li class="nav-item"><a class="nav-link" href="noticelist.action?notice_check=${cateNamelist.nos_no }">${cateNamelist.name }</a></li>
 			</c:forEach>
