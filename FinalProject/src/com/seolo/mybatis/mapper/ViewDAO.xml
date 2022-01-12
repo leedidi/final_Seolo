@@ -32,10 +32,11 @@
 		LEFT JOIN STICKER S                                    
 		ON T.CSTICKER_NO = S.CSTICKER_NO                      
 	</select>
-
 	<select id="listAllCheck" resultType="com.seolo.dto.ViewDTO">
 		SELECT AC_NO, TYPE, MARKNO, LISTNO, GUNAME, DONGNAME, TITLE
-		     , DEPOSIT, WOLSE, JEONSE, MAEMAE, SEC, TP, HJ, CONVENIENCE_TOT, PET
+		     , DEPOSIT, WOLSE, JEONSE, MAEMAE
+		     , SEC AS SECURITY, TP AS TRANSPORT, HJ AS HONJAP
+		     , CONVENIENCE_TOT AS CONVENIENCE, PET
 		FROM VIEW_LIST                                                          
 		WHERE AC_NO = #{acNo}
 		  AND TYPE LIKE #{type}
@@ -46,7 +47,9 @@
 
 	<select id="listGuCheck" resultType="com.seolo.dto.ViewDTO">
 		SELECT AC_NO, TYPE, MARKNO, LISTNO, GUNAME, DONGNAME, TITLE
-		     , DEPOSIT, WOLSE, JEONSE, MAEMAE, SEC, TP, HJ, CONVENIENCE_TOT, PET
+		     , DEPOSIT, WOLSE, JEONSE, MAEMAE
+		     , SEC AS SECURITY, TP AS TRANSPORT, HJ AS HONJAP
+		     , CONVENIENCE_TOT AS CONVENIENCE, PET
 		FROM VIEW_LIST                                                          
 		WHERE AC_NO = #{acNo}
 		  AND TYPE LIKE #{type}
@@ -56,7 +59,9 @@
 
 	<select id="listNoneCheck" resultType="com.seolo.dto.ViewDTO">
 		SELECT AC_NO, TYPE, MARKNO, LISTNO, GUNAME, DONGNAME, TITLE
-		     , DEPOSIT, WOLSE, JEONSE, MAEMAE, SEC, TP, HJ, CONVENIENCE_TOT, PET
+		     , DEPOSIT, WOLSE, JEONSE, MAEMAE
+		     , SEC AS SECURITY, TP AS TRANSPORT, HJ AS HONJAP
+		     , CONVENIENCE_TOT AS CONVENIENCE, PET
 		FROM VIEW_LIST                                                          
 		WHERE AC_NO = #{acNo}
 		  AND TYPE LIKE #{type}

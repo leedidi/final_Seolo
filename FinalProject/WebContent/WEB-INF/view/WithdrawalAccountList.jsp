@@ -147,12 +147,20 @@ String cp = request.getContextPath();
 		</div>
 
 		<div class="card-footer">
+		
+			<!-- 페이징 처리 -->
+			<div class="dataTables_paginate paging_simple_numbers" style="text-align: center;"datatable_paginate">
+				<span style="text-align: center;">${pageIndexList }</span>
+			</div>
+
+			<%-- 부트스트랩이 적용된 페이징 처리 --%>			
 			<!-- Pagination -->
 			<div
 				class="row justify-content-center justify-content-sm-between align-items-sm-center">
 				<div class="col-sm mb-2 mb-sm-0"></div>
 			</div>
 
+			<%--
 			<div class="col-sm-auto">
 				<div class="d-flex justify-content-center justify-content-sm-end">
 					<!-- Pagination -->
@@ -187,6 +195,7 @@ String cp = request.getContextPath();
 					</nav>
 				</div>
 			</div>
+			--%>	
 		</div>
 		<!-- End Pagination -->
 	</div>

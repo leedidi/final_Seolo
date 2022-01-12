@@ -82,8 +82,6 @@ public class FaqController
 			pageIndexList = my.pageIndexList(currentPage, totalPage, listUrl);
 
 			//-- 게시글 목록
-			System.out.println(start);
-			System.out.println(end);
 			model.addAttribute("list", dao.list(start, end));
 		}
 		

@@ -31,21 +31,6 @@ String cp = request.getContextPath();
 		});
 
 		
-		//○ 스티커 전체선택 버튼 클릭
-		$("#allSticker").click(function()
-		{
-			if($("#allSticker").is(":checked"))
-			{
-				alert("실행");
-				$("input[name=sticker]").prop("checked", true);
-				$("#allStickerLabel").removeClass("btn-outline-primary").addClass("btn-primary");
-				//$("stickerLabel").removeClass("btn-outline-primary").addClass("btn-primary");
-			}
-			else
-				$("input[name=sticker]").prop("checked", false);
-		});
-
-		
 		//○ '구 이름' 이 선택되면 '동 이름'을 불러오는 ajax 처리
 		$("#guSelect").on('change', function()
 		{
@@ -78,6 +63,23 @@ String cp = request.getContextPath();
 					alert(e.responseText);
 				}
 			});
+			
+			/*
+			//○ 스티커 전체선택 버튼 클릭
+			$("#allSticker").click(function()
+			{
+				if($("#allSticker").is(":checked"))
+				{
+					alert("실행");
+					$("input[name=sticker]").prop("checked", true);
+					$("#allStickerLabel").removeClass("btn-outline-primary").addClass("btn-primary");
+					//$("stickerLabel").removeClass("btn-outline-primary").addClass("btn-primary");
+				}
+				else
+					$("input[name=sticker]").prop("checked", false);
+			});
+			*/
+			
 		});
 
 		//○ 스티커 컨트롤 관련

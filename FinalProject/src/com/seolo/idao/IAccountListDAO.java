@@ -5,13 +5,15 @@
 
 package com.seolo.idao;
 import java.util.ArrayList;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.seolo.dto.AccountListDTO;
-import com.seolo.dto.WithdrawalAccountListDTO;
 
 
 public interface IAccountListDAO
 {
 	// 게시물 목록
-	public ArrayList<AccountListDTO> list();
+	public ArrayList<AccountListDTO> list(@Param("start") int start, @Param("end") int end);
 	public int count();
 }
