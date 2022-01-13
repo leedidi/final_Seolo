@@ -5,6 +5,7 @@
 
 package com.seolo.personal;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,6 +25,34 @@ public class LogoutController implements Controller
 		HttpSession session = request.getSession();
 		session.invalidate();
 		
+		// 쿠키 제거
+		Cookie[] cookies = request.getCookies();
+		if (cookies!=null)
+		{
+			for (Cookie cookie : cookies)
+			{
+				if (cookie.getName().equals("acNo"))
+				{
+					cookie.setMaxAge(0);
+					cookie.setPath("/");
+					response.addCookie(cookie);
+				}
+				
+				if (cookie.getName().equals("id"))
+				{
+					cookie.setMaxAge(0);
+					cookie.setPath("/");
+					response.addCookie(cookie);
+				}
+				
+				if (cookie.getName().equals("warn"))
+				{
+					cookie.setMaxAge(0);
+					cookie.setPath("/");
+					response.addCookie(cookie);
+				}
+			}
+		}
 		
 		// 로그아웃시 메인으로 돌아감
 		mav.setViewName("redirect:main.action");

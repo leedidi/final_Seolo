@@ -80,7 +80,7 @@
          <!-- 로그인 상태 유지 기능 -->
          <div class="checkbox mb-3">
             <label>
-               <input type="checkbox" value="remember-me"> 로그인 상태 유지
+               <input type="checkbox" name="rememberMe" value="rememberMe"> 로그인 상태 유지
             </label>
          </div>
          <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>

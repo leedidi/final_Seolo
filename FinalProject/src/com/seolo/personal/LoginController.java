@@ -5,6 +5,7 @@
 
 package com.seolo.personal;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -52,8 +53,33 @@ public class LoginController implements Controller
       }
       else	// 로그인 성공 & 경고횟수 10회 이하
       {
+    	 
+    	  
          HttpSession session = request.getSession();      // 세션에 해당 계정의 계정정보 값 부여
          session.setAttribute("userLogin", userLogin);
+         
+         // 자동로그인 확인
+         String rememberMe = request.getParameter("rememberMe");
+         
+         // 로그인 유지 처리
+         if (rememberMe!=null)
+		{
+			Cookie cookieNo = new Cookie("acNo", userLogin.getAc_No());
+			cookieNo.setPath("/");
+			cookieNo.setMaxAge(60*60*24*7);	// 단위는 초, 쿠키 유효기간은 7일로 설정
+			
+			Cookie cookieId = new Cookie("id", userLogin.getPe_Id());
+			cookieId.setPath("/");
+			cookieId.setMaxAge(60*60*24*7);
+			
+			Cookie cookieWarning = new Cookie("warn", Integer.toString(userLogin.getWarningCount()));
+			cookieWarning.setPath("/");
+			cookieWarning.setMaxAge(60*60*24*7);
+			
+			response.addCookie(cookieNo);
+			response.addCookie(cookieId);
+			response.addCookie(cookieWarning);
+		}
          
          mav.setViewName("redirect:main.action");
       }
