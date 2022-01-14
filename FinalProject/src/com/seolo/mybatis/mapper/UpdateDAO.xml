@@ -40,5 +40,19 @@
 		WHERE REPORTERNAME=#{reportername} AND ROWNUM>=1 AND ROWNUM<=3
 	]]>
 	</select>
+	
+	<!-- 마이페이지 - 신고당한 후 승인처리 된 횟수 -->
+	<select id="reportApproval" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM VIEW_REPORT
+		WHERE WRITERNAME=#{pe_Id} AND STATUSNAME='승인'
+	</select>
+	
+	<!-- 마이페이지 - 허위신고한 횟수 -->
+	<select id="reportFake" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM VIEW_REPORT
+		WHERE REPORTERNAME=#{pe_Id} AND STATUSNAME='허위신고'
+	</select>
    	
 </mapper>

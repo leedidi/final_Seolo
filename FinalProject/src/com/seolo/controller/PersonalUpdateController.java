@@ -30,9 +30,9 @@ public class PersonalUpdateController
 	
 
 	// 마이페이지 내 정보 전체 조회
-	
 	// ★ 다영 수정
 	// + 나의 신고리스트(최근 3개) 조회 가능하게 추가
+	// + 나의 경고 횟수 조회되게 추가
 	@RequestMapping(value = "/myinfo.action", method = RequestMethod.GET)
 	public String myInfoForm(Model model, HttpSession session)
 	{
@@ -54,6 +54,10 @@ public class PersonalUpdateController
 			String reportername = userLogin.getPe_Id();
 			model.addAttribute("myinfoList", dao.myinfoList(reportername));
 			
+			// 나의 경고 횟수 추가(신고받은 뒤 승인처리된 횟수 + 허위신고한 횟수)
+			int totalWarning = dao.reportApproval(pe_Id) + dao.reportFake(pe_Id);
+			// 경고 횟수 값 넘겨주기
+			model.addAttribute("totalWarning", totalWarning);
 		}
 		
 		return "WEB-INF/view/MyInfo.jsp";
@@ -250,4 +254,5 @@ public class PersonalUpdateController
 		
 		return "redirect:myinfo.action";
 	}
+	
 }
