@@ -16,31 +16,7 @@
 		FROM VIEW_REPORT
 		WHERE RPCHECK_NO = #{rpcheck_no}
 	</select>	
-	
-	<!-- 마이페이지 - 나의 신고리스트 추가 -->
-	<!-- 마이페이지 - 나의 신고리스트(최신순 3개) -->
-	<!-- 
-	<select id="myinfoList" resultType="com.seolo.dto.ReportviewDTO">
-	<![CDATA[  
-		SELECT RPCHECK_NO, CHECK_NO, TITLE, STATUSNAME, REPORTDATE
-		FROM (
-		SELECT RPCHECK_NO, CHECK_NO, TITLE, STATUSNAME, REPORTDATE, REPORTERNAME
-		FROM VIEW_REPORT
-		ORDER BY RPCHECK_NO DESC
-		)
-		WHERE REPORTERNAME=#{reportername} AND ROWNUM>=1 AND ROWNUM<=3
-	]]>
-	</select>
-	 -->
 	 
-	<!-- 마이페이지 - 나의 신고리스트(전체) -->
-	<select id="myinfoAllList" resultType="com.seolo.dto.ReportviewDTO">
-		SELECT RPCHECK_NO, CHECK_NO, TITLE, WHY, STATUSNAME, REPORTDATE
-		FROM VIEW_REPORT
-		WHERE REPORTERNAME=#{reportername}
-		ORDER BY RPCHECK_NO DESC
-	</select>
-	
 	<!-- 신고 게시판 - 카테고리별 조회 -->
 	<select id="cateList" resultType="com.seolo.dto.ReportviewDTO">   
         SELECT RNUM, RPCHECK_NO, TITLE, STATUSNAME, REPORTDATE, REPORTERNAME
@@ -49,10 +25,19 @@
 		ORDER BY RPCHECK_NO DESC
 	</select>
 	
-	<!-- 카테고리 조회 -->
+	<!-- 카테고리 버튼 출력 -->
 	<select id="cateNameList" resultType="com.seolo.dto.ReportviewDTO">
 		SELECT STATUS_NO, STATUSNAME
 		FROM REPORT_STATUS
+	</select>
+	
+	<!-- 마이페이지 - 나의 신고리스트 -->
+	<!-- 마이페이지 - 나의 신고리스트(전체) -->
+	<select id="myinfoAllList" resultType="com.seolo.dto.ReportviewDTO">
+		SELECT RPCHECK_NO, CHECK_NO, TITLE, WHY, STATUSNAME, REPORTDATE
+		FROM VIEW_REPORT
+		WHERE REPORTERNAME=#{reportername}
+		ORDER BY RPCHECK_NO DESC
 	</select>
 	
 </mapper>

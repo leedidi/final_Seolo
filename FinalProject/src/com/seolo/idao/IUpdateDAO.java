@@ -14,5 +14,7 @@ public interface IUpdateDAO
 	public int updatePwd(PersonalDTO dto);		// 비밀번호 변경
 
 	public ArrayList<ReportviewDTO> myinfoList(String reportername);	// 마이페이지 - 나의 신고리스트(최신순 3개) 조회
-
+	
+	public int reportApproval(String pe_Id);				// 마이페이지 - 신고당한 후 승인처리 된 횟수
+	public int reportFake(String pe_Id);					// 마이페이지 - 허위신고한 횟수
 }
