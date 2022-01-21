@@ -29,7 +29,6 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
 
 
 <script>
-	
 	$(document).ready(function()
 	{
 		$("#repBtn").click(function()
@@ -39,19 +38,25 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
 			
 		});
 
-		
-
 		$("#bookBtn").click(function()
 		{
 			$("#readCheck").attr("method", "GET");
 			$("#readCheck").attr("action", "main.action");
 			
 		});
-		
-			
 	});
+	
+	// 스티커 추가, 삭제 새 창 띄우는 함수
+	function openAddWin(btn)
+	{
+		window.open("stickeraddform.action?checkNo=" + btn.value, "add", "width=800, height=600, toolbar=no, menubar=no, scrollbars=no, resizable=yes");
+	}
+	
+	function openDeleteWin(btn)
+	{
+		window.open("stickerdeleteform.action?checkNo=" + btn.value, "delete", "width=800, height=600, toolbar=no, menubar=no, scrollbars=no, resizable=yes");
+	}
 		
-
 	// 지도 출력
 	window.onload = function()
     {
@@ -96,7 +101,6 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
                 $("#jamsil").html(Math.round(distance(xAddr, yAddr, 37.5146855894903, 127.10433616425807)) + "m");
             } 
         });
-        
     }
 	
 	function distance(x, y, subX, subY)
@@ -115,12 +119,6 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
     	
     	return polyline.getLength();
 	}
-	
-	
-	
-	
-	
-	
 </script>
 
 </head>
@@ -639,10 +637,21 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
 	<hr class="mb-4">
 		<c:if test="${(user eq 'writer') or (user eq 'bookmarker') }">
 		<div class="card mb-4 shadow-sm" style="margin-top: 50px;">
-			<div class="card-header"><h4 class="my-0 font-weight-normal">스티커</h4></div>
-	      
+			<div class="card-header">
+				<h4 class="my-0 font-weight-normal">스티커</h4>
+			</div>
 	        <div class="card-body">
 	        	<p class="card-text">
+	        		<c:choose>
+	        			<c:when test="${user eq 'writer' }">
+	        				<p><button type="button" class="btn btn-secondary" value="${checklist.checkNo }&type=1" onclick="openAddWin(this);">스티커 추가</button>
+	        					<button type="button" class="btn btn-secondary" value="${checklist.checkNo }&type=1" onclick="openDeleteWin(this);">스티커 삭제</button></p>
+	        			</c:when>
+	        			<c:otherwise>
+	        				<p><button type="button" class="btn btn-secondary" value="${checklist.checkNo }&type=2" onclick="openAddWin(this);">스티커 추가</button>
+	        					<button type="button" class="btn btn-secondary" value="${checklist.checkNo }&type=2" onclick="openDeleteWin(this);">스티커 삭제</button></p>
+	        			</c:otherwise>
+	        		</c:choose>
 	        	<c:choose>
 	        		<c:when test="${!empty stickerList }">
 	        			<c:forEach var="sticker" items="${stickerList }">
