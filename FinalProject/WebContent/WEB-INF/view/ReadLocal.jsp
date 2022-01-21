@@ -200,10 +200,12 @@
 	<hr class="mb-4">
 		<c:if test="${user eq 'bookmarker' }">
 		<div class="card mb-4 shadow-sm" style="margin-top: 50px;">
-			<div class="card-header"><h4 class="my-0 font-weight-normal">스티커</h4></div>
-	      
+			<div class="card-header">
+				<h4 class="my-0 font-weight-normal">스티커</h4>
+			</div>
 	        <div class="card-body">
 	        	<p class="card-text">
+	        	<a href="xxx.action" role="button" class="btn btn-secondary" id="stickerModify" style="vertical-align: bottom;">스티커 추가/삭제</a><br><br>
 	        	<c:choose>
 	        		<c:when test="${!empty stickerList }">
 	        			<c:forEach var="sticker" items="${stickerList }">

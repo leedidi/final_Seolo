@@ -4,7 +4,25 @@ public class StickerDTO
 {
 	private int stickerNo, checkNo, acNo;		// checkNo, acNo 입력 3번 페이지 때문에 추가
 	private String content;
+	
+	private int tagNo, chbNo;
 
+	public int getChbNo()
+	{
+		return chbNo;
+	}
+	public void setChbNo(int chbNo)
+	{
+		this.chbNo = chbNo;
+	}
+	public int getTagNo()
+	{
+		return tagNo;
+	}
+	public void setTagNo(int tagNo)
+	{
+		this.tagNo = tagNo;
+	}
 	public int getStickerNo()
 	{
 		return stickerNo;

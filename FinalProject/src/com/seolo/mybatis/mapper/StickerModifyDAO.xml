@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seolo.idao.IStickerModifyDAO">
+	
+	<select id="listBookmarkSticker" resultType="java.lang.String">
+		SELECT CONTENT
+		FROM
+		(
+		    SELECT C.CH_TAG_NO AS CHTAGNO, C.CH_B_NO AS CHBNO, S.CONTENT AS CONTENT
+		    FROM CHECKTAG C, STICKER S
+		    WHERE C.CSTICKER_NO=S.CSTICKER_NO(+)
+		    ORDER BY CHTAGNO
+		)
+		WHERE CHBNO=#{chbNo}
+	</select>
+	
+	<select id="listWriterSticker" resultType="java.lang.String">
+		SELECT CONTENT
+		FROM
+		(
+		    SELECT M.MC_TAG_NO AS MCTAGNO, M.CHECK_NO AS CHECKNO, CONTENT AS CONTENT
+		    FROM MYCHECKTAG M, STICKER S
+		    WHERE M.CSTICKER_NO=S.CSTICKER_NO(+)
+		    ORDER BY MCTAGNO
+		)
+		WHERE CHECKNO=#{checkNo}
+	</select>
+	
+	<select id="listLocalBookmarkSticker" resultType="java.lang.String">
+		SELECT CONTENT
+		FROM
+		(
+		    SELECT L.LO_TAG_NO AS LOTAGNO, L.LO_B_NO AS LOBNO, S.CONTENT AS CONTENT
+		    FROM LOCALTAG L, STICKER S
+		    WHERE L.CSTICKER_NO=S.CSTICKER_NO(+)
+		    ORDER BY LOTAGNO
+		)
+		WHERE LOBNO=#{lobNo}
+	</select>
+	
+	<select id="listSticker" resultType="com.seolo.dto.StickerDTO">
+		SELECT CSTICKER_NO AS STICKERNO, CONTENT
+		FROM STICKER
+		WHERE AC_NO=#{acNo}
+	</select>
+	
+	<select id="bookmarkNo" resultType="java.lang.Integer">
+		SELECT CH_B_NO AS CHBNO
+		FROM CHECK_BOOKMARK
+		WHERE AC_NO=#{acNo} AND CHECK_NO=#{checkNo}
+	</select>
+	
+	<insert id="addMyCheckSticker">
+		INSERT INTO MYCHECKTAG(MC_TAG_NO, CHECK_NO, CSTICKER_NO)
+		VALUES(#{tagNo}, #{checkNo}, #{stickerNo})
+	</insert>
+	
+	<insert id="addCheckSticker">
+		INSERT INTO CHECKTAG(CH_TAG_NO, CH_B_NO, CSTICKER_NO)
+		VALUES(#{tagNo}, #{chbNo}, #{stickerNo})
+	</insert>
+	
+	<select id="myCheckTagNo" resultType="java.lang.Integer">
+		SELECT MAX(MC_TAG_NO)+1 AS TAG_NO
+		FROM MYCHECKTAG
+	</select>
+	
+	<select id="checkTagNo" resultType="java.lang.Integer">
+		SELECT MAX(CH_TAG_NO)+1 AS TAG_NO
+		FROM CHECKTAG
+	</select>
+	
+	<select id="localTagNo" resultType="java.lang.Integer">
+		
+	</select>
+	
+	<select id="maxStickerNo" resultType="java.lang.Integer">
+		SELECT MAX(CSTICKER_NO)+1 AS STICKERNO
+		FROM STICKER
+	</select>
+	
+	<insert id="addNewSticker">
+		INSERT INTO STICKER(CSTICKER_NO, AC_NO, CONTENT)
+		VALUES(#{stickerNo}, #{acNo}, #{content})
+	</insert>
+	
+	<select id="deleteListWriterSticker" resultType="com.seolo.dto.StickerDTO">
+		SELECT MCTAGNO AS TAGNO, CONTENT
+		FROM
+		(
+		    SELECT M.MC_TAG_NO AS MCTAGNO, M.CHECK_NO AS CHECKNO, CONTENT AS CONTENT
+		    FROM MYCHECKTAG M, STICKER S
+		    WHERE M.CSTICKER_NO=S.CSTICKER_NO(+)
+		    ORDER BY MCTAGNO
+		)
+		WHERE CHECKNO=#{checkNo}
+	</select>
+	
+	<select id="deleteListBookmarkSticker" resultType="com.seolo.dto.StickerDTO">
+		SELECT CHTAGNO AS TAGNO, CONTENT
+		FROM
+		(
+		    SELECT C.CH_TAG_NO AS CHTAGNO, C.CH_B_NO AS CHBNO, S.CONTENT AS CONTENT
+		    FROM CHECKTAG C, STICKER S
+		    WHERE C.CSTICKER_NO=S.CSTICKER_NO(+)
+		    ORDER BY CHTAGNO
+		)
+		WHERE CHBNO=#{chbNo}
+	</select>
+	
+	<select id="deleteListLocalBookmarkSticker" resultType="com.seolo.dto.StickerDTO">
+		SELECT LOTAGNO AS TAGNO, CONTENT
+		FROM
+		(
+		    SELECT L.LO_TAG_NO AS LOTAGNO, L.LO_B_NO AS LOBNO, S.CONTENT AS CONTENT
+		    FROM LOCALTAG L, STICKER S
+		    WHERE L.CSTICKER_NO=S.CSTICKER_NO(+)
+		    ORDER BY LOTAGNO
+		)
+		WHERE LOBNO=#{lobNo}
+	</select>
+	
+	<delete id="deleteWriterSticker">
+		DELETE
+		FROM MYCHECKTAG
+		WHERE MC_TAG_NO=#{tagNo}
+	</delete>
+	
+	<delete id="deleteBookmarkSticker">
+		DELETE
+		FROM CHECKTAG
+		WHERE CH_TAG_NO=#{tagNo}
+	</delete>
+	
+	<delete id="deleteLocalSticker">
+		DELETE
+		FROM LOCALTAG
+		WHERE LO_TAG_NO=#{tagNo}
+	</delete>
+	
+	<select id="writerStickerNo" resultType="java.lang.Integer">
+		SELECT CSTICKER_NO
+		FROM MYCHECKTAG
+		WHERE MC_TAG_NO=#{tagNo}
+	</select>
+	
+	<select id="bookmarkStickerNo" resultType="java.lang.Integer">
+		SELECT CSTICKER_NO
+		FROM CHECKTAG
+		WHERE CH_TAG_NO=#{tagNo}
+	</select>
+	
+	<select id="localStickerNo" resultType="java.lang.Integer">
+		SELECT CSTICKER_NO
+		FROM MYLOCALTAG
+		WHERE LO_TAG_NO=#{tagNo}
+	</select>
+	
+	<select id="validSticker" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM
+		(SELECT CSTICKER_NO
+		FROM MYCHECKTAG
+		UNION ALL
+		SELECT CSTICKER_NO
+		FROM CHECKTAG
+		UNION ALL
+		SELECT CSTICKER_NO
+		FROM LOCALTAG)
+		WHERE CSTICKER_NO=#{stickerNo}
+	</select>
+	
+	<delete id="deleteInvalidSticker">
+		DELETE
+		FROM STICKER
+		WHERE CSTICKER_NO=#{stickerNo}
+	</delete>
+	
+</mapper>
