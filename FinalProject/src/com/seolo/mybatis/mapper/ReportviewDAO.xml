@@ -5,92 +5,39 @@
 
 <mapper namespace="com.seolo.idao.IReportviewDAO">
 
-	<select id="list" resultType="com.seolo.dto.ReportviewDTO">  
-	<![CDATA[    
-		SELECT RNUM, RPCHECK_NO, TITLE, STATUSNAME, REPORTDATE, REPORTERNAME
-		FROM
-		(
-		    SELECT ROWNUM ROWN, DATA.*
-		    FROM
-		    (
-		        SELECT *
-		        FROM VIEW_REPORT
-		        ORDER BY RPCHECK_NO DESC
-		    ) DATA
-		) 
-		WHERE ROWN >=#{start} AND ROWN <= #{end}
-   	]]>
-	</select>
-
-	<!-- 신고 게시판 - 카테고리별 조회 -->
-	<select id="cateList" resultType="com.seolo.dto.ReportviewDTO">  
-	<![CDATA[    
-		SELECT RNUM, RPCHECK_NO, TITLE, STATUSNAME, REPORTDATE, REPORTERNAME
-		FROM
-		(
-		    SELECT ROWNUM ROWN, DATA.*
-		    FROM
-		    (
-		        SELECT *
-		        FROM VIEW_REPORT
-        		WHERE STATUSNAME = #{report_check}
-		        ORDER BY RPCHECK_NO DESC
-		    ) DATA
-		) 
-		WHERE ROWN >=#{start} AND ROWN <= #{end}
-   	]]> 
-	</select>
-	
-	<!-- 데이터 총 갯수 : 전체 -->
-	<select id="count" resultType="java.lang.Integer">
-		SELECT COUNT(*) AS COUNT
+	<select id="list" resultType="com.seolo.dto.ReportviewDTO">   
+        SELECT RNUM, RPCHECK_NO, TITLE, STATUSNAME, REPORTDATE, REPORTERNAME
 		FROM VIEW_REPORT
+		ORDER BY RPCHECK_NO DESC
 	</select>
-	
-	<!-- 데이터 총 갯수 : 카테고리 별 -->
-	<select id="cateCount" resultType="java.lang.Integer">
-		SELECT COUNT(*) AS COUNT
-		FROM VIEW_REPORT
-        WHERE STATUSNAME = #{report_check}
-	</select>
-	
-	<!-- 데이터 총 갯수 : 카테고리 별 -->
-	<select id="myCount" resultType="java.lang.Integer">
-		SELECT COUNT(*) AS COUNT
-		FROM VIEW_REPORT
-        WHERE REPORTERNAME = #{reportername}
-	</select>
-	
-	<!-- 신고 게시글 조회 -->
+		
 	<select id="view" resultType="com.seolo.dto.ReportviewDTO">
 		SELECT RNUM, RPCHECK_NO, TITLE, STATUSNAME, REPORTDATE, REPORTERNO, REPORTERNAME, WRITERNO, WRITERNAME, WHY, CHECK_NO
 		FROM VIEW_REPORT
 		WHERE RPCHECK_NO = #{rpcheck_no}
 	</select>	
-	
-	<!-- 마이페이지 - 나의 신고리스트(전체) -->
-	<select id="myinfoAllList" resultType="com.seolo.dto.ReportviewDTO">
-	<![CDATA[    
-	SELECT RPCHECK_NO, CHECK_NO, TITLE, WHY, STATUSNAME, REPORTDATE
-	FROM
-	(
-	    SELECT ROWNUM ROWN, DATA.*
-	    FROM
-	    (
-	        SELECT *
-	        FROM VIEW_REPORT
-	        WHERE REPORTERNAME = #{reportername}
-	        ORDER BY RPCHECK_NO DESC
-	    ) DATA
-	)
-	WHERE ROWN >=#{start} AND ROWN <= #{end}
-   	]]> 
+	 
+	<!-- 신고 게시판 - 카테고리별 조회 -->
+	<select id="cateList" resultType="com.seolo.dto.ReportviewDTO">   
+        SELECT RNUM, RPCHECK_NO, TITLE, STATUSNAME, REPORTDATE, REPORTERNAME
+		FROM VIEW_REPORT
+		WHERE STATUSNAME=#{report_check}
+		ORDER BY RPCHECK_NO DESC
 	</select>
 	
-	<!-- 카테고리 조회 -->
+	<!-- 카테고리 버튼 출력 -->
 	<select id="cateNameList" resultType="com.seolo.dto.ReportviewDTO">
 		SELECT STATUS_NO, STATUSNAME
 		FROM REPORT_STATUS
+	</select>
+	
+	<!-- 마이페이지 - 나의 신고리스트 -->
+	<!-- 마이페이지 - 나의 신고리스트(전체) -->
+	<select id="myinfoAllList" resultType="com.seolo.dto.ReportviewDTO">
+		SELECT RPCHECK_NO, CHECK_NO, TITLE, WHY, STATUSNAME, REPORTDATE
+		FROM VIEW_REPORT
+		WHERE REPORTERNAME=#{reportername}
+		ORDER BY RPCHECK_NO DESC
 	</select>
 	
 </mapper>
