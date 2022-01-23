@@ -60,7 +60,7 @@ crossorigin="anonymous">
 			{
 				if (confirm("해당 신고를 정말 취소하시겠습니까?"))
 				{
-					$(location).attr("href", "myInfoReportMDelete.action?rpcheck_no=" + $(this).val());
+					$(location).attr("href", "myInfoReportDelete.action?rpcheck_no=" + $(this).val());
 				}
 			});
 
