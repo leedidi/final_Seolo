@@ -172,7 +172,7 @@ public class ChecklistReadController
 				
 			}
 			
-			
+			model.addAttribute("dongNo", dongNo);
 			model.addAttribute("localList", localList);
 			
 			return "WEB-INF/view/ReadLocal.jsp";

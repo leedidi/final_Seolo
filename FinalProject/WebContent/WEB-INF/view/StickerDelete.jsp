@@ -30,7 +30,16 @@
 				$(location).attr("href", "stickerdelete.action?tagNo=" + $(this).val() 
 						+ "&type=" + $("#type").val() + "&checkNo=" + $("#checkNo").val());
 			}
-			
+		});
+		
+		$(".stickerLocalDelete").click(function()
+		{
+			var result = confirm("해당 스티커를 삭제하시겠습니까?");
+			if (result)
+			{
+				$(location).attr("href", "stickerdelete.action?tagNo=" + $(this).val() 
+						+ "&type=" + $("#type").val() + "&dongNo=" + $("#dongNo").val());
+			}
 		});
 	});
 
@@ -39,6 +48,7 @@
 <body>
 	<div class="card mb-4 shadow-sm" style="margin: 50px 20px 0 20px;">
 		<input type="hidden" id="checkNo" name="checkNo" value="${checkNo }">
+		<input type="hidden" id="dongNo" name="dongNo" value="${dongNo }">
 		<input type="hidden" id="type" name="type" value="${type }">
 		<div class="card-header">
 			<h4 class="my-0 font-weight-normal">스티커 목록</h4>
@@ -59,6 +69,24 @@
 	        					<tr>
 	        						<td>#${sticker.content }</td>
 	        						<td><button type="button" class="btn btn-secondary stickerDelete" value="${sticker.tagNo }">삭제</button></td>
+	        					</tr>
+	        				</tbody>
+			        	</c:forEach>
+			        	</table>
+	        		</c:when>
+	        		<c:when test="${!empty localStickerList }">
+	        			<table class="table">
+	        				<thead>
+	        					<tr>
+	        						<th>스티커명</th>
+	        						<th>삭제</th>
+	        					</tr>
+	        				</thead>
+	        			<c:forEach var="sticker" items="${localStickerList }">
+	        				<tbody>
+	        					<tr>
+	        						<td>#${sticker.content }</td>
+	        						<td><button type="button" class="btn btn-secondary stickerLocalDelete" value="${sticker.tagNo }">삭제</button></td>
 	        					</tr>
 	        				</tbody>
 			        	</c:forEach>
