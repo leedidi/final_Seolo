@@ -15,9 +15,11 @@ public interface IStickerModifyDAO
 	public ArrayList<StickerDTO> listSticker(String acNo);
 	
 	public int bookmarkNo(StickerDTO dto);
+	public int localBookmarkNo (StickerDTO dto);
 	
 	public int addMyCheckSticker(StickerDTO dto);
 	public int addCheckSticker(StickerDTO dto);
+	public int addLocalSticker(StickerDTO dto);
 	
 	public int myCheckTagNo();
 	public int checkTagNo();

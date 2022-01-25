@@ -53,6 +53,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE AC_NO=#{acNo} AND CHECK_NO=#{checkNo}
 	</select>
 	
+	<select id="localBookmarkNo" resultType="java.lang.Integer">
+		SELECT LO_B_NO AS LOBNO
+		FROM LOCAL_BOOKMARK
+		WHERE AC_NO=#{acNo} AND DONG_NO=#{dongNo}
+	</select>
+	
 	<insert id="addMyCheckSticker">
 		INSERT INTO MYCHECKTAG(MC_TAG_NO, CHECK_NO, CSTICKER_NO)
 		VALUES(#{tagNo}, #{checkNo}, #{stickerNo})
@@ -61,6 +67,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="addCheckSticker">
 		INSERT INTO CHECKTAG(CH_TAG_NO, CH_B_NO, CSTICKER_NO)
 		VALUES(#{tagNo}, #{chbNo}, #{stickerNo})
+	</insert>
+	
+	<insert id="addLocalSticker">
+		INSERT INTO LOCALTAG(LO_TAG_NO, LO_B_NO, CSTICKER_NO)
+		VALUES(#{tagNo}, #{lobNo}, #{stickerNo})
 	</insert>
 	
 	<select id="myCheckTagNo" resultType="java.lang.Integer">
@@ -74,7 +85,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="localTagNo" resultType="java.lang.Integer">
-		
+		SELECT MAX(LO_TAG_NO)+1 AS TAG_NO
+		FROM LOCALTAG
 	</select>
 	
 	<select id="maxStickerNo" resultType="java.lang.Integer">
@@ -155,7 +167,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="localStickerNo" resultType="java.lang.Integer">
 		SELECT CSTICKER_NO
-		FROM MYLOCALTAG
+		FROM LOCALTAG
 		WHERE LO_TAG_NO=#{tagNo}
 	</select>
 	

@@ -22,6 +22,12 @@
 					+ "&type=" + $("#type").val() + "&checkNo=" + $("#checkNo").val());
 		});
 		
+		$(".addLocalStk").click(function()
+		{
+			$(location).attr("href", "stickeradd.action?stickerNo=" + $(this).val() 
+					+ "&type=" + $("#type").val() + "&dongNo=" + $("#dongNo").val());
+		});
+		
 		$("#exit").click(function()
 		{
 			window.opener.location.reload();
@@ -35,6 +41,7 @@
 	<form action="addnewsticker.action" method="post">
 		<div class="card mb-4 shadow-sm" style="margin: 50px 20px 0 20px;">
 			<input type="hidden" id="checkNo" name="checkNo" value="${checkNo }">
+			<input type="hidden" id="dongNo" name="dongNo" value="${dongNo }">
 			<input type="hidden" id="type" name="type" value="${type }">
 			<div class="card-header">
 				<h4 class="my-0 font-weight-normal">붙어있는 스티커 목록</h4>
@@ -46,6 +53,11 @@
 		        			<c:forEach var="sticker" items="${checkStickerList }">
 				        		<button type="button" class="btn btn-link">#${sticker }</button>
 				        	</c:forEach>
+		        		</c:when>
+		        		<c:when test="${!empty localStickerList }">
+		        			<c:forEach var="sticker" items="${localStickerList }">
+		        				<button type="button" class="btn btn-link">#${sticker }</button>
+		        			</c:forEach>
 		        		</c:when>
 		        		<c:otherwise>
 		        			붙어있는 스티커가 없습니다.
@@ -61,9 +73,14 @@
 	        <div class="card-body">
 	        	<p class="card-text">
 					<c:choose>
-						<c:when test="${!empty stickerList }">
+						<c:when test="${(type eq 1 || type eq 2) && !empty stickerList }">
 		        			<c:forEach var="sticker" items="${stickerList }">
 				        		<button type="button" class="btn btn-link addStk" value="${sticker.stickerNo }">#${sticker.content }</button>
+				        	</c:forEach>
+		        		</c:when>
+		        		<c:when test="${(type eq 3) && !empty stickerList }">
+		        			<c:forEach var="sticker" items="${stickerList }">
+				        		<button type="button" class="btn btn-link addLocalStk" value="${sticker.stickerNo }">#${sticker.content }</button>
 				        	</c:forEach>
 		        		</c:when>
 		        		<c:otherwise>

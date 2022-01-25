@@ -22,6 +22,18 @@
 </style>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+	//스티커 추가, 삭제 새 창 띄우는 함수
+	function openAddWin(btn)
+	{
+		window.open("stickeraddform.action?dongNo=" + btn.value, "add", "width=800, height=600, toolbar=no, menubar=no, scrollbars=no, resizable=yes");
+	}
+	
+	function openDeleteWin(btn)
+	{
+		window.open("stickerdeleteform.action?dongNo=" + btn.value, "delete", "width=800, height=600, toolbar=no, menubar=no, scrollbars=no, resizable=yes");
+	}
+</script>
 
 </head>
 <body>
@@ -205,17 +217,18 @@
 			</div>
 	        <div class="card-body">
 	        	<p class="card-text">
-	        	<a href="xxx.action" role="button" class="btn btn-secondary" id="stickerModify" style="vertical-align: bottom;">스티커 추가/삭제</a><br><br>
-	        	<c:choose>
-	        		<c:when test="${!empty stickerList }">
-	        			<c:forEach var="sticker" items="${stickerList }">
-			        		<button type="button" class="btn btn-link">#${sticker }</button>
-			        	</c:forEach>
-	        		</c:when>
-	        		<c:otherwise>
-	        			작성한 스티커가 없습니다.
-	        		</c:otherwise>
-	        	</c:choose>
+		        	<p><button type="button" class="btn btn-secondary" value="${dongNo }&type=3" onclick="openAddWin(this);">스티커 추가</button>
+		        		<button type="button" class="btn btn-secondary" value="${dongNo }&type=3" onclick="openDeleteWin(this);">스티커 삭제</button></p>
+		        	<c:choose>
+		        		<c:when test="${!empty stickerList }">
+		        			<c:forEach var="sticker" items="${stickerList }">
+				        		<button type="button" class="btn btn-link">#${sticker }</button>
+				        	</c:forEach>
+		        		</c:when>
+		        		<c:otherwise>
+		        			작성한 스티커가 없습니다.
+		        		</c:otherwise>
+		        	</c:choose>
 	        	</p>
 	        	
 	        	<br>
