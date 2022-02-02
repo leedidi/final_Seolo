@@ -1,10 +1,6 @@
 package com.seolo.idao;
 
-import java.util.ArrayList;
-
 import com.seolo.dto.ReportRunDTO;
-import com.seolo.dto.ReportviewDTO;
-import com.seolo.personal.PersonalDTO;
 
 public interface IReportRunDAO
 {
