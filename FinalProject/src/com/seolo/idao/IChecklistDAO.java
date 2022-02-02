@@ -73,8 +73,10 @@ public interface IChecklistDAO
 	public int deletechecklist6(String checkNo);
 	public int deletechecklist7(String checkNo);
 	public int deletechecklist8(String checkNo);
+	public int deletehonjap(String checkNo);
+	public int deletepet(String checkNo);
+	public int deletecon(String checkNo);
 	public int deletechecklist9(String checkNo);
-	//public int deletechecklist10(String checkNo);
 	
 	/*
 	// 시간추가항목 전체리스트 가져오기 - 고유번호가 큰 순 정렬
