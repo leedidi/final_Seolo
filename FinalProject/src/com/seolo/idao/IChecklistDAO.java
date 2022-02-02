@@ -9,6 +9,7 @@ package com.seolo.idao;
 import java.util.ArrayList;
 
 import com.seolo.dto.ChecklistDTO;
+import com.seolo.dto.FaqRunDTO;
 import com.seolo.dto.ScoreDTO;
 
 public interface IChecklistDAO
@@ -61,6 +62,19 @@ public interface IChecklistDAO
 	
 	// 지금 계정번호에서 가장 최근에 쓴 체크리스트 번호 가져오기 (sysdate로 정렬해서 첫번째꺼)
 	public int searchCheckNo(int acNo);
+	
+	// 체크리스트 삭제*************************************************
+	
+	public int deletechecklist1(String checkNo);
+	public int deletechecklist2(String checkNo);
+	public int deletechecklist3(String checkNo);
+	public int deletechecklist4(String checkNo);
+	public int deletechecklist5(String checkNo);
+	public int deletechecklist6(String checkNo);
+	public int deletechecklist7(String checkNo);
+	public int deletechecklist8(String checkNo);
+	public int deletechecklist9(String checkNo);
+	//public int deletechecklist10(String checkNo);
 	
 	/*
 	// 시간추가항목 전체리스트 가져오기 - 고유번호가 큰 순 정렬

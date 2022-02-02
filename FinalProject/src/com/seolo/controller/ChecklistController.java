@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.seolo.dto.StickerDTO;
+import com.seolo.admin.INoticeDAO;
+import com.seolo.admin.NoticeDTO;
 import com.seolo.dto.ChecklistDTO;
 import com.seolo.dto.PlusDTO;
 import com.seolo.idao.ICheckStickerDAO;
@@ -741,8 +743,32 @@ public class ChecklistController
       return "WEB-INF/view/ChecklistWrite_third.jsp";
    }
    
-   
+   // 체크리스트 삭제
+   //@RequestMapping(value = "/deletechecklist.action", method= {RequestMethod.GET, RequestMethod.POST})
+   @RequestMapping(value="/deletechecklist.action" , method = RequestMethod.GET)
+   //public String deletechecklist(ChecklistDTO dto, HttpSession session)
+   public String deletechecklist(String checkNo, HttpSession session)
+   {
+		IChecklistDAO dao = sqlSession.getMapper(IChecklistDAO.class);
+		
+		System.out.println("Test");
+		//System.out.println("dto.getHonjap_scoreNo(): " + dto.getHonjap_scoreNo());
+		System.out.println("checkNo: " + checkNo);
 
+		dao.deletechecklist1(checkNo);
+		dao.deletechecklist2(checkNo);
+		dao.deletechecklist3(checkNo);
+		dao.deletechecklist4(checkNo);
+		dao.deletechecklist5(checkNo);
+		dao.deletechecklist6(checkNo);
+		dao.deletechecklist7(checkNo);
+		dao.deletechecklist8(checkNo);
+		dao.deletechecklist9(checkNo);
+		//dao.deletechecklist10(checkNo);
 
+		
+		return "redirect:mychecklistform.action";
+
+	}	
 }
 

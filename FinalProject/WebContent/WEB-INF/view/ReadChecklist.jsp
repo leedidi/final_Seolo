@@ -44,6 +44,13 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
 			$("#readCheck").attr("action", "main.action");
 			
 		});
+		
+		$("#checklistBtn").click(function()
+		{
+			$("#readCheck").attr("method", "GET");
+			$("#readCheck").attr("action", "deletechecklist.action?checkNo=" + $(this).val());
+					
+		});
 	});
 	
 	// 스티커 추가, 삭제 새 창 띄우는 함수
@@ -119,6 +126,24 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
     	
     	return polyline.getLength();
 	}
+
+
+	// 체크리스트 삭제 버튼 클릭 -------------------------------------------------------
+	$(function()
+	{
+		$(".btn-danger").click(function()
+		{
+			// 테스트
+			//alert("삭제 버튼 클릭");
+			
+			if (confirm("해당 게시물을 정말 삭제하시겠습니까?"))
+			{
+				$(location).attr("href", "checklistdelete.action?check_no=" + $(this).val());
+			}
+		});
+	});
+
+
 </script>
 
 </head>
@@ -149,7 +174,7 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
 				<c:if test="${user eq 'writer' }">
 				<div class="col-md-4 text-center">
 					<button class="btn btn-secondary">수정하기</button>
-					<button class="btn btn-secondary">삭제하기</button>
+					<button type="submit" id="checklistBtn" class="btn btn-danger" value="${checklist.checkNo }">삭제하기</button>
 				</div>
 				</c:if>
 			</div>

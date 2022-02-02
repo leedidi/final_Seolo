@@ -142,6 +142,47 @@
 		WHERE T.FAST =1
 	</select>
 	
+	<!-- 체크리스트 삭제하기 -->
+	<delete id="deletechecklist1">
+		DELETE FROM WOLSE
+		WHERE CHECK_NO=#{checkNo}
+	</delete>
+	<delete id="deletechecklist2">
+		DELETE FROM TRANSPORT
+		WHERE CHECK_NO=#{checkNo}
+	</delete>
+	<delete id="deletechecklist3">	
+		DELETE FROM SECRET_CONTENT
+		WHERE CHECK_NO=#{checkNo}
+	</delete>	
+	<delete id="deletechecklist4">
+		DELETE FROM MYCHECKTAG
+		WHERE CHECK_NO=#{checkNo}
+	</delete>
+	<delete id="deletechecklist5">
+		DELETE FROM MAEMAE
+		WHERE CHECK_NO=#{checkNo}
+	</delete>
+	<delete id="deletechecklist6">
+		DELETE FROM JEONSE
+		WHERE CHECK_NO=#{checkNo}
+	</delete>
+	<delete id="deletechecklist7">
+		DELETE FROM CONTENT
+		WHERE CHECK_NO=#{checkNo}
+	</delete>
+	<delete id="deletechecklist8">
+		DELETE FROM SECURITY
+		WHERE CHECK_NO=#{checkNo}
+	</delete>
+	<!-- <delete id="deletechecklist9">
+		DELETE FROM HONJAP
+		WHERE CHECK_NO=#{checkNo}
+	</delete> -->
+	<delete id="deletechecklist9">
+		DELETE FROM CHECKLIST
+		WHERE CHECK_NO=#{checkNo}
+	</delete>
 	
 	<!-- 점수 추가 리스트 -->
 	<!-- 
@@ -160,7 +201,7 @@
 		WHERE CHECK_NO = #{checkNo}
 		ORDER BY PSCORE_NO DESC
 	</select>	
-	 -->
+	-->
 	
 </mapper>
 
