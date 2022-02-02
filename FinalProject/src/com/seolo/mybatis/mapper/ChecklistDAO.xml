@@ -175,10 +175,18 @@
 		DELETE FROM SECURITY
 		WHERE CHECK_NO=#{checkNo}
 	</delete>
-	<!-- <delete id="deletechecklist9">
-		DELETE FROM HONJAP
-		WHERE CHECK_NO=#{checkNo}
-	</delete> -->
+	<delete id="deletehonjap">
+	DELETE FROM HONJAP
+	WHERE CHECK_NO=#{checkNo}
+	</delete>
+	<delete id="deletepet">
+	DELETE FROM PET
+	WHERE CHECK_NO=#{checkNo}
+	</delete>
+	<delete id="deletecon">
+	DELETE FROM CONVENIENCE
+	WHERE CHECK_NO=#{checkNo}
+	</delete>
 	<delete id="deletechecklist9">
 		DELETE FROM CHECKLIST
 		WHERE CHECK_NO=#{checkNo}

@@ -763,6 +763,9 @@ public class ChecklistController
 		dao.deletechecklist6(checkNo);
 		dao.deletechecklist7(checkNo);
 		dao.deletechecklist8(checkNo);
+		dao.deletehonjap(checkNo);
+		dao.deletepet(checkNo);
+		dao.deletecon(checkNo);
 		dao.deletechecklist9(checkNo);
 		//dao.deletechecklist10(checkNo);
 
