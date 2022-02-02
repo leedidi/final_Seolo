@@ -65,19 +65,24 @@ public class MyUtil
 			currentPageSetup = currentPageSetup - numPerBlock;
 
 		
+		//○ 부트스트랩 적용으로 추가: ul 태그
+		strList.append("<ul id='datatable_pagination' class='pagination datatable-custom-pagination justify-content-center'>");
+		
+		
 		//① 1 페이지 
 		if((totalPage > numPerBlock) && (currentPageSetup > 0))
-		{
-			strList.append(" <a href='" + listUrl + "pageNum=1'>◀◀</a>");
-		}
+			strList.append(" <li class='paginate_item page-item'><a href='" + listUrl + "pageNum=1' class='paginate_button page-link' aria-controls='datatable' id= 'pageId'>◀</a></li>");
+			//strList.append(" <a href='" + listUrl + "pageNum=1'>◀◀</a>");
 
+		
 		//② Prev
 		n = currentPage - numPerBlock;
 		//-- n : 해당 페이지만큼 앞으로 가기 위한 변수  (예: 24페이지면 → 14페이지로 이동)
 
 		// 10개 이상 일때 Prev 표시
 		if((totalPage > numPerBlock) && (currentPageSetup > 0))
-			strList.append(" <a href='" + listUrl + "pageNum=" + n + "'>Prev</a>");
+			strList.append(" <li class='paginate_item page-item'><a href='" + listUrl + "pageNum=" + n + "' class='paginate_button previous page-link' aria-controls='datatable' id=datatable_previous> <span aria-hidden='true'>Prev</span></a></li>");
+			//strList.append(" <a href='" + listUrl + "pageNum=" + n + "'>Prev</a>");	//-- 부트스트랩 적용 전
 		//-- currentPageSetup 이 0 보다 큰 경우는
 		//   이미 페이지가 10 이상이라는 의미이며
 		//   이 때, 현재 페이지(currentPage) 가 11 이상일 경우
@@ -97,9 +102,11 @@ public class MyUtil
 		while ((page <= totalPage) && (page <= currentPageSetup + numPerBlock))
 		{
 			if(page == currentPage)
-				strList.append(" <span style='color:orange; font-weight:bold; font-size:20px;'>" + page + "</span>");
+				strList.append(" <li class='paginate_item page-item active'><a class='paginate_button page-link' aria-controls='datatable'>" + page +"</a></li>");
+				//strList.append(" <span style='color:orange; font-weight:bold; font-size:20px;'>" + page + "</span>");
 			else
-				strList.append(" <a id= 'pageId' href='" + listUrl + "pageNum=" + page + "'>" + page + "</a>");
+				strList.append(" <li class='paginate_item page-item'><a href='" + listUrl + "pageNum=" + page + "' class='paginate_button page-link' aria-controls='datatable' id= 'pageId'>" + page + "</a></li>");
+				//strList.append(" <a id= 'pageId' href='" + listUrl + "pageNum=" + page + "'>" + page + "</a>");
 
 			page++;
 		}
@@ -107,14 +114,19 @@ public class MyUtil
 		//④ Next
 		n = currentPage + numPerBlock;
 		//-- n : 해당 페이지만큼 뒤로 가기 위한 변수  (예: 14페이지면 → 24페이지로 이동)
+		
+		if((totalPage + currentPageSetup) > numPerBlock)
+			strList.append(" <li class='paginate_item page-item'><a href='" + listUrl + "pageNum=" + n + "' class='paginate_button next page-link' aria-controls='datatable' id='datatable_next'> <span aria-hidden='true'>Next</span></a>");
+			//strList.append(" <a href='" + listUrl + "pageNum=" + n + "'>Next</a>");
 
-		if((totalPage - currentPageSetup) > numPerBlock)
-			strList.append(" <a href='" + listUrl + "pageNum=" + n + "'>Next</a>");
-
+		
 		//⑤ 마지막 페이지 
 		if((totalPage > numPerBlock) && (currentPageSetup + numPerBlock) < totalPage)
-			strList.append(" <a href='" + listUrl + "pageNum=" + totalPage + "'>" + "▶▶" + "</a>");
-
+			strList.append(" <li class='paginate_item page-item'><a href='" + listUrl + "pageNum="+ totalPage +"' class='paginate_button page-link' aria-controls='datatable' id= 'pageId'>▶</a></li>");
+			//strList.append(" <a href='" + listUrl + "pageNum=" + totalPage + "'>" + "▶▶" + "</a>");
+		
+		//○ 부트스트랩 적용으로 추가: ul 태그
+		strList.append(" </ul>");
 		
 		//○ 완성된 페이징 문자열 반환 
 		return strList.toString();
