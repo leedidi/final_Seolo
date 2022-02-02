@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
+String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -72,25 +72,24 @@
 
 			<!-- 페이징 처리 부분 -->
 			<div class="dataTables_paginate paging_simple_numbers" style="text-align: center;"datatable_paginate">
+				<span style="text-align: center;">${pageIndexList }</span>
+			</div>
+
+			<%-- 부트스트랩이 적용된 페이징 처리 --%>
+			<%-- 
+			<div class="dataTables_paginate paging_simple_numbers" style="text-align: center;"datatable_paginate">
 				<ul id="datatable_pagination" class="pagination datatable-custom-pagination justify-content-center">
 					<!-- prev 부분도 필요할까봐 넣어둠! -->
 					<li class="paginate_item page-item disabled"><a class="paginate_button previous page-link" aria-controls="datatable" data-dt-idx="0" tabindex="0" id="datatable_previous"> <span aria-hidden="true">Prev</span></a></li>
-					<li class="paginate_item page-item active"><a class="paginate_button page-link" aria-controls="datatable" data-dt-idx="1" tabindex="0">1</a> <!-- </li>
-		            <li class="paginate_item page-item">
-		               <a class="paginate_button page-link" aria-controls="datatable" data-dt-idx="2" tabindex="0">2</a>
-		            </li>
-		            <li class="paginate_item page-item">
-		               <a class="paginate_button page-link" aria-controls="datatable" data-dt-idx="2" tabindex="0">3</a>
-		            </li>
-		            <li class="paginate_item page-item">
-		               <a class="paginate_button page-link" aria-controls="datatable" data-dt-idx="2" tabindex="0">4</a>
-		            </li> 
-		            <li class="paginate_item page-item">
-		               <a class="paginate_button next page-link" aria-controls="datatable" data-dt-idx="3" tabindex="0" id="datatable_next">
-		               <span aria-hidden="true">Next</span></a> -->
+					<li class="paginate_item page-item active"><a class="paginate_button page-link" aria-controls="datatable" data-dt-idx="1" tabindex="0">1</a></li>
+					<li class="paginate_item page-item"><a class="paginate_button page-link" aria-controls="datatable" data-dt-idx="2" tabindex="0">2</a></li>
+					<li class="paginate_item page-item"><a class="paginate_button page-link" aria-controls="datatable" data-dt-idx="2" tabindex="0">3</a></li>
+					<li class="paginate_item page-item"><a class="paginate_button page-link" aria-controls="datatable" data-dt-idx="2" tabindex="0">4</a></li>
+					<li class="paginate_item page-item"><a class="paginate_button next page-link" aria-controls="datatable" data-dt-idx="3" tabindex="0" id="datatable_next"> <span aria-hidden="true">Next</span></a>
 					<li class="paginate_item page-item disabled"><a class="paginate_button next page-link" aria-controls="datatable" data-dt-idx="3" tabindex="0" id="datatable_next"> <span aria-hidden="true">Next</span></a></li>
 				</ul>
 			</div>
+			--%>
 		</div>
 	</div>
 
