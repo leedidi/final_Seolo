@@ -1,5 +1,8 @@
 package com.seolo.controller;
 
+import java.io.File;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,7 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.seolo.dto.ReportRunDTO;
 import com.seolo.idao.IReportRunDAO;
 import com.seolo.idao.IReportviewDAO;
@@ -21,6 +27,62 @@ public class PersonalUpdateController
 	@Autowired
 	private SqlSession sqlSession;
 
+	
+	
+	// 파일 업로드 부분
+	@RequestMapping(value = "/myinfoImg.action", method = RequestMethod.POST)
+	public ModelAndView myInfoImg(Model model, HttpSession session, HttpServletRequest request, ModelAndView mo)
+	{
+		IUpdateDAO dao = sqlSession.getMapper(IUpdateDAO.class);
+		
+		// 파일 업로드 부분 해보기
+		String root = request.getSession().getServletContext().getRealPath("/");
+		
+		String savePath = root + "pds" + "\\" + "saveFile";
+		
+		File dir = new File(savePath);
+		
+		if (!dir.exists())
+			dir.mkdirs();
+		
+		String encType = "UTF-8"; // -- 인코딩방식
+		int maxFileSize = 10*1024*1024;
+		
+		PersonalDTO dto = new PersonalDTO();
+		
+		String fileName = null;
+		
+		try
+		{
+			MultipartRequest multi = null;
+			multi = new MultipartRequest(request, savePath, maxFileSize, encType, new DefaultFileRenamePolicy());
+			
+			File file = multi.getFile("profile");
+
+			String fileSaveName = null;
+			fileSaveName = multi.getFilesystemName("profile");
+			
+			// 멀티파트 사용할 때 파라미터 가져오기
+			String pe_id = multi.getParameter("pe_Id");
+			
+			dto.setPe_Id(pe_id);
+			dto.setProfile(fileSaveName);
+			
+			int result = dao.imgUpdate(dto);
+			
+			fileName = dao.searchPro(pe_id);
+			
+			mo.addObject("fileName", fileName);
+			mo.setViewName("WEB-INF/view/AjaxIm.jsp");
+			
+		} catch (Exception e)
+		{
+			System.out.println(e.toString());
+		}
+		
+		return mo;
+	}		
+	
 	// 마이페이지 내 정보 전체 조회
 
 	// ★ 다영 수정

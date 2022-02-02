@@ -26,7 +26,7 @@ crossorigin="anonymous">
 <script type="text/javascript">
 
 
-		$(function()
+$(function()
 		{
 			$("#updateBtn").click(function()
 			{
@@ -48,9 +48,47 @@ crossorigin="anonymous">
 			{
 				$(location).attr("href", "myInfoReportList.action");
 			});
-	
-			//myInfoReportList.action
+			
+
+			// 이미지 업로드 ajax 처리
+			$("#imgUpBtn").click(function()
+			{
+				if ($("#profile").val() == "")
+				{
+					alert("파일을 선택해주세요");
+					return;
+				}
+				
+				var formData = new FormData($("#imform")[0]);
+				var data = {"userid": $("#pe_Id").val()};
+				
+			    $.ajax({
+			        url: 'myinfoImg.action',
+			        data : formData,
+			        processData: false,
+			        contentType: false,
+			        type: 'POST',
+			       // dataType: 'json',
+			        success: function (data) {
+			            alert("이미지 업로드 완료");
+			            
+			            $("#filename").val(data);
+			            //확인
+			            //alert($("#filename").val());
+			            
+			            $("#image").attr("src", "pds/saveFile/" + $("#filename").val());
+			            
+			        },
+			        error: function(jqXHR, textStatus, errorThrown) {
+			            alert("error");
+			        }
+			    });
+			});
+				
+
+			
 		});
+
 		
 		$(function()
 		{
@@ -60,10 +98,11 @@ crossorigin="anonymous">
 			{
 				if (confirm("해당 신고를 정말 취소하시겠습니까?"))
 				{
-					$(location).attr("href", "myInfoReportDelete.action?rpcheck_no=" + $(this).val());
+					$(location).attr("href", "myInfoReportMDelete.action?rpcheck_no=" + $(this).val());
 				}
 			});
 
+			
 		});
 	
 </script>
@@ -85,19 +124,36 @@ crossorigin="anonymous">
         <br>
           <h2 class="sub_tit_txt">내 정보 조회</h2>
           <hr>
-		<!-- 프로필사진 업로드구역 -->
+		<!-- 프로필 사진이 등록되어 있을 시 확인, 미등록시 확인 불가 -->
+		<form action="myinfoImg.action" method="post" id="imform" enctype="multipart/form-data">
 		<div class="col-md-4 mx-auto">
-			<img src="<%=cp %>/images/profile.jpg" width="250px"><br><br>
+			<%-- <img src="<%=cp %>/images/profile.jpg" width="250px"><br><br> --%>
 			<div style="text-align: center;">
+				<!-- 프로필사진 업로드구역 -->
+				<c:if test="${!empty user.profile }">
+					<img src="pds/saveFile/${user.profile }" width="200" 
+					style="text-align: center;" id="image">
+				</c:if>	
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button type="button" class="btn btn-primary">사진 바꾸기</button>
+				<label><input type="file" name="profile" id="profile"></label>
+				<input type="hidden" name="pe_Id" id="pe_Id" value="${user.pe_Id }">
+				
+				<c:choose>
+					<c:when test="${empty user.profile }">
+						<button type="button" class="btn btn-primary" id="imgUpBtn">프로필 추가</button>					
+					</c:when>
+					<c:otherwise>
+						<button type="button" class="btn btn-primary" id="imgUpBtn">프로필 변경</button>
+					</c:otherwise>	
+				</c:choose>
+			
 			</div>
 		</div>
+		</form>
         
         <hr style="margin: 30px 0;">
           
           <div class="join_form">
-          <form action="" method="post" id="personalInsertForm">
             <table>
               <colgroup>
                 <col width="30%"/>
@@ -171,7 +227,6 @@ crossorigin="anonymous">
                 <tr>
               </tbody>
             </table>
-            </form>
            
           </div><!-- join_form E  -->
           <div class="text-center">
@@ -181,6 +236,8 @@ crossorigin="anonymous">
 			<button type="button" class="btn btn-primary" id="updateBtn" style="font-size: 13px;">수정하기</button>&nbsp;&nbsp;&nbsp;
 			<button type="button" class="btn btn-primary" id="pwdUpdateBtn" style="font-size: 13px;">비밀번호 변경</button>&nbsp;&nbsp;&nbsp;
 			<button type="button" class="btn btn-danger" id="withdrawalBtn" style="font-size: 13px;">탈퇴하기</button>
+			
+			<input type="hidden" name="filename" id="filename">
 			<!-- ＠ 자바스크립트에서 secondary 버튼 사용해야해서...! 이부분만 danger로 수정할게요! -->
           </div>
            

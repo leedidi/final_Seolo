@@ -17,4 +17,8 @@ public interface IUpdateDAO
 	
 	public int reportApproval(String pe_Id);				// 마이페이지 - 신고당한 후 승인처리 된 횟수
 	public int reportFake(String pe_Id);					// 마이페이지 - 허위신고한 횟수
+	
+	public int imgUpdate(PersonalDTO dto); // 이미지 업로드
+	public String searchPro(String pe_id); // 이미지 가져오기
+	
 }

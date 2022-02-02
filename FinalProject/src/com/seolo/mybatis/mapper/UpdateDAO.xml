@@ -5,7 +5,7 @@
 <mapper namespace="com.seolo.idao.IUpdateDAO">
 	<!-- 해당 인터페이스(ISampleDAO)의 각각 메소드에 어떤 쿼리문(sql)을 매칭시켜줄지 -->
 	<select id="searchId" resultType="com.seolo.personal.PersonalDTO">
-		SELECT PE_ID, NAME, NICKNAME, TEL, EMAIL, ROADADDR, DETAILADDR
+		SELECT PE_ID, NAME, NICKNAME, TEL, EMAIL, ROADADDR, DETAILADDR, PROFILE
 		FROM PERSONAL
 		WHERE PE_ID=#{pe_Id}
 	</select>
@@ -54,5 +54,18 @@
 		FROM VIEW_REPORT
 		WHERE REPORTERNAME=#{pe_Id} AND STATUSNAME='허위신고'
 	</select>
-   	
+
+
+   <select id="searchPro" parameterType="com.seolo.personal.PersonalDTO" resultType="String">
+		SELECT PROFILE
+		FROM PERSONAL
+		WHERE PE_ID=#{pe_Id}   		
+   </select> 
+   
+   	<update id="imgUpdate" parameterType="com.seolo.personal.PersonalDTO">
+		UPDATE PERSONAL
+		SET PROFILE=#{profile}
+		WHERE PE_ID =#{pe_Id}
+   	</update>
+   	      	
 </mapper>
