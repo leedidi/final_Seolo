@@ -29,4 +29,35 @@ public interface IReadDAO
 	public LocalDTO readLocal(String dongNo);
 	
 	public ArrayList<String> listLocalBookmarkSticker(int lobNo);
+
+	// 북마크 체크리스트 수정
+	public int updateCheckBookMark(BookmarkDTO dto);
+	
+	// 북마크 체크리스트 삭제
+	public int deleteCheckBookMark(BookmarkDTO dto);
+	
+	// 북마크 지역정보 삭제
+	public int deleteLocalBookMark(BookmarkDTO dto);
+	
+	// 북마크 지역정보 스티커 삭제
+	public int deleteLocalBookMarkSticker(BookmarkDTO dto);
+	
+	// 북마크 체크리스트 스티커 삭제
+	public int deleteCheckBookMarkSticker(BookmarkDTO dto);
+	
+	// 북마크 체크리스트 스티커 삭제용 CSTICKER_NO 선택
+	public ArrayList<String> selectCheckStiker(int lobNo);
+	
+	// 북마크 지역정보 스티커 삭제용 CSTICKER_NO 선택
+	public ArrayList<String> selectLocalStiker(int chbNo);
+	
+	// 북마크 스티커 테이블에서 스티커 삭제
+	public int deleteSticker(BookmarkDTO dto);
+	
+	// 북마크 지역정보 스티커가 딱 하나인지 확인용
+	public int selectStikerOne(int cstickerNo);
+	
+	// 북마크 체크리스트 스티커가 딱 하나인지 확인용
+	public int selectStikerCheckOne(int cstickerNo);
+
 }

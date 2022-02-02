@@ -23,6 +23,7 @@
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
+
 	//스티커 추가, 삭제 새 창 띄우는 함수
 	function openAddWin(btn)
 	{
@@ -33,6 +34,22 @@
 	{
 		window.open("stickerdeleteform.action?dongNo=" + btn.value, "delete", "width=800, height=600, toolbar=no, menubar=no, scrollbars=no, resizable=yes");
 	}
+	
+	// 지역정보가 북마크 되어 있을 시, 북마크 삭제
+	$(function()
+	{	
+		// 삭제 버튼 클릭
+		$("#bookmarkLocalDelete").click(function()
+		{
+			// 해당 북마크를 삭제할지 확인 후 북마크 삭제
+			if (confirm("해당 북마크를 삭제하시겠습니까?"))
+			{
+			    $("#readLocal").attr("action", "deletebookmarklocal.action?dongNo=" + $(this).val());
+			}
+			 
+		});
+	});
+	
 </script>
 
 </head>
@@ -53,6 +70,7 @@
 
 		<!-- 폼 시작 -->
 		<form class="needs-validation" novalidate=""  action="" method="post" id="readLocal">
+		
 			<div class="row">
 				<!-- 본문 우측 영역 -->
 				<div class="col-md-4 order-md-2 mb-4">
@@ -68,10 +86,11 @@
 					</div>
 					
 					<c:if test="${user eq 'bookmarker' }">
-						<button class="btn btn-secondary" style="width: 100%;">북마크 삭제하기</button>
+						<button class="btn btn-secondary" id="bookmarkLocalDelete" value="${dongNo }" style="width: 100%;">북마크 삭제하기</button>
 					</c:if>
 					<c:if test="${user eq 'viewer' }">
-						<button class="btn btn-primary" style="width: 100%;">북마크 추가하기</button>
+						<button type="button" class="btn btn-primary" style="width: 100%;" 
+						onclick="location.href='addLocalBookmark.action?dongNo=${dongNo }'">북마크 추가하기</button>
 					</c:if>
 
 				</div><!-- 본문 우측 영역 끝 -->

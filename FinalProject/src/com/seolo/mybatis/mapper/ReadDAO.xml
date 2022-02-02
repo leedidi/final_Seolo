@@ -88,4 +88,76 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE LOBNO=#{lobNo}
 	</select>
 	
+	<!-- 북마크 체크리스트 수정 -->
+	<!-- @ 에러: 요기 title부분에 임의의 String 넣으면 수정은 됨! 구조문제는 아닌듯 근데 #{title}로 바꾸면 못 받아옴 -->
+	<!-- → 컨트롤러에서 임의로 title 넣어주면 수정 가능. 다만 원래는 알아서 매칭해줘야하는데 안 되는듯... -->
+	<update id="updateCheckBookMark">
+		UPDATE CHECK_BOOKMARK
+		SET TITLE=#{title}
+		WHERE CHECK_NO=#{checkNo} AND AC_NO=#{acNo}
+	</update>
+	
+	<!-- 북마크 체크리스트 삭제 -->
+	<delete id="deleteCheckBookMark">
+		DELETE
+		FROM CHECK_BOOKMARK
+		WHERE CHECK_NO=#{checkNo} AND AC_NO=#{acNo}
+	</delete>
+	
+	<!-- 북마크 지역정보 삭제 -->
+	<delete id="deleteLocalBookMark">
+		DELETE
+		FROM LOCAL_BOOKMARK
+		WHERE DONG_NO=#{dongNo} AND AC_NO=#{acNo}
+	</delete>
+	
+	<!-- 북마크 지역정보 스티커 삭제 -->
+	<delete id="deleteLocalBookMarkSticker">
+		DELETE 
+		FROM LOCALTAG
+		WHERE LO_B_NO=#{lobNo}	
+	</delete>
+	
+	<!-- 북마크 체크리스트 스티커 삭제 -->
+	<delete id="deleteCheckBookMarkSticker">
+		DELETE
+		FROM CHECKTAG
+		WHERE CH_B_NO=#{chbNo}	
+	</delete>
+	
+	<!-- 북마크 지역정보 스티커 테이블 삭제용 CSTICKER_NO 선택 -->
+	<select id="selectLocalStiker" resultType="java.lang.String">
+		SELECT CSTICKER_NO
+		FROM LOCALTAG
+		WHERE LO_B_NO=#{lobNo}	
+	</select>
+	
+	<!-- 북마크 체크리스트 스티커 테이블 삭제용 CSTICKER_NO 선택 -->
+	<select id="selectCheckStiker" resultType="java.lang.String">
+		SELECT CSTICKER_NO
+		FROM CHECKTAG
+		WHERE CH_B_NO=#{chbNo}	
+	</select>
+	
+	<!-- 북마크 스티커 테이블에서 스티커 삭제 -->
+	<delete id="deleteSticker">
+		DELETE
+		FROM STICKER
+		WHERE CSTICKER_NO=#{cstickerNo}
+	</delete>
+	
+	<!-- 북마크 지역정보 스티커가 딱 하나인지 확인용 -->
+	<select id="selectStikerOne" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM LOCALTAG
+		WHERE CSTICKER_NO=#{cstickerNo}
+	</select>
+	
+	<!-- 북마크 체크리스트 스티커가 딱 하나인지 확인용 -->
+	<select id="selectStikerCheckOne" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM CHECKTAG
+		WHERE CSTICKER_NO=#{cstickerNo}
+	</select>
+
 </mapper>
