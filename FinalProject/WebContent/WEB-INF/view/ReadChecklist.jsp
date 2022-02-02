@@ -51,6 +51,32 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
 			$("#readCheck").attr("action", "deletechecklist.action?checkNo=" + $(this).val());
 					
 		});
+		
+		// 제목 수정 버튼 클릭
+	    $("#bookUpdateBtn").click(function()
+		{
+	    	// 해당 북마크 수정 페이지로 이동
+			$("#readCheck").attr("method", "GET");
+			$("#readCheck").attr("action", "updatebookmarkcheck.action?checkNo=" + $(this).val());
+		});
+		
+		 // 북마크 삭제하기 버튼 클릭
+		$("#bookDeleteBtn").click(function()
+		{
+			// 해당 북마크를 삭제할지 확인 후 북마크 삭제
+			if (confirm("해당 북마크를 삭제하시겠습니까?"))
+			{
+				$("#readCheck").attr("method", "GET");
+			    $("#readCheck").attr("action", "deletechecking.action?checkNo=" + $(this).val());
+			}
+			else
+			{
+				$("#readCheck").attr("method", "GET");
+				$("#readCheck").attr("action", "readcheck.action?checkNo=" + $(this).val());
+			}
+
+		});
+	
 	});
 	
 	// 스티커 추가, 삭제 새 창 띄우는 함수
@@ -214,6 +240,7 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
 			<c:if test="${user eq 'writer' }">
 				<div class="mb-3">
 					<label for="title"><h4 class="mb-3">제목<span class="text-essential">(*)</span></h4></label>
+					&nbsp;<button class="btn btn-primary" id="bookUpdateBtn" value="${checklist.checkNo}">제목 수정</button>
 					<input type="text" class="form-control" id="title" name="title"
 					 maxlength="25" required="required" readonly="readonly" value="${checklist.title }">
 				</div>
@@ -302,9 +329,10 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
 					value="${checklist.checkNo}">신고하기</button>							
 					</c:if>
 					
-					<!-- 북마크 삭제 -->
+					<!-- 북마크 수정&삭제 -->
 					<c:if test="${user eq 'bookmarker' }">
-					<button class="btn btn-secondary" style="width: 100%;">북마크 삭제하기</button>
+					<%-- <button class="btn btn-primary" id="bookUpdateBtn" style="width: 50%;" value="${checklist.checkNo}">북마크 수정하기</button> --%>
+					<button class="btn btn-secondary" id="bookDeleteBtn" style="width: 100%;" value="${checklist.checkNo}">북마크 삭제하기</button>
 					<br><br>
 					<button class="btn btn-danger" id="repBtn" style="width: 100%;"
 					value="${checklist.checkNo}">신고하기</button>							

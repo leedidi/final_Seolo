@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seolo.idao.IBookmarkDAO">
+
+	<!-- 내 스티커 리스트 -->
+	<select id="stickerList" resultType="com.seolo.dto.StickerDTO">   
+		SELECT S.CSTICKER_NO AS stickerNo, S.CONTENT AS content
+		 FROM  ( SELECT CSTICKER_NO
+		         FROM VIEW_ALLSTICKER 
+		         WHERE AC_NO = #{acNo}
+		         GROUP BY CSTICKER_NO) T
+		 LEFT JOIN STICKER S
+		 ON T.CSTICKER_NO = S.CSTICKER_NO
+	</select>
+	
+	
+	<!-- 내 스티커에 추가하기 -->
+	<insert id="addSticker">
+		INSERT INTO STICKER(CSTICKER_NO, CONTENT, AC_NO)
+		VALUES(CSTICKERSEQ.NEXTVAL, #{content}, #{acNo})	
+	</insert>
+	
+	
+	<!-- 체크리스트 북마크 인서트 -->
+	<!-- 
+	<insert id="addCheckBookmark">
+		INSERT INTO CHECK_BOOKMARK(CH_B_NO, CHECK_NO, AC_NO, TITLE, MARKDATE)
+		VALUES(CHBOOKSEQ.NEXTVAL, #{checkNo}, #{acNo}, #{title}, SYSDATE)
+	</insert> -->
+	
+	<insert id="addCheckBookmark">
+	<choose>
+		<when test=" #{title}==null">
+			INSERT INTO CHECK_BOOKMARK(CH_B_NO, CHECK_NO, AC_NO, MARKDATE)
+			VALUES(CHBOOKSEQ.NEXTVAL, #{checkNo}, #{acNo}, SYSDATE)
+		</when>
+		<otherwise>
+			INSERT INTO CHECK_BOOKMARK(CH_B_NO, CHECK_NO, AC_NO, TITLE, MARKDATE)
+			VALUES(CHBOOKSEQ.NEXTVAL, #{checkNo}, #{acNo}, #{title}, SYSDATE)
+		</otherwise>
+	</choose>
+	</insert>
+
+
+	<!-- 체크리스트 부착스티커(태그) 인서트 -->
+	<insert id="addCheckSticker">
+		INSERT INTO CHECKTAG(CH_TAG_NO, CH_B_NO, CSTICKER_NO)
+		VALUES(CHECKTAGSEQ.NEXTVAL, #{chbNo}, #{cstickerNo})
+	</insert>
+
+
+	<!-- 지역정보 북마크 인서트 --> <!-- 인서트 되고 나서는 북마크하기 버튼 없어져야함 -->
+	<insert id="addLocalBookmark">
+		INSERT INTO LOCAL_BOOKMARK(LO_B_NO, DONG_NO, AC_NO, MARKDATE)
+		VALUES(LOBOOKSEQ.NEXTVAL, #{dongNo}, #{acNo}, SYSDATE)	
+	</insert>
+	
+	
+	<!-- 지역정보 부착스티커 인서트 -->
+	<insert id="addLocalSticker">
+		INSERT INTO LOCALTAG(LO_TAG_NO, LO_B_NO, CSTICKER_NO)
+		VALUES(LOCALTAGSEQ.NEXTVAL, #{lobNo}, #{cstickerNo})	
+	</insert>
+	
+	
+	<!-- 이 계정에서 가장 최근에 인서트된 지역정보 북마크 고유번호 -->
+	<select id="searchLocalBookNo" resultType="java.lang.Integer">
+		SELECT LO_B_NO
+		FROM
+		(
+			SELECT LO_B_NO, MARKDATE, RANK() OVER(ORDER BY MARKDATE DESC) AS FAST
+			FROM LOCAL_BOOKMARK
+			WHERE AC_NO= #{acNo}
+		)T
+		WHERE T.FAST=1	
+	</select>
+	
+	
+	<!-- 이 계정에서 가장 최근에 인서트된 체크리스트 북마크 고유번호 -->
+	<select id="searchCheckBookNo"  resultType="java.lang.Integer">
+		SELECT CH_B_NO
+		FROM
+		(
+			SELECT CH_B_NO, MARKDATE, RANK() OVER(ORDER BY MARKDATE DESC) AS FAST
+			FROM CHECK_BOOKMARK
+			WHERE AC_NO=#{acNo}
+		)T
+		WHERE T.FAST=1	
+	</select>
+	
+	
+	<!-- 이 계정에서 가장 최근에 인서트된 스티커 DTO -->
+	<select id="searchSticker" resultType="com.seolo.dto.StickerDTO">
+		SELECT CSTICKER_NO AS stickerNo, CONTENT AS content, AC_NO AS acNo
+		FROM
+		(
+			SELECT *
+			FROM STICKER
+			WHERE AC_NO=#{acNo}
+			ORDER BY CSTICKER_NO DESC
+		)
+		WHERE ROWNUM=1	
+	</select>
+	
+	
+	<!-- 해당 지역북마크에 붙은 스티커 목록 -->
+	<select id="localStickerList" resultType="com.seolo.dto.StickerDTO">
+		SELECT CSTICKER_NO, CONTENT
+		FROM VIEW_LOCALBOOKMARK
+		WHERE AC_NO=#{acNo} AND DONG_NO=#{dongNo}	
+	</select>
+	
+	
+	<!-- 해당 체크북마크에 붙은 스티커 목록 -->
+	<select id="checkStickerList" resultType="com.seolo.dto.StickerDTO">
+		SELECT CSTICKER_NO, CONTENT
+		FROM VIEW_CHECKBOOKMARK
+		WHERE AC_NO=#{acNo} AND CHECK_NO=#{checkNo}
+	</select>
+	
+	
+	<!-- 북마크가 되어있는지 아닌지를 판별/ 북마크 고유번호(LO_B_NO) 가져온다 -->
+	<select id="localbookmarkornot"  resultType="java.lang.String">
+		SELECT LO_B_NO AS lobNo
+		FROM LOCAL_BOOKMARK 
+		WHERE AC_NO=#{acNo} AND DONG_NO=#{dongNo}	
+	</select>
+	
+	<!-- 지역부착스티커 삭제하기 -->
+	<delete id="removeLocaltag">
+		DELETE 
+		FROM LOCALTAG
+		WHERE LO_B_NO=#{lobNo}	
+	</delete>
+	
+	<!-- 지역북마크 삭제하기 -->
+	<delete id="removeLocalBookmark">
+		DELETE 
+		FROM LOCAL_BOOKMARK
+		WHERE AC_NO=#{acNo} AND DONG_NO=#{dongNo}	
+	</delete>
+	
+	<!-- 체크북마크가 되어있는지 아닌지를 판별/ 북마크 고유번호(CH_B_NO) 가져온다 -->
+	<select id="checkbookmarkornot" resultType="java.lang.String">
+		SELECT CH_B_NO AS chbNo
+		FROM CHECK_BOOKMARK
+		WHERE AC_NO=#{acNo} AND CHECK_NO=#{checkNo}	
+	</select>
+	
+	<!-- 체크부착스티커 삭제하기 -->
+	<delete id="removeChecktag">
+		DELETE
+		FROM CHECKTAG
+		WHERE CH_B_NO=#{chbNo}	
+	</delete>
+	
+	<!-- 체크북마크 삭제하기 -->
+	<delete id="removeCheckBookmark">
+		DELETE
+		FROM CHECK_BOOKMARK
+		WHERE AC_NO=#{acNo} AND CHECK_NO=#{checkNo}	
+	</delete>
+	
+	
+</mapper>
+
+
+
+
+
+
+
+

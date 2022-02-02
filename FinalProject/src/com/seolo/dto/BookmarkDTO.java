@@ -5,6 +5,9 @@ public class BookmarkDTO
 	private int chbNo, lobNo, checkNo;
 	// chbNo : 체크리스트 북마크 번호, lobNo : 지역 북마크 번호
 	private String acNo, title, markDate, dongNo;
+	
+	private int chtagNo, lotagNo, cstickerNo;
+	// 부착스티커 테이블들의 고유번호들과 스티커고유번호
 
 	public BookmarkDTO()
 	{
@@ -79,5 +82,36 @@ public class BookmarkDTO
 	{
 		this.dongNo = dongNo;
 	}
+
+	public int getChtagNo()
+	{
+		return chtagNo;
+	}
+
+	public void setChtagNo(int chtagNo)
+	{
+		this.chtagNo = chtagNo;
+	}
+
+	public int getLotagNo()
+	{
+		return lotagNo;
+	}
+
+	public void setLotagNo(int lotagNo)
+	{
+		this.lotagNo = lotagNo;
+	}
+
+	public int getCstickerNo()
+	{
+		return cstickerNo;
+	}
+
+	public void setCstickerNo(int cstickerNo)
+	{
+		this.cstickerNo = cstickerNo;
+	}
+	
 
 }
