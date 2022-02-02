@@ -17,11 +17,8 @@ crossorigin="anonymous">
 	p { font-size: small; color: red; }
 	.errMsg { font-size: small; color: red; }
 	.okMsg { font-size: small; color: blue; }
-	.myWarning { font-weight:bold; text-align: right;}
 	
 	input { pointer-events: none; }
-	
-	
 
 </style>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -85,16 +82,9 @@ crossorigin="anonymous">
 	<div class="wrap wd668">
 	<!-- <div class="container" style="width:50%; text-align: left;"> -->
         <div class="form_txtInput">
+        <br>
           <h2 class="sub_tit_txt">내 정보 조회</h2>
           <hr>
-         
-        <!-- 사용자가 받은 경고 횟수 -->
-        <!-- 경고가 없을 시에는 보이지 않고, 경고가 있을 시에만 보이도록 처리 -->
-   		<c:if test="${totalWarning != 0}">
-				<p class="myWarning" title="경고 횟수는 신고를 받거나, 허위신고를 했을 때 1회씩 추가됩니다.
-경고를 총 10회 받을 시 강퇴되며, 6개월 간 재가입을 할 수 없습니다.">(!) 나의 경고 횟수 : ${totalWarning }회</p>
-		</c:if>
-			
 		<!-- 프로필사진 업로드구역 -->
 		<div class="col-md-4 mx-auto">
 			<img src="<%=cp %>/images/profile.jpg" width="250px"><br><br>
