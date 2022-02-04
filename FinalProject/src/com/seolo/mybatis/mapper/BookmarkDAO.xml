@@ -25,12 +25,11 @@
 	
 	
 	<!-- 체크리스트 북마크 인서트 -->
-	<!-- 
 	<insert id="addCheckBookmark">
 		INSERT INTO CHECK_BOOKMARK(CH_B_NO, CHECK_NO, AC_NO, TITLE, MARKDATE)
 		VALUES(CHBOOKSEQ.NEXTVAL, #{checkNo}, #{acNo}, #{title}, SYSDATE)
-	</insert> -->
-	
+	</insert> 
+	<!-- 
 	<insert id="addCheckBookmark">
 	<choose>
 		<when test=" #{title}==null">
@@ -43,8 +42,8 @@
 		</otherwise>
 	</choose>
 	</insert>
-
-
+ 	-->
+ 	
 	<!-- 체크리스트 부착스티커(태그) 인서트 -->
 	<insert id="addCheckSticker">
 		INSERT INTO CHECKTAG(CH_TAG_NO, CH_B_NO, CSTICKER_NO)
