@@ -323,7 +323,8 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8debbf5b35bae9b060adac364d027afd&lib
 					
 					<!-- 북마크 추가 -->
 					<c:if test="${user eq 'viewer' }">
-					<button class="btn btn-primary" id="bookBtn" style="width: 100%;">북마크 추가하기</button>
+					<button type="button" class="btn btn-primary" style="width: 100%;"
+					onclick="location.href='addCheckBookmark.action?checkNo=${checklist.checkNo}'">북마크 추가하기</button>
 					<br><br>
 					<button class="btn btn-danger" id="repBtn" style="width: 100%;"
 					value="${checklist.checkNo}">신고하기</button>							

@@ -55,8 +55,8 @@ public class BookmarkController
 		model.addAttribute("dongNo", dongNo);
 		model.addAttribute("list", list);
 		
-		// return "WEB-INF/view/AddLocalBookmark.jsp";
-		return "AddLocalBookmark.jsp";
+		return "WEB-INF/view/AddLocalBookmark.jsp";
+		// return "AddLocalBookmark.jsp";
 	}
 	
 	
@@ -117,8 +117,8 @@ public class BookmarkController
 		model.addAttribute("sticker", sticker);
 		model.addAttribute("list", list);
 		
-		// return "WEB-INF/view/AddLocalBookmark.jsp";
-		return "AddLocalBookmark.jsp"; 
+		return "WEB-INF/view/AddLocalBookmark.jsp";
+		// return "AddLocalBookmark.jsp"; 
 	}
 	
 	
@@ -179,8 +179,8 @@ public class BookmarkController
 		model.addAttribute("sticker", sticker);
 		model.addAttribute("list", list);
 		
-		// return "WEB-INF/view/AddLocalBookmark.jsp";
-		return "AddLocalBookmark.jsp";
+		return "WEB-INF/view/AddLocalBookmark.jsp";
+		// return "AddLocalBookmark.jsp";
 	}
 	
 	
@@ -225,10 +225,9 @@ public class BookmarkController
     	
 		return "redirect:main.action";
 	}
-	
+	*/
 	
 	//========================= 여기부터 체크리스트 북마크 =========================
-	
 	
 	// 체크 북마크 페이지로 이동 (ReadChecklist.jsp로부터)
 	@RequestMapping(value="/addCheckBookmark.action", method=RequestMethod.GET)
@@ -253,15 +252,16 @@ public class BookmarkController
 		model.addAttribute("list", list);
     	model.addAttribute("checkNo", checkNo);
 		
-		// return "WEB-INF/view/AddCheckBookmark.jsp";
-		return "AddCheckBookmark.jsp";
+		return "WEB-INF/view/AddCheckBookmark.jsp";
+		// return "AddCheckBookmark.jsp";
 	}
-	*/
+	
 	
 	// 체크 : 기존의 스티커를 선택하면 선택한 스티커에 추가
 	//@ title 이 안넘어가는 문제 해결
 	@RequestMapping(value="/addCheckSticker.action", method=RequestMethod.GET)
 	public String addCheckSticker(Model model, HttpSession session, String checkNo, int stickerNo, String title)
+	//public String addCheckSticker(Model model, HttpSession session, String checkNo, int stickerNo, String title)
 	{
 		IBookmarkDAO dao = sqlSession.getMapper(IBookmarkDAO.class);
 
@@ -276,13 +276,13 @@ public class BookmarkController
     	BookmarkDTO dto = new BookmarkDTO();
     	dto.setAcNo(user.getAc_No());
     	dto.setCheckNo(Integer.parseInt(checkNo));
-    	// dto.setTitle(title);
+    	dto.setTitle(title);
     	dto.setCstickerNo(stickerNo);
     	
-    	System.out.println("체크 acNo : " + user.getAc_No());
-    	System.out.println("체크 checkNo : " + checkNo);
+    	// System.out.println("체크 acNo : " + user.getAc_No());
+    	// System.out.println("체크 checkNo : " + checkNo);
     	// System.out.println("체크 title : " + title);
-    	System.out.println("체크 stickerNo : " + stickerNo);
+    	// System.out.println("체크 stickerNo : " + stickerNo);
     	
     	// 체크리스트 북마크가 안 되어 있을 경우
     	if(dao.checkbookmarkornot(dto)==null)
@@ -294,7 +294,8 @@ public class BookmarkController
     	// 북마크 DTO에 체크북마크 번호 set
     	int chbNo = dao.searchCheckBookNo(Integer.parseInt(user.getAc_No()));
     	dto.setChbNo(chbNo);
-    	System.out.println("체크 chbNo : " + chbNo);
+    	// System.out.println("체크 chbNo : " + chbNo);
+    	// System.out.println("============================");
     	
     	// 체크북마크에 스티커 붙이기
     	dao.addCheckSticker(dto);
@@ -310,15 +311,16 @@ public class BookmarkController
     	model.addAttribute("sticker", sticker);
     	model.addAttribute("list", list);
     	
-		// return "WEB-INF/view/AddCheckBookmark.jsp";
-		return "AddCheckBookmark.jsp";
+		return "WEB-INF/view/AddCheckBookmark.jsp";
+		// return "AddCheckBookmark.jsp";
 	}
 	
 	
 	// 체크 : 새로 스티커를 추가하면 선택한 스티커에 추가
 	//@ title 이 안넘어가는 부분 문제
 	@RequestMapping(value="/addNewCheckSticker.action", method=RequestMethod.GET)
-	public String addNewCheckSticker(Model model, HttpSession session, String checkNo, int stickerNo, String title, String newSticker)
+	public String addNewCheckSticker(Model model, HttpSession session, String checkNo, String title, String newSticker)
+	// public String addNewCheckSticker(Model model, HttpSession session, String checkNo, int stickerNo, String title, String newSticker)
 	{
 		IBookmarkDAO dao = sqlSession.getMapper(IBookmarkDAO.class);
 
@@ -340,11 +342,10 @@ public class BookmarkController
     	sdto.setAcNo(Integer.parseInt(user.getAc_No()));
     	sdto.setContent(newSticker);
     	
-    	System.out.println("새 체크 acNo : " + user.getAc_No());
-    	System.out.println("새 체크 checkNo : " + checkNo);
-    	System.out.println("새 체크 title : " + title);
-    	System.out.println("새 체크 newSticker : " + newSticker);
-    	
+    	// System.out.println("새 체크 acNo : " + user.getAc_No());
+    	// System.out.println("새 체크 checkNo : " + checkNo);
+    	// System.out.println("새 체크 title : " + title);
+    	// System.out.println("새 체크 newSticker : " + newSticker);
     	
     	// 내 스티커에 추가하기
     	dao.addSticker(sdto);
@@ -355,15 +356,17 @@ public class BookmarkController
     		// 체크리스트 북마크하기
     		dao.addCheckBookmark(dto);
     	}
-    	
+    	    
     	// 북마크 DTO에 체크북마크 번호, 추가한 스티커 번호 set
 		int chbNo = dao.searchCheckBookNo(Integer.parseInt(user.getAc_No()));
 		dto.setChbNo(chbNo);
-		System.out.println("새 체크 chbNo : " + chbNo);
+		// System.out.println("새 체크 chbNo : " + chbNo);
 		
 		StickerDTO s = dao.searchSticker(Integer.parseInt(user.getAc_No()));
 		dto.setCstickerNo(s.getStickerNo());
-		System.out.println("새 체크 stickerNo : " + stickerNo);
+		// System.out.println("새 체크 stickerNo : " + s.getStickerNo());
+		// System.out.println("====================");
+		
 		
 		// 북마크에 추가한 스티커 붙이기
 		dao.addCheckSticker(dto);
@@ -379,8 +382,8 @@ public class BookmarkController
     	model.addAttribute("list", list);
     	
 		
-		// return "WEB-INF/view/AddCheckBookmark.jsp";
-		return "AddCheckBookmark.jsp";
+		return "WEB-INF/view/AddCheckBookmark.jsp";
+		// return "AddCheckBookmark.jsp";
 	}
 	
 	/*
